@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-lelab-charcoal text-lelab-light font-sans antialiased overflow-x-hidden min-h-screen selection:bg-lelab-yellow selection:text-lelab-charcoal;
+    line-height: 1.8;
+    letter-spacing: 0.012em;
+  }
+}
+
+/* Noise grain overlay — fixed, non-interactive */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.032;
+}
+
+/* Faint global grid pattern */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(239,185,9,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239,185,9,0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+@layer components {
+  .lelab-container {
+    @apply max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24;
+  }
+
+  /* Primary button — yellow fill, compact */
+  .btn-primary {
+    @apply bg-lelab-yellow text-lelab-charcoal px-6 py-2.5 rounded-full font-bold uppercase tracking-widest text-[11px] inline-flex items-center justify-center gap-2;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .btn-primary:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  /* Secondary button — outlined, compact */
+  .btn-secondary {
+    @apply bg-transparent text-lelab-light border border-lelab-light/20 px-6 py-2.5 rounded-full font-bold uppercase tracking-widest text-[11px] inline-flex items-center justify-center gap-2;
+    transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  }
+  .btn-secondary:hover {
+    @apply border-lelab-light/60 text-lelab-light;
+    transform: translateY(-1px);
+  }
+
+  /* Section label */
+  .section-label {
+    @apply text-lelab-yellow text-xs font-bold uppercase tracking-[0.3em];
+  }
+
+  /* Legacy support */
+  .btn-pill-dark {
+    @apply btn-primary;
+  }
+  .btn-pill-light {
+    @apply btn-secondary;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #EFB909;
+}
