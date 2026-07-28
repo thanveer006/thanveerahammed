@@ -1,0 +1,42 @@
+---
+title: "Why I Reach for Server-Sent Events Before WebSockets"
+description: "Most 'real-time' features are one-directional. SSE gives you that with a fraction of the operational complexity of a WebSocket server."
+date: "2026-03-12"
+tags: ["System Design", "Next.js", "Architecture"]
+---
+
+Most features that get labeled "real-time" during planning turn out to be one-directional the moment you look closely: the server has new state, the client needs to know. A session status changes. A payment clears. A notification is ready. The client is not sending a continuous stream of anything back — it's just waiting.
+
+That distinction matters more than it gets credit for, because the two obvious real-time tools — WebSockets and Server-Sent Events — are not interchangeable in cost.
+
+## What SSE actually buys you
+
+Server-Sent Events run over plain HTTP. A client opens a long-lived connection with `EventSource`, and the server writes `data: ...` chunks to it as events happen. No separate protocol upgrade, no custom framing, and — critically — no separate reconnect logic to write. Reconnection is built into the browser's `EventSource` implementation.
+
+```ts
+export async function GET() {
+  const stream = new ReadableStream({
+    start(controller) {
+      const unsubscribe = events.subscribe((event) => {
+        controller.enqueue(`data: ${JSON.stringify(event)}\n\n`);
+      });
+      return () => unsubscribe();
+    },
+  });
+  return new Response(stream, {
+    headers: { "Content-Type": "text/event-stream" },
+  });
+}
+```
+
+That's close to the entire server-side implementation. No connection registry to manage by hand, no ping/pong keepalive protocol to design, no separate library dependency on the server.
+
+## Where WebSockets earn their complexity
+
+WebSockets are the right call when the client genuinely needs to *send* on the same channel it's receiving on — a collaborative cursor, a chat input, a multiplayer game state. If your feature is bidirectional in the literal sense, SSE can't do that job, and reaching for it would mean bolting a separate `POST` request path onto something that should be one connection.
+
+The mistake I try to avoid is picking WebSockets by default because "real-time" is in the feature description, then paying for a stateful connection server, sticky sessions or a pub/sub backplane, and manual reconnect handling — for a feature that only ever pushes data one way.
+
+## The actual decision rule
+
+Before reaching for either, I ask one question: does the client ever need to send data on this same channel, in response to something that just happened, without a full request round-trip? If yes, WebSockets. If the client is purely a listener, SSE gets you there with less to operate and less to get wrong.

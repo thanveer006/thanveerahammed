@@ -1,0 +1,32 @@
+---
+title: "Where AI Actually Earns Its Place in a Workflow"
+description: "The question isn't whether you can add an LLM to a feature. It's whether a deterministic solution would be more reliable — and cheaper to debug."
+date: "2026-01-22"
+tags: ["AI", "Automation", "Software Engineering"]
+---
+
+Every workflow-automation conversation eventually reaches the same fork: should this step call an LLM, or should it just be code? The honest answer is that most steps should just be code — and the ones that shouldn't are more specific than "anything involving text."
+
+## Deterministic first, always
+
+If a step has a correct answer that can be computed — a merit score from weighted inputs, a payroll figure from logged hours, a QR code bound to a record — it should be a pure function, not a prompt. A deterministic function is testable, reproducible, and free. A model call for the same task is none of those by default, and debugging "why did it produce this output" is a fundamentally worse problem than debugging a function.
+
+```ts
+function calculateMerit(applicant: Applicant): MeritScore {
+  const eligibility = scoreEligibility(applicant.income, applicant.category);
+  const interview = applicant.interviewScore ?? 0;
+  return { total: eligibility * 0.6 + interview * 0.4 };
+}
+```
+
+Nobody should want an LLM anywhere near this. It has one correct answer, and the LLM version of it is strictly worse on every axis that matters — cost, latency, and trust.
+
+## Where it actually earns its place
+
+The steps worth an LLM are the ones with no deterministic answer to begin with: summarizing an unstructured document, drafting a first-pass message from loosely structured input, classifying free-text into categories that don't have a clean rule-based boundary. These are tasks a human would otherwise do by reading and judging — not tasks with a formula underneath them that a prompt is standing in for.
+
+Workflow automation tools like n8n make this distinction easy to see in practice: most of a working automation is deterministic steps — trigger, transform, branch, call an API — with an LLM node doing the one step that genuinely needs judgment, not the whole pipeline routed through a model because it was available.
+
+## The actual heuristic
+
+Before adding a model call to a step, I ask: if I handed this exact input to a junior developer and told them to write a function for it, could they? If yes, write the function. If the honest answer is "no, this genuinely requires reading and judgment," that's where AI belongs — and it'll be a small fraction of the workflow, not the whole thing.

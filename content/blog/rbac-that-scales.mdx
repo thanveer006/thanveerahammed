@@ -1,0 +1,38 @@
+---
+title: "Designing RBAC That Doesn't Fall Apart at Scale"
+description: "Role-based access control is easy to build and easy to build wrong. The failure mode isn't a missing check — it's checks scattered across the wrong layer."
+date: "2026-02-18"
+tags: ["Security", "Architecture", "Software Engineering"]
+---
+
+Role-based access control looks simple in a demo: check `user.role === "admin"` before doing the sensitive thing. The failure mode never shows up in the demo. It shows up eighteen months later, when that check has been copy-pasted into eleven route handlers with three slightly different spellings of the same role name.
+
+## The failure mode is the *location* of the check, not the logic
+
+The actual risk in RBAC systems isn't that the permission logic is wrong — it's usually that the permission logic exists in more than one place, and those places drift. A UI hides a button for non-admins, but the API route behind that button never got the equivalent check, because "the button's already hidden." That's not a hypothetical; it's the most common real-world access-control bug.
+
+The fix is boring: enforce access control at the API boundary, unconditionally, and treat the UI hiding as a UX nicety layered on top — never as the actual control.
+
+```ts
+export async function withRole(role: Role, handler: Handler) {
+  return async (req: Request) => {
+    const session = await getSession(req);
+    if (!session || !session.roles.includes(role)) {
+      return Response.json({ error: "Forbidden" }, { status: 403 });
+    }
+    return handler(req, session);
+  };
+}
+```
+
+One wrapper, applied consistently, means the check can't drift out of sync with the UI — because the UI was never the thing enforcing it.
+
+## Roles are not permissions
+
+The second recurring mistake is modeling roles as if they *are* permissions. "Admin can do everything, mentor can do mentor things" works until a mentor needs exactly one admin-level capability for one workflow, and now you're either creating a new role for a single permission or quietly weakening the admin/mentor boundary.
+
+Separating roles from permissions — a role is a named bundle of permissions, and checks are written against permissions, not role names — costs a bit more upfront modeling and saves a rewrite the first time the business asks for an exception.
+
+## Auditability is part of the design, not an add-on
+
+Access control that can't answer "who did this, under what role, and when" after the fact isn't finished — it's demoed. Logging the role and permission that authorized a sensitive action, at the point of authorization, turns "we think this is secure" into something you can actually verify.
