@@ -32,6 +32,15 @@ export function Hero() {
             Available for select engineering work
           </motion.p>
 
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.02 }}
+            className="mb-2 text-lg font-semibold text-foreground"
+          >
+            Thanveer Ahammed N
+          </motion.p>
+
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}

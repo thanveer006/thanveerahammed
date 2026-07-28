@@ -52,13 +52,15 @@ export function Nav() {
       >
         <Link
           href="/"
-          className="flex items-center gap-2 font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+          className="mr-4 flex shrink-0 items-center gap-2 font-semibold tracking-tight whitespace-nowrap text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
         >
-          <Logo className="size-6 text-primary" />
-          Thanveer<span className="text-primary">.</span>
+          <Logo className="size-6 shrink-0 text-primary" />
+          <span className="hidden xl:inline">Thanveer Ahammed N</span>
+          <span className="xl:hidden">Thanveer</span>
+          <span className="text-primary">.</span>
         </Link>
 
-        <div className="hidden md:flex md:items-center md:gap-8">
+        <div className="hidden md:flex md:items-center md:gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
