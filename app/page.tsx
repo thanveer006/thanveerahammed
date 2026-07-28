@@ -6,8 +6,6 @@ import { Skills } from "@/components/sections/skills";
 import { Philosophy } from "@/components/sections/philosophy";
 import { Process } from "@/components/sections/process";
 import { Stats } from "@/components/sections/stats";
-import { GitHubActivity } from "@/components/sections/github-activity";
-import { Testimonials } from "@/components/sections/testimonials";
 import { Contact } from "@/components/sections/contact";
 
 export default function Home() {
@@ -21,8 +19,6 @@ export default function Home() {
       <Philosophy />
       <Process />
       <Stats />
-      <GitHubActivity />
-      <Testimonials />
       <Contact />
     </>
   );
