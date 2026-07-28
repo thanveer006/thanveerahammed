@@ -2,8 +2,14 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Activity, GitBranch, ShieldCheck } from "lucide-react";
+import { ArrowRight, Download, Activity, GitBranch, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const trustItems = [
+  "Production Systems Shipped",
+  "Enterprise Clients",
+  "Based in Kerala, India",
+];
 
 const float = (delay: number) => ({
   animate: { y: [0, -10, 0] },
@@ -69,6 +75,20 @@ export function Hero() {
               <Link href="/#contact">Contact Me</Link>
             </Button>
           </motion.div>
+
+          <motion.ul
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.32 }}
+            className="mt-8 flex flex-wrap gap-x-6 gap-y-2"
+          >
+            {trustItems.map((item) => (
+              <li key={item} className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <CheckCircle2 className="size-4 text-success" />
+                {item}
+              </li>
+            ))}
+          </motion.ul>
         </div>
 
         <div className="relative hidden h-105 lg:block" aria-hidden>
