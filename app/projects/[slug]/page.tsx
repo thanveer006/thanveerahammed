@@ -162,9 +162,6 @@ export default async function ProjectPage({
 
         <CaseStudySection title="Gallery">
           <GalleryPlaceholder />
-          <p className="mt-3 text-xs text-muted-foreground">
-            Screenshots to be added.
-          </p>
         </CaseStudySection>
       </div>
 
