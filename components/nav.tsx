@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useCommandPalette } from "@/components/command-palette-provider";
+import { Logo } from "@/components/logo";
 
 const navLinks = [
   { href: "/#about", label: "About" },
@@ -51,8 +52,9 @@ export function Nav() {
       >
         <Link
           href="/"
-          className="font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+          className="flex items-center gap-2 font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
         >
+          <Logo className="size-6 text-primary" />
           Thanveer<span className="text-primary">.</span>
         </Link>
 
