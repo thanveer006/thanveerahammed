@@ -1,0 +1,28 @@
+---
+title: "Vibe Coding Is a Superpower, If You Know Where to Grip It"
+description: "AI is excellent at building the happy path and bad at thinking like an attacker. That gap is where most of the risk in AI-generated code actually lives."
+date: "2026-04-05"
+tags: ["AI", "Security", "Software Engineering"]
+---
+
+Vibe coding — describing what you want in plain language and letting AI build it — is genuinely changing who gets to ship software. A product manager, a designer, a domain expert who deeply understands a problem but never learned to write a for-loop can now build a working solution themselves. That's a real shift, and mostly a good one.
+
+It also has an honest failure mode worth naming directly: AI is very good at building the path where everything goes right, and much worse at thinking like someone trying to break it.
+
+## The gap is measurable
+
+A meaningful share of people building this way aren't developers by background — and that's fine on its own. The problem is what tends to ship alongside the working feature: hardcoded secrets committed straight into the repo, missing input validation that opens the door to injection, database access configured wide open because narrowing it wasn't part of the prompt.
+
+None of that shows up in a demo. All of it shows up eventually, in production, to someone who wasn't supposed to have access.
+
+## Why this happens
+
+A model optimizing for "does this work" will get you to working software efficiently. It is not the same objective as "is this safe to expose to the internet," and nothing about a plain-language prompt forces those two goals to align. Security is usually an implicit requirement — the kind a prompt doesn't state because a human building it manually would have applied it out of habit. AI doesn't have the habit. It has the request.
+
+## The skill didn't disappear — it moved
+
+You don't need to hand-write every line to ship something real anymore. But you do need to know what good looks like: basic architecture judgment, a sense for where secrets and access control belong, and which parts of a system are not safe to fully delegate without review.
+
+That's a shorter list than "learn to code from scratch." It's also a non-negotiable one if what you're shipping touches real user data.
+
+Vibe coding is a legitimate way to build. The question worth asking before every deploy isn't whether it works — it's whether anyone reviewed it with an attacker's mindset before it went live.

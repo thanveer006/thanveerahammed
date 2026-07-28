@@ -1,0 +1,27 @@
+---
+title: "AI Doesn't Lie. It Forgets."
+description: "A hallucination usually isn't the model being wrong about the world. It's the model running out of room to remember your conversation, and guessing rather than admitting it."
+date: "2026-02-10"
+tags: ["AI", "Developer Tools", "AI Engineering"]
+---
+
+Every model has a limit to how much it can hold in mind at once — a context window. Think of it as short-term memory. Once a conversation runs long enough, the earliest parts fall off the edge to make room for what's new.
+
+Here's the part that actually causes problems: when that happens, the model doesn't say "I don't remember that." It fills the gap with its best guess. Often the guess is wrong. That's what gets labeled a hallucination, and it's easy to read as the model being unreliable in general when really it just lost the thread.
+
+## What this looks like in practice
+
+Say you're a few hours into a long coding session with an AI assistant. At some point you see a note like "context getting full — compacting conversation." That means the earlier turns are being summarized to free up space. If you set an important constraint at the very start of the session — "always use async/await," "this project uses Node 20," whatever it was — that detail might be gone or flattened into something vaguer by the time it matters again.
+
+The assistant keeps working. It just isn't working from the instruction you think it still has.
+
+That's not a bug in the tool. It's the tradeoff of a finite context window, and it applies to every model, not one specific product.
+
+## What actually helps
+
+- **Start a new conversation for a new topic** rather than letting one thread carry everything from the last three unrelated tasks.
+- **Re-state constraints that matter**, especially once a session has run long — a one-line reminder costs nothing and closes the gap.
+- **Break large tasks into smaller, focused ones.** A clean, short context produces more reliable output than a long one carrying accumulated noise.
+- **Know when compaction is happening.** Most coding assistants surface it directly — that notice is useful information, not just a status update to ignore.
+
+None of this makes the model smarter. It makes you a better user of the memory it actually has, which in practice matters more than which model you're using.
