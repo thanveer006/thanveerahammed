@@ -36,7 +36,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.02 }}
-            className="mb-2 text-lg font-semibold text-foreground"
+            className="mb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
           >
             Thanveer Ahammed N
           </motion.p>
