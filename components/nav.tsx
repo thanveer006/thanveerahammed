@@ -48,7 +48,7 @@ export function Nav() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-md supports-backdrop-filter:bg-background/60">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6"
+        className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6"
       >
         <Link
           href="/"

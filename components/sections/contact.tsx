@@ -30,7 +30,7 @@ const links = [
 export function Contact() {
   return (
     <section id="contact" className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-[1400px] px-6">
         <SectionHeading
           eyebrow="Contact"
           title="Let's build something."

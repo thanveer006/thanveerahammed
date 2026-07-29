@@ -16,7 +16,7 @@ const steps = [
 export function Process() {
   return (
     <section id="process" className="border-b border-border py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-[1400px] px-6">
         <SectionHeading
           eyebrow="Development Process"
           title="From requirement to production."

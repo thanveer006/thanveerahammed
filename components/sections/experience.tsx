@@ -6,7 +6,7 @@ import { experience } from "@/lib/data/experience";
 export function Experience() {
   return (
     <section id="experience" className="border-b border-border py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-[1400px] px-6">
         <SectionHeading
           eyebrow="Experience"
           title="Where I've built."

@@ -20,7 +20,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--color-primary)_10%,transparent),transparent_45%)]" />
-      <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-6xl grid-cols-1 items-center gap-16 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-0">
+      <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-[1400px] grid-cols-1 items-center gap-16 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-0">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 8 }}

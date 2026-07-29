@@ -22,7 +22,7 @@ const repoUrl = "https://github.com/thanveer006/My-Portfolio";
 export function Footer() {
   return (
     <footer className="border-t border-border">
-      <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="mx-auto max-w-[1400px] px-6 py-10">
         <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
           {siteLinks.map((link) => (
             <Link

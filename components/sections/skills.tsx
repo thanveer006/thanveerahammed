@@ -6,7 +6,7 @@ import { skillCategories, highlightedIntegrations } from "@/lib/data/skills";
 export function Skills() {
   return (
     <section id="skills" className="border-b border-border py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-[1400px] px-6">
         <SectionHeading
           eyebrow="Skills"
           title="A stack built around shipping real systems."

@@ -57,7 +57,7 @@ const principles = [
 export function Philosophy() {
   return (
     <section id="philosophy" className="border-b border-border py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-[1400px] px-6">
         <SectionHeading
           eyebrow="How I Think"
           title="Software Engineering Philosophy"

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-20">
+    <div className="mx-auto max-w-[1400px] px-6 py-20">
       <SectionHeading
         eyebrow="All Projects"
         title="Systems in production, not tutorials."

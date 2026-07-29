@@ -9,7 +9,7 @@ import { projects } from "@/lib/data/projects";
 export function ProjectsPreview() {
   return (
     <section id="projects" className="border-b border-border py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-[1400px] px-6">
         <SectionHeading
           eyebrow="Featured Projects"
           title="Systems in production, not tutorials."
