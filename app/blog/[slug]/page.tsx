@@ -25,8 +25,14 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: `${siteUrl}/blog/${post.slug}`,
+      types: { "application/rss+xml": `${siteUrl}/rss.xml` },
+    },
     openGraph: {
       type: "article",
+      url: `${siteUrl}/blog/${post.slug}`,
+      siteName: "Thanveer Ahammed N",
       title: post.title,
       description: post.description,
       publishedTime: post.date,

@@ -29,35 +29,44 @@ export const metadata: Metadata = {
     template: "%s | Thanveer Ahammed N",
   },
   description:
-    "Software engineer building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
+    "Software engineer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
   keywords: [
+    "Thanveer Ahammed",
     "Software Engineer",
+    "Software Engineer Kerala",
+    "Software Developer Kozhikode",
     "Full Stack Developer",
-    "Next.js",
-    "TypeScript",
+    "MERN Stack Developer",
+    "Next.js Developer",
+    "TypeScript Developer",
+    "AI Automation Specialist",
+    "n8n Developer",
     "Enterprise Software",
     "Workflow Automation",
     "AI Integration",
+    "React Developer India",
   ],
   authors: [{ name: "Thanveer Ahammed N" }],
+  creator: "Thanveer Ahammed N",
   openGraph: {
     type: "website",
     url: siteUrl,
     title: "Thanveer Ahammed N | Software Engineer",
     description:
-      "Software engineer building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
+      "Software engineer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
     siteName: "Thanveer Ahammed N",
   },
   twitter: {
     card: "summary_large_image",
     title: "Thanveer Ahammed N | Software Engineer",
     description:
-      "Software engineer building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
+      "Software engineer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
   },
   icons: {
     icon: "/favicon.svg",
   },
   alternates: {
+    canonical: siteUrl,
     types: {
       "application/rss+xml": `${siteUrl}/rss.xml`,
     },
@@ -71,6 +80,25 @@ const personJsonLd = {
   url: siteUrl,
   jobTitle: "Software Engineer",
   email: "mailto:thanveerahd06@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Kozhikode",
+    addressRegion: "Kerala",
+    addressCountry: "IN",
+  },
+  worksFor: {
+    "@type": "Organization",
+    name: "DOPA Coaching",
+  },
+  knowsAbout: [
+    "Software Engineering",
+    "Full Stack Development",
+    "Next.js",
+    "TypeScript",
+    "AI Automation",
+    "Workflow Automation",
+    "n8n",
+  ],
   sameAs: [
     "https://www.linkedin.com/in/thanveer-ahammed-dev",
     "https://github.com/thanveer006",

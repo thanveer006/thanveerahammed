@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Resume",
-  description: "Resume for Thanveer Ahammed N, Software Engineer.",
+  description: "Resume for Thanveer Ahammed N, Software Engineer based in Kozhikode, Kerala, India.",
+  alternates: {
+    canonical: `${siteUrl}/resume`,
+    types: { "application/rss+xml": `${siteUrl}/rss.xml` },
+  },
 };
 
 export default function ResumePage() {

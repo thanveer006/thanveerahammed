@@ -8,7 +8,6 @@ import {
   FolderKanban,
   Wrench,
   Lightbulb,
-  GitCommitHorizontal,
   Mail,
   FileText,
   Sun,
@@ -47,7 +46,6 @@ const sections = [
   { label: "Projects", href: "/#projects", icon: FolderKanban },
   { label: "Skills", href: "/#skills", icon: Wrench },
   { label: "Philosophy", href: "/#philosophy", icon: Lightbulb },
-  { label: "Process", href: "/#process", icon: GitCommitHorizontal },
   { label: "Blog", href: "/blog", icon: FileText },
   { label: "Contact", href: "/#contact", icon: Mail },
 ];

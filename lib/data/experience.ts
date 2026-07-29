@@ -12,48 +12,50 @@ export type ExperienceEntry = {
 
 export const experience: ExperienceEntry[] = [
   {
-    role: "Software Developer",
+    role: "Software Developer (IT Executive)",
     company: "DOPA Coaching",
     start: "April 2026",
     end: "Present",
     type: "Full-time",
     impact:
-      "Designing and shipping the internal software systems DOPA Coaching runs on — enterprise HR tooling, mentor operations, event registration, and workflow automation — replacing manual, spreadsheet-driven processes with production applications used daily across the organization.",
+      "Designing and shipping the internal software systems DOPA Coaching runs on — enterprise HR tooling, mentor operations, event registration, and AI-powered workflow automation — replacing manual, spreadsheet-driven processes with production applications used daily across the organization.",
     responsibilities: [
       "Own end-to-end delivery of internal platforms: architecture, database design, API design, and deployment.",
       "Build role-based, secure systems (JWT auth, RBAC) for payroll, scheduling, and mentor management.",
+      "Integrate AI tools (ChatGPT, Gemini, Claude) into internal systems to automate repetitive operational work.",
       "Integrate third-party platforms into business workflows: HDFC SmartGateway for payments, Meta WhatsApp Business API for notifications, Cloudinary for media.",
-      "Design and automate multi-step business workflows (approvals, scheduling, reporting) to remove manual coordination.",
+      "Design and automate multi-step business workflows (approvals, scheduling, reporting) with n8n to remove manual coordination.",
     ],
     tech: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Prisma", "JWT", "RBAC", "n8n"],
   },
   {
-    role: "Freelance AI Mentor & Web Developer",
+    role: "Freelance Applied AI Mentor & Developer",
     company: "Self-Employed",
-    start: "2025",
+    start: "2026",
     end: "Present",
     type: "Freelance",
     impact:
-      "Teach applied AI and modern web development to students and working professionals, while delivering client web projects — pairing real engineering work with the ability to explain systems clearly.",
+      "Mentor individuals and teams on implementing real-world AI systems and automation workflows, while delivering client web projects — pairing hands-on engineering work with the ability to explain systems clearly.",
     responsibilities: [
-      "Run hands-on sessions on applied AI, prompt engineering, and workflow automation.",
+      "Guide learners on practical, hands-on AI implementation using n8n, APIs, and LLM integrations — not just theory.",
+      "Help clients design and build automation workflows and AI-integrated applications.",
       "Design and build client-facing web applications from requirements to deployment.",
-      "Advise learners on modern full-stack architecture and development practices.",
     ],
-    tech: ["React", "Node.js", "Prompt Engineering", "AI Automation"],
+    tech: ["React", "Node.js", "n8n", "Prompt Engineering", "AI Automation"],
   },
   {
-    role: "Freelance Graphic Designer",
-    company: "Self-Employed",
-    start: "2023",
-    end: "2025",
-    type: "Freelance",
+    role: "Full Stack Development & AI Trainee",
+    company: "HACA (Tech School)",
+    start: "April 2025",
+    end: "March 2026",
+    type: "Intensive Training",
     impact:
-      "Delivered brand identity and marketing design for clients across digital and print media — the visual and typographic foundation now carried into the interfaces I build.",
+      "Completed an intensive MERN full-stack development and applied AI program — the foundation where I learned to code and moved into applied AI, building production-level projects rather than tutorials.",
     responsibilities: [
-      "Created visual identities, brand systems, and UI mockups for client products.",
-      "Produced marketing and social media creative across digital and print channels.",
+      "Built a full-stack e-commerce platform and a real-time social app using Socket.IO.",
+      "Built a full-stack music streaming application, covering both client and server architecture.",
+      "Trained across the MERN stack (MongoDB, Express.js, React, Node.js) and API design end to end.",
     ],
-    tech: ["Brand Identity", "UI Design", "Adobe Photoshop", "Adobe Illustrator"],
+    tech: ["MongoDB", "Express.js", "React", "Node.js", "Socket.IO"],
   },
 ];

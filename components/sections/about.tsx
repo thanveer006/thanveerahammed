@@ -32,7 +32,7 @@ export function About() {
         <SectionHeading
           eyebrow="About"
           title="I build software that businesses run on."
-          description="Based in Calicut, Kerala. I work across the stack — from database schema to production deployment — with a focus on internal platforms, automation, and applied AI for organizations that need software to actually work, every day."
+          description="Based in Kozhikode, Kerala, India. I work across the stack — from database schema to production deployment — with a focus on internal platforms, workflow automation, and applied AI for organizations that need software to actually work, every day."
         />
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

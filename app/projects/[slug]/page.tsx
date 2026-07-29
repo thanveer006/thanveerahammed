@@ -8,7 +8,7 @@ import { projects } from "@/lib/data/projects";
 import { CaseStudySection } from "@/components/case-study/section";
 import { ArchitectureDiagram } from "@/components/case-study/architecture-diagram";
 import { CodeBlock } from "@/components/case-study/code-block";
-import { GalleryPlaceholder } from "@/components/case-study/gallery-placeholder";
+import { siteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -29,6 +29,17 @@ export async function generateMetadata({
   return {
     title: project.name,
     description: project.oneLiner,
+    alternates: {
+      canonical: `${siteUrl}/projects/${project.slug}`,
+      types: { "application/rss+xml": `${siteUrl}/rss.xml` },
+    },
+    openGraph: {
+      type: "article",
+      url: `${siteUrl}/projects/${project.slug}`,
+      siteName: "Thanveer Ahammed N",
+      title: project.name,
+      description: project.oneLiner,
+    },
   };
 }
 
@@ -43,8 +54,22 @@ export default async function ProjectPage({
 
   const otherProjects = projects.filter((p) => p.slug !== project.slug).slice(0, 2);
 
+  const projectJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.name,
+    description: project.oneLiner,
+    creator: { "@type": "Person", name: "Thanveer Ahammed N" },
+    url: `${siteUrl}/projects/${project.slug}`,
+    keywords: project.tech.join(", "),
+  };
+
   return (
     <div className="border-b border-border">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
       {/* Header */}
       <div className="border-b border-border">
         <div className="mx-auto max-w-3xl px-6 py-16">
@@ -101,14 +126,6 @@ export default async function ProjectPage({
 
         <CaseStudySection title="Architecture">
           <ArchitectureDiagram layers={project.architectureLayers} />
-          <ul className="mt-6 space-y-3">
-            {project.architectureNotes.map((note) => (
-              <li key={note} className="flex gap-2 text-sm text-muted-foreground">
-                <span className="mt-2 size-1 shrink-0 rounded-full bg-muted-foreground" aria-hidden />
-                <span className="text-pretty">{note}</span>
-              </li>
-            ))}
-          </ul>
         </CaseStudySection>
 
         <CaseStudySection title="Feature Breakdown">
@@ -128,14 +145,10 @@ export default async function ProjectPage({
           <CodeBlock label={project.codeSnippet.label} code={project.codeSnippet.code} />
         </CaseStudySection>
 
-        <CaseStudySection title="Challenges & Solutions">
-          <div className="space-y-4">
-            {project.challenges.map((c) => (
-              <div key={c.challenge} className="rounded-lg border border-border bg-card p-5">
-                <p className="mb-2 text-sm font-medium text-foreground">{c.challenge}</p>
-                <p className="text-sm text-muted-foreground text-pretty">{c.solution}</p>
-              </div>
-            ))}
+        <CaseStudySection title="Challenge & Solution">
+          <div className="rounded-lg border border-border bg-card p-5">
+            <p className="mb-2 text-sm font-medium text-foreground">{project.challenge.challenge}</p>
+            <p className="text-sm text-muted-foreground text-pretty">{project.challenge.solution}</p>
           </div>
         </CaseStudySection>
 
@@ -148,20 +161,6 @@ export default async function ProjectPage({
               </li>
             ))}
           </ul>
-        </CaseStudySection>
-
-        <CaseStudySection title="Lessons Learned">
-          <ul className="space-y-3">
-            {project.lessons.map((lesson) => (
-              <li key={lesson} className="text-sm text-muted-foreground text-pretty">
-                {lesson}
-              </li>
-            ))}
-          </ul>
-        </CaseStudySection>
-
-        <CaseStudySection title="Gallery">
-          <GalleryPlaceholder />
         </CaseStudySection>
       </div>
 

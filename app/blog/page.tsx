@@ -3,10 +3,15 @@ import type { Metadata } from "next";
 import { Clock, Rss } from "lucide-react";
 import { getAllPosts } from "@/lib/blog";
 import { SectionHeading } from "@/components/section-heading";
+import { siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Blog",
   description: "Notes on software engineering, system design, AI integration, and automation.",
+  alternates: {
+    canonical: `${siteUrl}/blog`,
+    types: { "application/rss+xml": `${siteUrl}/rss.xml` },
+  },
 };
 
 export default function BlogIndexPage() {
