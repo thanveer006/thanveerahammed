@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Search } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,7 +13,6 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { useCommandPalette } from "@/components/command-palette-provider";
 import { Logo } from "@/components/logo";
 
 const navLinks = [
@@ -21,13 +20,12 @@ const navLinks = [
   { href: "/#experience", label: "Experience" },
   { href: "/#projects", label: "Projects" },
   { href: "/#skills", label: "Skills" },
-  { href: "/#philosophy", label: "Philosophy" },
+  { href: "/#services", label: "Services" },
   { href: "/blog", label: "Blog" },
   { href: "/#contact", label: "Contact" },
 ];
 
 export function Nav() {
-  const { setOpen } = useCommandPalette();
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   // The mobile Sheet's own trigger is hidden past the `lg` breakpoint, so if it's left
@@ -72,28 +70,6 @@ export function Nav() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="hidden items-center gap-2 text-muted-foreground sm:inline-flex"
-            onClick={() => setOpen(true)}
-            aria-label="Open command palette"
-          >
-            <Search className="size-3.5" />
-            Search
-            <kbd className="ml-1 rounded border border-border bg-secondary px-1.5 py-0.5 font-mono text-[10px]">
-              &#8984;K
-            </kbd>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="sm:hidden"
-            onClick={() => setOpen(true)}
-            aria-label="Open command palette"
-          >
-            <Search className="size-4" />
-          </Button>
           <ThemeToggle />
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link href="/#contact">Contact Me</Link>

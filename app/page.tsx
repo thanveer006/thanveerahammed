@@ -4,7 +4,7 @@ import { ToolsMarquee } from "@/components/sections/tools-marquee";
 import { Experience } from "@/components/sections/experience";
 import { ProjectsPreview } from "@/components/sections/projects-preview";
 import { Skills } from "@/components/sections/skills";
-import { Philosophy } from "@/components/sections/philosophy";
+import { Services } from "@/components/sections/services";
 import { Stats } from "@/components/sections/stats";
 import { Contact } from "@/components/sections/contact";
 
@@ -17,7 +17,7 @@ export default function Home() {
       <Experience />
       <ProjectsPreview />
       <Skills />
-      <Philosophy />
+      <Services />
       <Stats />
       <Contact />
     </>

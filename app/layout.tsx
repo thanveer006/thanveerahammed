@@ -6,8 +6,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
-import { CommandPaletteProvider } from "@/components/command-palette-provider";
-import { getAllPosts } from "@/lib/blog";
 import { siteUrl } from "@/lib/site";
 
 const inter = Inter({
@@ -110,8 +108,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const posts = getAllPosts();
-
   return (
     <html
       lang="en"
@@ -130,19 +126,17 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider delayDuration={200}>
-            <CommandPaletteProvider posts={posts}>
-              <a
-                href="#main-content"
-                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-              >
-                Skip to content
-              </a>
-              <Nav />
-              <main id="main-content" className="flex-1">
-                {children}
-              </main>
-              <Footer />
-            </CommandPaletteProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+            >
+              Skip to content
+            </a>
+            <Nav />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />
