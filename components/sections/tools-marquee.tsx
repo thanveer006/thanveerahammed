@@ -24,7 +24,7 @@ const tools = [
 
 export function ToolsMarquee() {
   return (
-    <section aria-label="Tools and technologies I use" className="border-b border-border py-10">
+    <section aria-label="Tools and technologies I use" className="py-10">
       <p className="mx-auto mb-6 max-w-[1400px] px-6 font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground">
         Tools &amp; Technologies I Use
       </p>
