@@ -1,6 +1,15 @@
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
+import { Badge } from "@/components/ui/badge";
 import { Code2, Puzzle, Layers, Sparkles } from "lucide-react";
+
+const languages = [
+  { name: "Malayalam", level: "Native / Bilingual" },
+  { name: "English", level: "Professional working" },
+  { name: "Tamil", level: "Elementary" },
+  { name: "Arabic", level: "Elementary" },
+  { name: "Urdu", level: "Limited working" },
+];
 
 const pillars = [
   {
@@ -46,6 +55,22 @@ export function About() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.3} className="mt-10">
+          <p className="mb-4 text-sm font-medium text-muted-foreground">Languages</p>
+          <div className="flex flex-wrap gap-2">
+            {languages.map((lang) => (
+              <Badge
+                key={lang.name}
+                variant="outline"
+                className="rounded-full border-border px-3 py-1 font-normal"
+              >
+                {lang.name}
+                <span className="ml-1.5 text-muted-foreground">&middot; {lang.level}</span>
+              </Badge>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
