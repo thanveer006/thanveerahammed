@@ -11,7 +11,7 @@ const services = [
   {
     icon: Bot,
     title: "AI Workflow Automation",
-    body: "n8n pipelines, APIs, and AI agents that remove repetitive manual work — approvals, notifications, reporting — without fragile automation nobody trusts.",
+    body: "Automation pipelines, APIs, and AI agents that remove repetitive manual work — approvals, notifications, reporting — without fragile automation nobody trusts.",
   },
   {
     icon: Sparkles,

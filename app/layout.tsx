@@ -38,7 +38,6 @@ export const metadata: Metadata = {
     "Next.js Developer",
     "TypeScript Developer",
     "AI Automation Specialist",
-    "n8n Developer",
     "Enterprise Software",
     "Workflow Automation",
     "AI Integration",
@@ -95,7 +94,6 @@ const personJsonLd = {
     "TypeScript",
     "AI Automation",
     "Workflow Automation",
-    "n8n",
   ],
   sameAs: [
     "https://www.linkedin.com/in/thanveer-ahammed-dev",

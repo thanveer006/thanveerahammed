@@ -9,7 +9,7 @@ export const skillCategories: SkillCategory[] = [
   { name: "Database", skills: ["MongoDB", "Prisma", "Data Modeling"] },
   { name: "Security", skills: ["JWT", "RBAC", "Auth Design"] },
   { name: "AI", skills: ["LLM APIs", "Prompt Engineering", "Applied AI"] },
-  { name: "Automation", skills: ["n8n", "Zapier", "Workflow Automation", "WhatsApp Business API"] },
+  { name: "Automation", skills: ["Zapier", "Workflow Automation", "WhatsApp Business API"] },
   { name: "Cloud & Deployment", skills: ["Vercel", "Cloudinary", "CI/CD"] },
   { name: "Integrations", skills: ["HDFC SmartGateway", "Meta WhatsApp Business Platform", "EmailJS"] },
 ];

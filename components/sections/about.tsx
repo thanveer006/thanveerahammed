@@ -25,7 +25,7 @@ const pillars = [
   {
     icon: Sparkles,
     title: "Applied AI & Automation",
-    body: "I use LLMs and tools like n8n where they remove real work — approvals, notifications, reporting — not as a feature for its own sake.",
+    body: "I use LLMs and automation tools where they remove real work — approvals, notifications, reporting — not as a feature for its own sake.",
   },
   {
     icon: Code2,

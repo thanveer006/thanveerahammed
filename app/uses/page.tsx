@@ -17,7 +17,7 @@ const groups = [
   },
   {
     title: "AI & Automation",
-    items: ["Claude", "ChatGPT", "n8n", "Google AI Studio"],
+    items: ["Claude", "ChatGPT", "Google AI Studio"],
   },
   {
     title: "Design",

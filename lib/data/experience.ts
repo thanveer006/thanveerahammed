@@ -24,9 +24,9 @@ export const experience: ExperienceEntry[] = [
       "Build role-based, secure systems (JWT auth, RBAC) for payroll, scheduling, and mentor management.",
       "Integrate AI tools (ChatGPT, Gemini, Claude) into internal systems to automate repetitive operational work.",
       "Integrate third-party platforms into business workflows: HDFC SmartGateway for payments, Meta WhatsApp Business API for notifications, Cloudinary for media.",
-      "Design and automate multi-step business workflows (approvals, scheduling, reporting) with n8n to remove manual coordination.",
+      "Design and automate multi-step business workflows (approvals, scheduling, reporting) to remove manual coordination.",
     ],
-    tech: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Prisma", "JWT", "RBAC", "n8n"],
+    tech: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Prisma", "JWT", "RBAC"],
   },
   {
     role: "Freelance Applied AI Mentor & Developer",
@@ -37,11 +37,11 @@ export const experience: ExperienceEntry[] = [
     impact:
       "Mentor individuals and teams on implementing real-world AI systems and automation workflows, while delivering client web projects — pairing hands-on engineering work with the ability to explain systems clearly.",
     responsibilities: [
-      "Guide learners on practical, hands-on AI implementation using n8n, APIs, and LLM integrations — not just theory.",
+      "Guide learners on practical, hands-on AI implementation using APIs and LLM integrations — not just theory.",
       "Help clients design and build automation workflows and AI-integrated applications.",
       "Design and build client-facing web applications from requirements to deployment.",
     ],
-    tech: ["React", "Node.js", "n8n", "Prompt Engineering", "AI Automation"],
+    tech: ["React", "Node.js", "Prompt Engineering", "AI Automation"],
   },
   {
     role: "Full Stack Development & AI Trainee",
