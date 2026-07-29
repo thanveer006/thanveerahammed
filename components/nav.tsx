@@ -31,11 +31,11 @@ export function Nav() {
   const { setOpen } = useCommandPalette();
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  // The mobile Sheet's own trigger is hidden past the `md` breakpoint, so if it's left
+  // The mobile Sheet's own trigger is hidden past the `lg` breakpoint, so if it's left
   // open while the viewport crosses into desktop width, it must close itself — otherwise
   // its overlay blocks the whole page with no visible way to dismiss it.
   React.useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
+    const mq = window.matchMedia("(min-width: 1024px)");
     const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
       if (e.matches) setMenuOpen(false);
     };
@@ -60,7 +60,7 @@ export function Nav() {
           <span className="text-primary">.</span>
         </Link>
 
-        <div className="hidden md:flex md:items-center md:gap-6">
+        <div className="hidden lg:flex lg:items-center lg:gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -102,7 +102,7 @@ export function Nav() {
 
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu">
+              <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
