@@ -37,7 +37,7 @@ const pillars = [
 export function About() {
   return (
     <section id="about" className="border-b border-border py-24">
-      <div className="mx-auto max-w-[1400px] px-6">
+      <div className="mx-auto max-w-350 px-6">
         <SectionHeading
           eyebrow="About"
           title="I build software that businesses run on."
