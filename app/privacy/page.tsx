@@ -13,9 +13,17 @@ export default function PrivacyPage() {
 
       <div className="space-y-6 text-sm text-muted-foreground">
         <p className="text-pretty">
-          This site is a personal portfolio. It does not use tracking cookies or third-party
-          analytics.
+          This site is a personal portfolio. It does not use tracking cookies, and does not sell
+          or share visitor data with third parties beyond what&apos;s disclosed below.
         </p>
+        <div>
+          <h2 className="mb-2 text-sm font-medium text-foreground">Analytics</h2>
+          <p className="text-pretty">
+            This site uses Vercel Analytics to measure aggregate traffic (page views, referrers,
+            approximate location from IP). It&apos;s cookie-free and doesn&apos;t track individual
+            visitors across other sites.
+          </p>
+        </div>
         <div>
           <h2 className="mb-2 text-sm font-medium text-foreground">Contact form</h2>
           <p className="text-pretty">

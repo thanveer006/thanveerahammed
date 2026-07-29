@@ -17,7 +17,7 @@ const siteLinks = [
   { href: "/privacy", label: "Privacy" },
 ];
 
-const repoUrl = "https://github.com/thanveer006/My-Portfolio";
+const repoUrl = "https://github.com/thanveer006/thanveerahammed";
 
 export function Footer() {
   return (

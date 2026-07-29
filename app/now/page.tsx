@@ -18,7 +18,7 @@ export default function NowPage() {
       <div className="space-y-6 text-sm text-foreground/90">
         <p className="text-pretty">
           Building and maintaining internal software at DOPA Coaching — enterprise HR tooling,
-          mentor operations, and event platforms — as a Software Developer.
+          mentor operations, and event platforms — as a Software Developer (IT Executive).
         </p>
         <p className="text-pretty">
           Deepening applied-AI and workflow-automation work — mostly figuring out, project by
@@ -26,8 +26,8 @@ export default function NowPage() {
           deterministic functions.
         </p>
         <p className="text-pretty">
-          Migrating this portfolio from a Vite SPA to Next.js — the case studies and blog are
-          done; project screenshots and real testimonials are still on the list.
+          Keeping this portfolio current as the case studies, blog, and project list evolve —
+          project screenshots and real testimonials are still on the list.
         </p>
         <p className="text-pretty">
           Mentoring a small group of students and professionals in applied AI and modern web
