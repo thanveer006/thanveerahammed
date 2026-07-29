@@ -38,7 +38,7 @@
 
 /* Light mode (default): blue-accented, light-first system. */
 :root {
-  --background: #f7f9fc;
+  --background: #e6f0fb;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -46,17 +46,17 @@
   --popover-foreground: #0f172a;
   --primary: #2563eb;
   --primary-foreground: #f7f9fc;
-  --secondary: #eaf0fa;
+  --secondary: #d7e6f8;
   --secondary-foreground: #0f172a;
-  --muted: #eaf0fa;
+  --muted: #d7e6f8;
   --muted-foreground: #5b6b80;
   --accent: #2563eb;
   --accent-foreground: #f7f9fc;
   --success: #16a34a;
   --success-foreground: #f7f9fc;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #dde5f0;
-  --input: #dde5f0;
+  --border: #c3d9f0;
+  --input: #c3d9f0;
   --ring: #2563eb;
   --radius: 0.75rem;
 }
