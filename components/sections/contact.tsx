@@ -5,6 +5,7 @@ import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { ContactForm } from "@/components/contact-form";
+import { SnapSection } from "@/components/motion/snap-section";
 
 const links = [
   {
@@ -29,8 +30,8 @@ const links = [
 
 export function Contact() {
   return (
-    <section id="contact" className="py-24">
-      <div className="mx-auto max-w-[1400px] px-6">
+    <SnapSection id="contact">
+      <div className="mx-auto max-w-350 px-6">
         <SectionHeading
           eyebrow="Contact"
           title="Let's build something."
@@ -77,6 +78,6 @@ export function Contact() {
           </div>
         </div>
       </div>
-    </section>
+    </SnapSection>
   );
 }

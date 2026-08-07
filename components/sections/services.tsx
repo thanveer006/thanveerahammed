@@ -1,6 +1,8 @@
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { Layers, Bot, Sparkles, ShieldCheck } from "lucide-react";
+import { SnapSection } from "@/components/motion/snap-section";
+import { Tilt3D } from "@/components/motion/tilt-3d";
 
 const services = [
   {
@@ -27,8 +29,8 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="border-b border-border py-24">
-      <div className="mx-auto max-w-[1400px] px-6">
+    <SnapSection id="services" className="border-b border-border">
+      <div className="mx-auto max-w-350 px-6">
         <SectionHeading
           eyebrow="Services"
           title="What I can build for you."
@@ -38,15 +40,17 @@ export function Services() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s, i) => (
             <Reveal key={s.title} delay={i * 0.08}>
-              <div className="h-full rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40">
-                <s.icon className="mb-4 size-5 text-primary" />
-                <h3 className="mb-2 font-medium">{s.title}</h3>
-                <p className="text-sm text-muted-foreground text-pretty">{s.body}</p>
-              </div>
+              <Tilt3D>
+                <div className="h-full rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40">
+                  <s.icon className="mb-4 size-5 text-primary" />
+                  <h3 className="mb-2 font-medium">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground text-pretty">{s.body}</p>
+                </div>
+              </Tilt3D>
             </Reveal>
           ))}
         </div>
       </div>
-    </section>
+    </SnapSection>
   );
 }

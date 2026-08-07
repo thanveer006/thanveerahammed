@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { projects } from "@/lib/data/projects";
+import { Tilt3D } from "@/components/motion/tilt-3d";
 
 const allTags = Array.from(new Set(projects.flatMap((p) => p.tech))).sort();
 
@@ -75,27 +76,28 @@ export function ProjectsExplorer() {
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {filtered.map((project) => (
-            <Link
-              key={project.slug}
-              href={`/projects/${project.slug}`}
-              className="group flex flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <div className="mb-2 flex items-start justify-between gap-3">
-                <div>
-                  <p className="mb-1 font-mono text-xs text-muted-foreground">{project.category}</p>
-                  <h2 className="font-semibold text-balance">{project.name}</h2>
+            <Tilt3D key={project.slug}>
+              <Link
+                href={`/projects/${project.slug}`}
+                className="group flex h-full flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <div className="mb-2 flex items-start justify-between gap-3">
+                  <div>
+                    <p className="mb-1 font-mono text-xs text-muted-foreground">{project.category}</p>
+                    <h2 className="font-semibold text-balance">{project.name}</h2>
+                  </div>
+                  <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
                 </div>
-                <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
-              </div>
-              <p className="mb-5 text-sm text-muted-foreground text-pretty">{project.oneLiner}</p>
-              <div className="mt-auto flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <Badge key={t} variant="secondary" className="font-mono text-xs font-normal">
-                    {t}
-                  </Badge>
-                ))}
-              </div>
-            </Link>
+                <p className="mb-5 text-sm text-muted-foreground text-pretty">{project.oneLiner}</p>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  {project.tech.map((t) => (
+                    <Badge key={t} variant="secondary" className="font-mono text-xs font-normal">
+                      {t}
+                    </Badge>
+                  ))}
+                </div>
+              </Link>
+            </Tilt3D>
           ))}
         </div>
       )}

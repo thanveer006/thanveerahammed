@@ -56,7 +56,7 @@ export default function BlogIndexPage() {
                 {post.readingTime}
               </span>
             </div>
-            <h2 className="mb-2 text-lg font-semibold text-balance transition-colors group-hover:text-primary">
+            <h2 className="font-heading mb-2 text-(length:--text-h4) font-semibold text-balance transition-colors group-hover:text-primary">
               {post.title}
             </h2>
             <p className="mb-3 text-sm text-muted-foreground text-pretty">{post.description}</p>

@@ -2,6 +2,8 @@ import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
 import { Code2, Puzzle, Layers, Sparkles } from "lucide-react";
+import { SnapSection } from "@/components/motion/snap-section";
+import { Tilt3D } from "@/components/motion/tilt-3d";
 
 const languages = [
   { name: "Malayalam", level: "Native / Bilingual" },
@@ -36,7 +38,7 @@ const pillars = [
 
 export function About() {
   return (
-    <section id="about" className="border-b border-border py-24">
+    <SnapSection id="about" className="border-b border-border">
       <div className="mx-auto max-w-350 px-6">
         <SectionHeading
           eyebrow="About"
@@ -47,11 +49,13 @@ export function About() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.08}>
-              <div className="h-full rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40">
-                <p.icon className="mb-4 size-5 text-primary" />
-                <h3 className="mb-2 font-medium">{p.title}</h3>
-                <p className="text-sm text-muted-foreground text-pretty">{p.body}</p>
-              </div>
+              <Tilt3D>
+                <div className="h-full rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40">
+                  <p.icon className="mb-4 size-5 text-primary" />
+                  <h3 className="mb-2 font-medium">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground text-pretty">{p.body}</p>
+                </div>
+              </Tilt3D>
             </Reveal>
           ))}
         </div>
@@ -72,6 +76,6 @@ export function About() {
           </div>
         </Reveal>
       </div>
-    </section>
+    </SnapSection>
   );
 }

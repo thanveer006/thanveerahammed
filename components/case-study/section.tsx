@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Reveal } from "@/components/reveal";
 
 export function CaseStudySection({
   title,
@@ -9,8 +10,12 @@ export function CaseStudySection({
 }) {
   return (
     <section className="border-t border-border py-12 first:border-t-0 first:pt-0">
-      <h2 className="mb-6 text-xl font-semibold tracking-tight">{title}</h2>
-      {children}
+      <Reveal>
+        <h2 className="font-heading mb-6 text-(length:--text-h3) font-semibold tracking-tight">
+          {title}
+        </h2>
+        {children}
+      </Reveal>
     </section>
   );
 }

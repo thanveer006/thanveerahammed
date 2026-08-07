@@ -4,6 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Download, Activity, GitBranch, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HeroCanvas } from "@/components/three/hero-canvas";
+import { ParallaxLayer } from "@/components/motion/parallax-layer";
+import { Tilt3D } from "@/components/motion/tilt-3d";
+import { SnapSection } from "@/components/motion/snap-section";
 
 const trustItems = [
   "Production Systems Shipped",
@@ -11,16 +15,11 @@ const trustItems = [
   "Based in Kerala, India",
 ];
 
-const float = (delay: number) => ({
-  animate: { y: [0, -10, 0] },
-  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const, delay },
-});
-
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-border">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--color-primary)_10%,transparent),transparent_45%)]" />
-      <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-[1400px] grid-cols-1 items-center gap-16 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-0">
+    <SnapSection id="hero" bleed className="overflow-hidden border-b border-border">
+      <HeroCanvas className="pointer-events-none absolute inset-0 -z-10" />
+      <div className="mx-auto grid min-h-[calc(100svh-var(--nav-height))] max-w-350 grid-cols-1 items-center gap-16 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-0">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 8 }}
@@ -41,15 +40,17 @@ export function Hero() {
             Thanveer Ahammed N
           </motion.p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
-          >
-            Software Engineer building{" "}
-            <span className="text-primary">production-grade software</span> for real businesses.
-          </motion.h1>
+          <Tilt3D>
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              className="font-heading text-(length:--text-display) leading-[1.05] font-semibold tracking-tight text-balance"
+            >
+              Software Engineer building{" "}
+              <span className="text-primary">production-grade software</span> for real businesses.
+            </motion.h1>
+          </Tilt3D>
 
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -101,65 +102,71 @@ export function Hero() {
         </div>
 
         <div className="relative hidden h-105 lg:block" aria-hidden>
-          <motion.div
-            {...float(0)}
-            className="absolute left-0 top-6 w-64 rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm"
+          <ParallaxLayer
+            className="absolute left-0 top-6 w-64"
+            yRange={[24, -60]}
           >
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-xs font-medium text-muted-foreground">Deployment</span>
-              <span className="flex items-center gap-1 rounded-full bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
-                Live
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <GitBranch className="size-4 text-primary" />
-              <span className="font-mono text-sm">main @ a1c93f2</span>
-            </div>
-            <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-              <div className="h-full w-full rounded-full bg-primary" />
-            </div>
-          </motion.div>
-
-          <motion.div
-            {...float(1.2)}
-            className="absolute right-2 top-40 w-60 rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm"
-          >
-            <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-              <ShieldCheck className="size-4 text-primary" />
-              Access Control
-            </div>
-            <div className="space-y-2 font-mono text-xs">
-              <div className="flex justify-between rounded-md bg-secondary px-2 py-1.5">
-                <span>role: admin</span>
-                <span className="text-success">allow</span>
+            <div className="rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-xs font-medium text-muted-foreground">Deployment</span>
+                <span className="flex items-center gap-1 rounded-full bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
+                  Live
+                </span>
               </div>
-              <div className="flex justify-between rounded-md bg-secondary px-2 py-1.5">
-                <span>role: mentor</span>
-                <span className="text-success">allow</span>
+              <div className="flex items-center gap-2">
+                <GitBranch className="size-4 text-primary" />
+                <span className="font-mono text-sm">main @ a1c93f2</span>
+              </div>
+              <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                <div className="h-full w-full rounded-full bg-primary" />
               </div>
             </div>
-          </motion.div>
+          </ParallaxLayer>
 
-          <motion.div
-            {...float(0.6)}
-            className="absolute bottom-4 left-10 w-56 rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm"
+          <ParallaxLayer
+            className="absolute right-2 top-40 w-60"
+            yRange={[-20, 40]}
           >
-            <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-              <Activity className="size-4 text-primary" />
-              Uptime
+            <div className="rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm">
+              <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
+                <ShieldCheck className="size-4 text-primary" />
+                Access Control
+              </div>
+              <div className="space-y-2 font-mono text-xs">
+                <div className="flex justify-between rounded-md bg-secondary px-2 py-1.5">
+                  <span>role: admin</span>
+                  <span className="text-success">allow</span>
+                </div>
+                <div className="flex justify-between rounded-md bg-secondary px-2 py-1.5">
+                  <span>role: mentor</span>
+                  <span className="text-success">allow</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-end gap-1">
-              {[40, 65, 50, 80, 60, 90, 75].map((h, i) => (
-                <div
-                  key={i}
-                  className="w-3 rounded-sm bg-primary/70"
-                  style={{ height: `${h * 0.5}px` }}
-                />
-              ))}
+          </ParallaxLayer>
+
+          <ParallaxLayer
+            className="absolute bottom-4 left-10 w-56"
+            yRange={[40, -30]}
+          >
+            <div className="rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm">
+              <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
+                <Activity className="size-4 text-primary" />
+                Uptime
+              </div>
+              <div className="flex items-end gap-1">
+                {[40, 65, 50, 80, 60, 90, 75].map((h, i) => (
+                  <div
+                    key={i}
+                    className="w-3 rounded-sm bg-primary/70"
+                    style={{ height: `${h * 0.5}px` }}
+                  />
+                ))}
+              </div>
             </div>
-          </motion.div>
+          </ParallaxLayer>
         </div>
       </div>
-    </section>
+    </SnapSection>
   );
 }

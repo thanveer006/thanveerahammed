@@ -2,11 +2,13 @@ import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
 import { experience } from "@/lib/data/experience";
+import { SnapSection } from "@/components/motion/snap-section";
+import { ParallaxLayer } from "@/components/motion/parallax-layer";
 
 export function Experience() {
   return (
-    <section id="experience" className="border-b border-border py-24">
-      <div className="mx-auto max-w-[1400px] px-6">
+    <SnapSection id="experience" className="border-b border-border">
+      <div className="mx-auto max-w-350 px-6">
         <SectionHeading
           eyebrow="Experience"
           title="Where I've built."
@@ -14,7 +16,12 @@ export function Experience() {
         />
 
         <div className="relative space-y-8 sm:pl-10">
-          <div className="absolute top-2 bottom-2 left-4 hidden w-px bg-border sm:block" aria-hidden />
+          <ParallaxLayer
+            className="absolute top-2 bottom-2 left-4 hidden w-px sm:block"
+            yRange={[-24, 24]}
+          >
+            <div className="h-full w-px bg-border" aria-hidden />
+          </ParallaxLayer>
           {experience.map((entry, i) => (
             <Reveal key={entry.role + entry.company} delay={i * 0.08} className="relative">
               <span
@@ -57,6 +64,6 @@ export function Experience() {
           ))}
         </div>
       </div>
-    </section>
+    </SnapSection>
   );
 }

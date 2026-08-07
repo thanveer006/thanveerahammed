@@ -9,7 +9,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
-  --font-heading: var(--font-inter);
+  --font-heading: var(--font-space-grotesk);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-ring: var(--ring);
@@ -18,6 +18,8 @@
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-foreground: var(--accent-2-foreground);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -34,6 +36,13 @@
   --radius-xl: calc(var(--radius) * 1.4);
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 3);
+
+  --text-display: clamp(2.75rem, 2rem + 3.2vw, 5.5rem);
+  --text-h1: clamp(2.25rem, 1.8rem + 2vw, 3.75rem);
+  --text-h2: clamp(1.75rem, 1.5rem + 1.1vw, 2.5rem);
+  --text-h3: clamp(1.375rem, 1.25rem + 0.5vw, 1.75rem);
+  --text-h4: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);
 }
 
 /* Light mode (default): blue-accented, light-first system. */
@@ -52,6 +61,8 @@
   --muted-foreground: #5b6b80;
   --accent: #2563eb;
   --accent-foreground: #f7f9fc;
+  --accent-2: #7c3aed;
+  --accent-2-foreground: #f7f9fc;
   --success: #16a34a;
   --success-foreground: #f7f9fc;
   --destructive: oklch(0.577 0.245 27.325);
@@ -59,6 +70,22 @@
   --input: #c3d9f0;
   --ring: #2563eb;
   --radius: 0.75rem;
+
+  --gradient-hero: radial-gradient(
+      120% 100% at 15% 0%,
+      color-mix(in oklab, var(--accent-2) 18%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      100% 90% at 85% 15%,
+      color-mix(in oklab, var(--primary) 20%, transparent) 0%,
+      transparent 60%
+    );
+  --gradient-edge-glow: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 35%, transparent),
+    color-mix(in oklab, var(--accent-2) 35%, transparent)
+  );
 }
 
 /* Dark mode: same blue accent on a near-black, blue-tinted surface. */
@@ -77,12 +104,37 @@
   --muted-foreground: #94a3b8;
   --accent: #3b82f6;
   --accent-foreground: #070b14;
+  --accent-2: #a78bfa;
+  --accent-2-foreground: #070b14;
   --success: #22c55e;
   --success-foreground: #070b14;
   --destructive: oklch(0.704 0.191 22.216);
   --border: #1f2937;
   --input: #1f2937;
   --ring: #3b82f6;
+
+  --gradient-hero: radial-gradient(
+      120% 100% at 15% 0%,
+      color-mix(in oklab, var(--accent-2) 22%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      100% 90% at 85% 15%,
+      color-mix(in oklab, var(--primary) 26%, transparent) 0%,
+      transparent 60%
+    );
+  --gradient-edge-glow: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 45%, transparent),
+    color-mix(in oklab, var(--accent-2) 45%, transparent)
+  );
+}
+
+/* Motion/3D tokens shared by both themes. Only tokens with a real consumer live
+   here — see components/motion/tilt-3d.tsx for --perspective-hero. */
+:root {
+  --nav-height: 4rem;
+  --perspective-hero: 1400px;
 }
 
 @keyframes marquee {
@@ -118,4 +170,12 @@
   html {
     @apply font-sans;
   }
+}
+
+.bg-gradient-hero {
+  background-image: var(--gradient-hero);
+}
+
+.bg-edge-glow {
+  background-image: var(--gradient-edge-glow);
 }

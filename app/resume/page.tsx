@@ -20,7 +20,9 @@ export default function ResumePage() {
           <p className="mb-2 font-mono text-xs font-medium uppercase tracking-widest text-primary">
             Resume
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight">Thanveer Ahammed N</h1>
+          <h1 className="font-heading text-(length:--text-h1) leading-[1.1] font-semibold tracking-tight">
+            Thanveer Ahammed N
+          </h1>
         </div>
         <Button asChild size="lg">
           <a href="/resume.pdf" download="Thanveer_Ahammed_Resume.pdf">

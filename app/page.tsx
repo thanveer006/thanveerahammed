@@ -7,10 +7,11 @@ import { Skills } from "@/components/sections/skills";
 import { Services } from "@/components/sections/services";
 import { Stats } from "@/components/sections/stats";
 import { Contact } from "@/components/sections/contact";
+import { SnapContainer } from "@/components/motion/snap-container";
 
 export default function Home() {
   return (
-    <>
+    <SnapContainer>
       <Hero />
       <ToolsMarquee />
       <About />
@@ -20,6 +21,6 @@ export default function Home() {
       <Services />
       <Stats />
       <Contact />
-    </>
+    </SnapContainer>
   );
 }

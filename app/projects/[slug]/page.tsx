@@ -83,7 +83,7 @@ export default async function ProjectPage({
           <p className="mb-3 font-mono text-xs font-medium uppercase tracking-widest text-primary">
             {project.category}
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+          <h1 className="font-heading text-(length:--text-h1) leading-[1.1] font-semibold tracking-tight text-balance">
             {project.name}
           </h1>
           <p className="mt-4 text-lg text-muted-foreground text-pretty">{project.oneLiner}</p>
