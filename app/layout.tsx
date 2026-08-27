@@ -29,15 +29,15 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Thanveer Ahammed N | Software Engineer",
+    default: "Thanveer Ahammed N | Software Developer",
     template: "%s | Thanveer Ahammed N",
   },
   description:
-    "Software engineer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
+    "Software developer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
   keywords: [
     "Thanveer Ahammed",
-    "Software Engineer",
-    "Software Engineer Kerala",
+    "Software Developer",
+    "Software Developer Kerala",
     "Software Developer Kozhikode",
     "Full Stack Developer",
     "MERN Stack Developer",
@@ -54,16 +54,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "Thanveer Ahammed N | Software Engineer",
+    title: "Thanveer Ahammed N | Software Developer",
     description:
-      "Software engineer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
+      "Software developer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
     siteName: "Thanveer Ahammed N",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thanveer Ahammed N | Software Engineer",
+    title: "Thanveer Ahammed N | Software Developer",
     description:
-      "Software engineer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
+      "Software developer in Kozhikode, Kerala, India building production-grade web applications, enterprise systems, workflow automation, and AI-powered products for real businesses.",
   },
   icons: {
     icon: "/favicon.svg",
@@ -81,7 +81,7 @@ const personJsonLd = {
   "@type": "Person",
   name: "Thanveer Ahammed N",
   url: siteUrl,
-  jobTitle: "Software Engineer",
+  jobTitle: "Software Developer",
   email: "mailto:thanveerahd06@gmail.com",
   address: {
     "@type": "PostalAddress",

@@ -39,5 +39,5 @@ npm run build
 - **Phase 3:** MDX blog, command palette (⌘K), search, resume/uses/now pages, testimonials content, sitemap/robots/structured data.
 
 ## Author
-**Thanveer Ahammed N** — Software Engineer
+**Thanveer Ahammed N** — Software Developer
 [GitHub](https://github.com/thanveer006) | [LinkedIn](https://www.linkedin.com/in/thanveer-ahammed-dev)

@@ -47,7 +47,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.05 }}
               className="font-heading text-(length:--text-display) leading-[1.05] font-semibold tracking-tight text-balance"
             >
-              Software Engineer building{" "}
+              Software Developer building{" "}
               <span className="text-primary">production-grade software</span> for real businesses.
             </motion.h1>
           </Tilt3D>

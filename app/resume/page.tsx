@@ -5,7 +5,7 @@ import { siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Resume",
-  description: "Resume for Thanveer Ahammed N, Software Engineer based in Kozhikode, Kerala, India.",
+  description: "Resume for Thanveer Ahammed N, Software Developer based in Kozhikode, Kerala, India.",
   alternates: {
     canonical: `${siteUrl}/resume`,
     types: { "application/rss+xml": `${siteUrl}/rss.xml` },

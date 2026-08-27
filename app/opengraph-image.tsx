@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Thanveer Ahammed N — Software Engineer";
+export const alt = "Thanveer Ahammed N — Software Developer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -55,7 +55,7 @@ export default async function Image() {
             maxWidth: 950,
           }}
         >
-          Software Engineer building production-grade software.
+          Software Developer building production-grade software.
         </div>
         <div style={{ display: "flex", color: "#3b82f6", fontSize: 28, marginTop: 32 }}>
           thanveerahammed.in
