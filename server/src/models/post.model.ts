@@ -2,7 +2,7 @@ import { Schema, model, InferSchemaType } from "mongoose";
 
 const postSchema = new Schema(
   {
-    slug: { type: String, required: true, unique: true, index: true },
+    slug: { type: String, required: true, unique: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: String, required: true },

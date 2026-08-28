@@ -6,11 +6,29 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 
-/** Resets scroll on route change (not for in-page hash navigation). */
-function ScrollToTop() {
+/**
+ * Route-change scroll behaviour. With a hash, scroll to that element once it
+ * exists (the target section may mount a frame or two after navigation);
+ * otherwise reset to the top. In-page hash clicks on the homepage are handled
+ * separately in Nav (smooth-scroll), so this only fires on real navigations.
+ */
+function ScrollManager() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
-    if (hash) return;
+    if (hash) {
+      const id = decodeURIComponent(hash.slice(1));
+      let tries = 0;
+      const tryScroll = () => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ block: "start" });
+        } else if (tries++ < 10) {
+          requestAnimationFrame(tryScroll);
+        }
+      };
+      requestAnimationFrame(tryScroll);
+      return;
+    }
     window.scrollTo(0, 0);
   }, [pathname, hash]);
   return null;
@@ -20,7 +38,7 @@ export function Layout() {
   return (
     <ThemeProvider>
       <TooltipProvider delayDuration={200}>
-        <ScrollToTop />
+        <ScrollManager />
         <div className="min-h-full flex flex-col bg-background text-foreground">
           <a
             href="#main-content"

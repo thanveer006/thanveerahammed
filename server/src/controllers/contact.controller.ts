@@ -3,11 +3,13 @@ import { z } from "zod";
 import { Message } from "../models/message.model.js";
 import { sendContactEmail } from "../services/email.service.js";
 
+const requiredField = { required_error: "Please fill in every field." };
+
 export const contactSchema = z.object({
-  name: z.string().trim().min(1, "Please fill in every field.").max(200),
-  email: z.string().trim().min(1, "Please fill in every field.").max(320),
+  name: z.string(requiredField).trim().min(1, "Please fill in every field.").max(200),
+  email: z.string(requiredField).trim().min(1, "Please fill in every field.").max(320),
   message: z
-    .string()
+    .string(requiredField)
     .trim()
     .min(1, "Please fill in every field.")
     .max(5000, "Message is too long."),

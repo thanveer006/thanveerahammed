@@ -14,19 +14,24 @@ const isExternal = (href: string) =>
 /**
  * Drop-in replacement for `next/link` used across ported components: keeps the
  * `href` prop, routes internal paths through React Router, and renders external
- * / asset / feed URLs as a plain anchor.
+ * / asset / feed URLs as a plain anchor. Forwards refs so it composes with Radix
+ * `asChild` (Button, SheetClose, …).
  */
-export function Link({ href, children, ...rest }: LinkProps) {
-  if (isExternal(href) || rest.target === "_blank") {
+export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
+  ({ href, children, ...rest }, ref) => {
+    if (isExternal(href) || rest.target === "_blank") {
+      return (
+        <a ref={ref} href={href} {...rest}>
+          {children}
+        </a>
+      );
+    }
     return (
-      <a href={href} {...rest}>
+      <RouterLink ref={ref} to={href} {...rest}>
         {children}
-      </a>
+      </RouterLink>
     );
   }
-  return (
-    <RouterLink to={href} {...rest}>
-      {children}
-    </RouterLink>
-  );
-}
+);
+
+Link.displayName = "Link";

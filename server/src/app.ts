@@ -11,13 +11,17 @@ export function createApp() {
 
   app.disable("x-powered-by");
   app.set("trust proxy", 1);
-  app.use(helmet());
+  // This API is meant to be read from a different origin (the static client), so
+  // don't let helmet's default `Cross-Origin-Resource-Policy: same-origin` get in
+  // the way — CORS is what gates access here.
+  app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
   app.use(
     cors({
       origin(origin, callback) {
         // Allow non-browser clients (curl, server-to-server, SSG build) with no Origin.
         if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-        callback(new Error(`Origin ${origin} not allowed by CORS`));
+        // Not an error: just respond without CORS headers so the browser blocks it.
+        callback(null, false);
       },
     })
   );

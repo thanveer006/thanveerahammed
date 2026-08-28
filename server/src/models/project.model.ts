@@ -26,7 +26,7 @@ const codeSnippetSchema = new Schema(
 
 const projectSchema = new Schema(
   {
-    slug: { type: String, required: true, unique: true, index: true },
+    slug: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     category: { type: String, required: true },
     oneLiner: { type: String, required: true },
