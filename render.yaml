@@ -14,9 +14,12 @@ services:
     # the Render dashboard (Settings → Branch). Switch it back to main after merge.
     branch: main
     # --include=dev is required: NODE_ENV=production below would otherwise make
-    # `npm ci` skip typescript/tsx, which the build and the seed script need.
+    # `npm ci` skip typescript/tsx, which the build needs.
     buildCommand: npm ci --include=dev && npm run build --workspace server
     startCommand: npm run start --workspace server
+    # The server seeds itself from bundled data on first boot against an empty
+    # database (see seedIfEmpty). To re-sync content after edits, run
+    # `npm run seed --workspace server` in the Render Shell.
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
