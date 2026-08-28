@@ -16,6 +16,9 @@
     "seed": "npm run seed --workspace server",
     "lint": "npm run lint --workspace client && npm run lint --workspace server"
   },
+  "engines": {
+    "node": ">=20 <23"
+  },
   "devDependencies": {
     "concurrently": "^9.1.0"
   },

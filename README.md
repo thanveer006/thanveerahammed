@@ -126,17 +126,35 @@ fall back to client-side rendering.
 | --- | --- |
 | `VITE_API_URL` | API origin for production builds; unset in dev (Vite proxy) |
 
-## Deployment
+## Deployment (Render API + Vercel client)
 
-The two apps deploy independently:
+Deploy in this order — the client's build snapshots the API.
 
-- **client** — static host (Vercel, Netlify, Cloudflare Pages). Build with
-  `VITE_API_URL` set. Add an SPA fallback to `index.html` for unmatched routes
-  (the 404 page), and route `/rss.xml`, `/sitemap.xml`, `/robots.txt` to the API
-  (proxy or redirect) if you want them on the apex domain.
-- **server** — any Node host (Render, Railway, Fly, a VM). Set the env vars, run
-  `npm run build --workspace server` then `npm start --workspace server`. Run
-  `npm run seed` once against the production database.
+**1. API → Render** (`render.yaml` blueprint at the repo root)
+
+- Render dashboard → New → Blueprint → pick this repo → apply.
+- Set the `sync: false` vars: `MONGODB_URI` (must include a db name and allow
+  `0.0.0.0/0` in the cluster's Network Access), optionally `RESEND_API_KEY` /
+  `CONTACT_FROM_EMAIL`.
+- After the first deploy, seed the database once — Render Shell:
+  `npm run seed --workspace server`.
+- Note the service URL (e.g. `https://thanveerahammed-api.onrender.com`). If it
+  differs from that name, update it in `client/vercel.json` (3 rewrites) and set
+  it as `VITE_API_URL` on Vercel.
+
+**2. Client → Vercel** (`client/vercel.json`)
+
+- Vercel project → Settings → General → **Root Directory = `client`**,
+  Framework Preset = **Other** (config lives in `vercel.json`).
+- Settings → Environment Variables → `VITE_API_URL` = the Render URL.
+- Redeploy. `vercel.json` handles clean URLs and proxies `/rss.xml`,
+  `/sitemap.xml`, `/robots.txt` to the API so they stay on the apex domain.
+
+**3. Domain** — point `thanveerahammed.in` at the Vercel project (Vercel →
+Domains). The API keeps its `onrender.com` URL.
+
+Free Render web services sleep after ~15 min idle (~50 s cold start); prerendered
+pages are unaffected, only live revalidation and the contact form wait.
 
 ## Author
 

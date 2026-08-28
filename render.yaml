@@ -1,0 +1,35 @@
+# Render Blueprint for the API (server/). Create it from the Render dashboard:
+# New → Blueprint → pick this repo. Fill in the values marked `sync: false`.
+#
+# Free web services sleep after ~15 min idle and cold-start in ~50s. Pages still
+# render instantly from the build-time snapshot; only live revalidation and the
+# contact form wait on a cold start.
+services:
+  - type: web
+    name: thanveerahammed-api
+    runtime: node
+    region: singapore
+    plan: free
+    branch: main
+    buildCommand: npm ci && npm run build --workspace server
+    startCommand: npm run start --workspace server
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Your MongoDB connection string, including a database name in the path,
+      # e.g. mongodb+srv://user:pass@cluster.xxxx.mongodb.net/portfolio?retryWrites=true&w=majority
+      # The cluster's Network Access must allow 0.0.0.0/0 (Render free has no static egress IP).
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_URL
+        value: https://thanveerahammed.in,https://www.thanveerahammed.in
+      - key: PUBLIC_SITE_URL
+        value: https://thanveerahammed.in
+      # Optional — leave blank to disable email (submissions are still stored in Mongo).
+      - key: RESEND_API_KEY
+        sync: false
+      - key: CONTACT_TO_EMAIL
+        value: thanveerahd06@gmail.com
+      - key: CONTACT_FROM_EMAIL
+        sync: false
