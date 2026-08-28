@@ -9,6 +9,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
+import readingTime from "reading-time";
 import { connectDB, disconnectDB } from "../src/config/db.js";
 import { Project } from "../src/models/project.model.js";
 import { Experience } from "../src/models/experience.model.js";
@@ -29,13 +30,15 @@ function loadPosts() {
       const slug = file.replace(/\.mdx?$/, "");
       const raw = readFileSync(join(BLOG_DIR, file), "utf8");
       const { data, content } = matter(raw);
+      const body = content.trim();
       return {
         slug,
         title: String(data.title),
         description: String(data.description),
         date: String(data.date),
         tags: (data.tags as string[] | undefined) ?? [],
-        content: content.trim(),
+        readingTime: readingTime(body).text,
+        content: body,
       };
     });
 }

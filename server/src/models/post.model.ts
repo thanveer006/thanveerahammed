@@ -7,6 +7,8 @@ const postSchema = new Schema(
     description: { type: String, required: true },
     date: { type: String, required: true },
     tags: { type: [String], default: [] },
+    /** Human-readable estimate ("3 min read"), computed once at seed time. */
+    readingTime: { type: String, required: true },
     /** Raw markdown body (rendered on the client with react-markdown). */
     content: { type: String, required: true },
   },

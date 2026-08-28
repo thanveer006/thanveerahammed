@@ -3,8 +3,6 @@
  * into the DTOs the client consumes. Keeps Mongo internals (`_id`, `__v`,
  * timestamps, `order`) out of the wire format.
  */
-import { toPostMeta } from "../services/content.service.js";
-
 type AnyDoc = Record<string, unknown>;
 
 export function serializeProject(p: AnyDoc) {
@@ -56,7 +54,14 @@ export function serializeSkillCategory(c: AnyDoc) {
 }
 
 export function serializePostMeta(p: AnyDoc) {
-  return toPostMeta(p as never, p.content as string);
+  return {
+    slug: p.slug,
+    title: p.title,
+    description: p.description,
+    date: p.date,
+    tags: p.tags ?? [],
+    readingTime: p.readingTime,
+  };
 }
 
 export function serializePost(p: AnyDoc) {

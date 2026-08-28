@@ -38,15 +38,29 @@ export async function submitContact(
       .json({ status: "error", message: "Please enter a valid email address." });
   }
 
-  const doc = await Message.create({
-    name,
+  const result = await sendContactEmail({ name, email, message });
+
+  // Persist the submission, de-duplicating retries: if the same person resends
+  // the same message within 10 minutes (e.g. after an "email not configured"
+  // error), update that row instead of inserting a new one.
+  const since = new Date(Date.now() - 10 * 60 * 1000);
+  const existing = await Message.findOne({
     email,
     message,
-    userAgent: req.get("user-agent"),
-    ip: req.ip,
+    createdAt: { $gte: since },
   });
-
-  const result = await sendContactEmail({ name, email, message });
+  if (existing) {
+    await Message.findByIdAndUpdate(existing._id, { emailed: result.ok });
+  } else {
+    await Message.create({
+      name,
+      email,
+      message,
+      emailed: result.ok,
+      userAgent: req.get("user-agent"),
+      ip: req.ip,
+    });
+  }
 
   if (!result.ok) {
     if (result.reason === "unconfigured") {
@@ -62,6 +76,5 @@ export async function submitContact(
     });
   }
 
-  await Message.findByIdAndUpdate(doc._id, { emailed: true });
   res.json({ status: "success" });
 }

@@ -41,7 +41,14 @@ async function main() {
       get("/api/experience"),
       get("/api/skills"),
     ]);
-    const fullPosts = await Promise.all(posts.map((p) => get(`/api/posts/${p.slug}`)));
+
+    // A single flaky post detail must not blank the whole snapshot — keep the
+    // ones that resolved; the rest fall back to client-side rendering.
+    const settled = await Promise.allSettled(posts.map((p) => get(`/api/posts/${p.slug}`)));
+    const fullPosts = settled
+      .filter((r) => r.status === "fulfilled")
+      .map((r) => r.value);
+    const failed = settled.length - fullPosts.length;
 
     snapshot = { projects, posts, fullPosts, experience, skills };
     routes = [
@@ -49,8 +56,9 @@ async function main() {
       ...posts.map((p) => `/blog/${p.slug}`),
     ];
     console.log(
-      `snapshot: ${projects.length} projects, ${posts.length} posts, ` +
-        `${experience.length} experience, ${skills.categories.length} skill groups`
+      `snapshot: ${projects.length} projects, ${posts.length} posts` +
+        (failed ? ` (${failed} post bodies failed)` : "") +
+        `, ${experience.length} experience, ${skills.categories.length} skill groups`
     );
   } catch (err) {
     console.warn(`snapshot: API unreachable at ${base} (${err.message}). Writing empty stub.`);
