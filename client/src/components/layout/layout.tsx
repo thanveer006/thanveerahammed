@@ -44,8 +44,13 @@ function PageTransition() {
 
   if (reducedMotion) return <Outlet />;
 
+  // popLayout (not "wait"): the incoming route mounts immediately, in normal
+  // flow, while the outgoing one is popped to absolute positioning and fades
+  // out on top of it. That keeps navigation feeling instant — no blank gap
+  // while the old page's exit finishes, and ScrollManager's hash-scroll can
+  // find the new page's elements right away instead of racing the transition.
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={pathname}
         initial={{ opacity: 0, y: 12 }}
