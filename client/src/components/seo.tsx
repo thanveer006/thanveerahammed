@@ -1,15 +1,23 @@
 import { Head } from "vite-react-ssg";
-import { defaultDescription, defaultTitle, siteName, siteUrl } from "@/lib/site";
+import {
+  defaultDescription,
+  defaultKeywords,
+  defaultTitle,
+  siteName,
+  siteUrl,
+} from "@/lib/site";
 
 type SeoProps = {
   /** Page title without the site suffix. Omit on the homepage for the default. */
   title?: string;
   description?: string;
+  /** Comma-separated <meta name="keywords">. Defaults to the site-wide list. */
+  keywords?: string;
   /** Canonical path beginning with "/", e.g. "/blog". */
   path?: string;
   type?: "website" | "article";
   publishedTime?: string;
-  jsonLd?: Record<string, unknown>;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   /** Set on pages with no real URL of their own (e.g. the 404 catch-all) to keep
    * them out of search results instead of emitting a misleading canonical link. */
   noIndex?: boolean;
@@ -22,6 +30,7 @@ type SeoProps = {
 export function Seo({
   title,
   description = defaultDescription,
+  keywords = defaultKeywords,
   path = "",
   type = "website",
   publishedTime,
@@ -36,6 +45,8 @@ export function Seo({
     <Head>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
+      {keywords ? <meta name="keywords" content={keywords} /> : null}
+      <meta name="author" content={siteName} />
       {noIndex ? (
         <meta name="robots" content="noindex, nofollow" />
       ) : (
