@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
+import { EASE_OUT_EXPO } from "@/components/motion/easing";
 
 /**
  * Route-change scroll behaviour. With a hash, scroll to that element once it
@@ -56,7 +57,7 @@ function PageTransition() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.3, ease: EASE_OUT_EXPO }}
       >
         <Outlet />
       </motion.div>

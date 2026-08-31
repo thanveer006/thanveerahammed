@@ -4,6 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/theme-provider";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
+import { EASE_OUT_EXPO } from "@/components/motion/easing";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -33,7 +34,7 @@ export function ThemeToggle() {
           initial={reducedMotion ? false : { rotate: -90, opacity: 0, scale: 0.6 }}
           animate={{ rotate: 0, opacity: 1, scale: 1 }}
           exit={reducedMotion ? undefined : { rotate: 90, opacity: 0, scale: 0.6 }}
-          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.25, ease: EASE_OUT_EXPO }}
         >
           {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
         </motion.span>

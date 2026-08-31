@@ -1,5 +1,6 @@
 import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
+import { EASE_OUT_EXPO } from "@/components/motion/easing";
 
 const variants: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -22,7 +23,7 @@ export function Reveal({
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={variants}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay, ease: EASE_OUT_EXPO }}
     >
       {children}
     </motion.div>

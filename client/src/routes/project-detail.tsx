@@ -18,7 +18,7 @@ export function Component() {
   if (!project) {
     return (
       <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-6 py-20 text-center">
-        <Seo title="Project not found" path={`/projects/${slug}`} />
+        <Seo title="Project not found" path={`/projects/${slug}`} noIndex />
         <p className="font-mono text-sm text-primary">{loading ? "Loading…" : "404"}</p>
         {!loading && (
           <>

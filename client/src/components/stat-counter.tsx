@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView, animate } from "framer-motion";
+import { EASE_OUT_EXPO } from "@/components/motion/easing";
 
 export function StatCounter({
   value,
@@ -18,7 +19,7 @@ export function StatCounter({
     if (!inView) return;
     const controls = animate(0, value, {
       duration: 1.4,
-      ease: [0.22, 1, 0.36, 1],
+      ease: EASE_OUT_EXPO,
       onUpdate: (v) => setDisplay(Math.round(v)),
     });
     return () => controls.stop();

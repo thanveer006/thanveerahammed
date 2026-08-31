@@ -11,7 +11,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
         rx="2"
         fill="currentColor"
         opacity="0.45"
-        className="origin-bottom transition-transform duration-300 ease-out motion-safe:group-hover:scale-y-90"
+        className="origin-bottom [transform-box:fill-box] transition-transform duration-300 ease-out motion-safe:group-hover:scale-y-90"
       />
       <rect
         x="13"
@@ -21,7 +21,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
         rx="2"
         fill="currentColor"
         opacity="0.75"
-        className="origin-bottom transition-transform duration-300 ease-out motion-safe:group-hover:scale-y-110"
+        className="origin-bottom [transform-box:fill-box] transition-transform duration-300 ease-out motion-safe:group-hover:scale-y-110"
       />
       <rect
         x="22"
@@ -30,7 +30,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
         height="24"
         rx="2"
         fill="currentColor"
-        className="origin-bottom transition-transform delay-75 duration-300 ease-out motion-safe:group-hover:scale-y-125"
+        className="origin-bottom [transform-box:fill-box] transition-transform delay-75 duration-300 ease-out motion-safe:group-hover:scale-y-125"
       />
     </svg>
   );

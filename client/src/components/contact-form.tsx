@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { apiBase } from "@/lib/api";
+import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 
 type Status = "idle" | "success" | "error";
 
@@ -16,6 +17,7 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [pending, setPending] = useState(false);
+  const reducedMotion = useReducedMotion();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,7 +44,13 @@ export function ContactForm() {
         }),
         signal: controller.signal,
       });
-      const body = (await res.json().catch(() => ({}))) as {
+      const body = (await res.json().catch((jsonErr) => {
+        // A slow/aborted body read rejects too — surface it to the outer catch
+        // (which distinguishes AbortError) instead of masking it as a generic
+        // server error.
+        if (controller.signal.aborted) throw jsonErr;
+        return {};
+      })) as {
         status?: Status;
         message?: string;
       };
@@ -125,34 +133,25 @@ export function ContactForm() {
         </Button>
 
         <AnimatePresence mode="wait">
-          {status === "success" && (
-            <motion.p
-              key="success"
-              role="status"
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center gap-2 text-sm text-success"
-            >
-              <CheckCircle2 className="size-4" />
-              Message sent — I&apos;ll get back to you soon.
-            </motion.p>
-          )}
-          {status === "error" && (
-            <motion.p
-              key="error"
-              role="alert"
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center gap-2 text-sm text-destructive"
-            >
-              <AlertCircle className="size-4" />
-              {errorMessage}
-            </motion.p>
-          )}
+          {status !== "idle" &&
+            (() => {
+              const isSuccess = status === "success";
+              const Icon = isSuccess ? CheckCircle2 : AlertCircle;
+              return (
+                <motion.p
+                  key={status}
+                  role={isSuccess ? "status" : "alert"}
+                  initial={reducedMotion ? false : { opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reducedMotion ? undefined : { opacity: 0, y: -6 }}
+                  transition={{ duration: 0.2 }}
+                  className={`flex items-center gap-2 text-sm ${isSuccess ? "text-success" : "text-destructive"}`}
+                >
+                  <Icon className="size-4" />
+                  {isSuccess ? "Message sent — I'll get back to you soon." : errorMessage}
+                </motion.p>
+              );
+            })()}
         </AnimatePresence>
       </div>
     </form>
