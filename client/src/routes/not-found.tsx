@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export function Component() {
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-6 py-20 text-center">
-      <Seo title="Page not found" />
+      <Seo title="Page not found" noIndex />
       <p className="font-mono text-sm text-primary">404</p>
       <h1 className="font-heading mt-3 text-(length:--text-h3) font-semibold tracking-tight">
         Page not found.

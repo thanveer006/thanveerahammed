@@ -10,6 +10,9 @@ type SeoProps = {
   type?: "website" | "article";
   publishedTime?: string;
   jsonLd?: Record<string, unknown>;
+  /** Set on pages with no real URL of their own (e.g. the 404 catch-all) to keep
+   * them out of search results instead of emitting a misleading canonical link. */
+  noIndex?: boolean;
 };
 
 /**
@@ -23,6 +26,7 @@ export function Seo({
   type = "website",
   publishedTime,
   jsonLd,
+  noIndex = false,
 }: SeoProps) {
   const fullTitle = title ? `${title} | ${siteName}` : defaultTitle;
   const url = `${siteUrl}${path}`;
@@ -32,7 +36,11 @@ export function Seo({
     <Head>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
+      {noIndex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <link rel="canonical" href={url} />
+      )}
       <link rel="alternate" type="application/rss+xml" href={`${siteUrl}/rss.xml`} />
 
       <meta property="og:title" content={fullTitle} />

@@ -24,6 +24,11 @@ export function ContactForm() {
     setStatus("idle");
     setErrorMessage(undefined);
 
+    // The API is on a free tier that can cold-start for tens of seconds; bound the
+    // wait so the button doesn't spin forever with no feedback.
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30_000);
+
     try {
       const res = await fetch(`${apiBase}/api/contact`, {
         method: "POST",
@@ -34,6 +39,7 @@ export function ContactForm() {
           message: String(data.get("message") ?? ""),
           company: String(data.get("company") ?? ""),
         }),
+        signal: controller.signal,
       });
       const body = (await res.json().catch(() => ({}))) as {
         status?: Status;
@@ -48,10 +54,15 @@ export function ContactForm() {
         setStatus("error");
         setErrorMessage(body.message ?? "Something went wrong. Please try again.");
       }
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setErrorMessage("Something went wrong sending your message. Please try again.");
+      setErrorMessage(
+        err instanceof DOMException && err.name === "AbortError"
+          ? "The server took too long to respond. Please try again in a moment."
+          : "Something went wrong sending your message. Please try again."
+      );
     } finally {
+      clearTimeout(timeout);
       setPending(false);
     }
   }

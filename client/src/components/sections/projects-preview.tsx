@@ -8,8 +8,12 @@ import { useProjects } from "@/lib/queries";
 import { SnapSection } from "@/components/motion/snap-section";
 import { Tilt3D } from "@/components/motion/tilt-3d";
 
+/** How many projects the homepage preview shows before sending visitors to /projects. */
+const PREVIEW_COUNT = 4;
+
 export function ProjectsPreview() {
-  const { data: projects } = useProjects();
+  const { data: allProjects } = useProjects();
+  const projects = allProjects.slice(0, PREVIEW_COUNT);
 
   return (
     <SnapSection id="projects" className="border-b border-border">
