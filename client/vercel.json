@@ -18,6 +18,10 @@
     {
       "source": "/robots.txt",
       "destination": "https://thanveerahammed-api.onrender.com/robots.txt"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
