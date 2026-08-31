@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
+import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 
 /**
  * Route-change scroll behaviour. With a hash, scroll to that element once it
@@ -34,6 +36,29 @@ function ScrollManager() {
   return null;
 }
 
+/** Fades/slides each route in on navigation. Skipped (no motion) on first load
+ * and under reduced motion, so it never delays first paint or fights SSG hydration. */
+function PageTransition() {
+  const { pathname } = useLocation();
+  const reducedMotion = useReducedMotion();
+
+  if (reducedMotion) return <Outlet />;
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={pathname}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Outlet />
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 export function Layout() {
   return (
     <ThemeProvider>
@@ -48,7 +73,7 @@ export function Layout() {
           </a>
           <Nav />
           <main id="main-content" className="flex-1">
-            <Outlet />
+            <PageTransition />
           </main>
           <Footer />
         </div>

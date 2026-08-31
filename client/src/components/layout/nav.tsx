@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "@/components/link";
@@ -68,7 +69,7 @@ export function Nav() {
       >
         <Link
           href="/"
-          className="mr-4 flex shrink-0 items-center gap-2 font-semibold tracking-tight whitespace-nowrap text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+          className="group mr-4 flex shrink-0 items-center gap-2 font-semibold tracking-tight whitespace-nowrap text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
         >
           <Logo className="size-6 shrink-0 text-primary" />
           <span className="hidden xl:inline">Thanveer Ahammed N</span>
@@ -86,11 +87,18 @@ export function Nav() {
                 onClick={handleInPageLink(link.href)}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
-                  "text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm",
+                  "relative py-1 text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm",
                   isActive ? "text-foreground font-medium" : "text-muted-foreground"
                 )}
               >
                 {link.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active-indicator"
+                    className="absolute inset-x-0 -bottom-[1px] h-px bg-primary"
+                    transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                  />
+                )}
               </Link>
             );
           })}

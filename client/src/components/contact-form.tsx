@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -123,18 +124,36 @@ export function ContactForm() {
           {pending ? "Sending..." : "Send Message"}
         </Button>
 
-        {status === "success" && (
-          <p role="status" className="flex items-center gap-2 text-sm text-success">
-            <CheckCircle2 className="size-4" />
-            Message sent — I&apos;ll get back to you soon.
-          </p>
-        )}
-        {status === "error" && (
-          <p role="alert" className="flex items-center gap-2 text-sm text-destructive">
-            <AlertCircle className="size-4" />
-            {errorMessage}
-          </p>
-        )}
+        <AnimatePresence mode="wait">
+          {status === "success" && (
+            <motion.p
+              key="success"
+              role="status"
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-2 text-sm text-success"
+            >
+              <CheckCircle2 className="size-4" />
+              Message sent — I&apos;ll get back to you soon.
+            </motion.p>
+          )}
+          {status === "error" && (
+            <motion.p
+              key="error"
+              role="alert"
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-2 text-sm text-destructive"
+            >
+              <AlertCircle className="size-4" />
+              {errorMessage}
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
     </form>
   );
