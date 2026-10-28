@@ -112,7 +112,7 @@ export function Nav() {
                     <SheetClose asChild key={link.href}>
                       <Link
                         href={link.href}
-                                aria-current={isActive ? "true" : undefined}
+                        aria-current={isActive ? "true" : undefined}
                         className={cn(
                           "rounded-md px-3 py-2.5 text-base hover:bg-secondary",
                           isActive ? "text-primary font-medium" : "text-foreground"

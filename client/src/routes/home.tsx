@@ -15,7 +15,7 @@ const personJsonLd = {
   name: "Thanveer Ahammed N",
   alternateName: ["Thanveer Ahammed", "Thanveer"],
   url: siteUrl,
-  image: `${siteUrl}/founder.jpg`,
+  image: `${siteUrl}/og.png`,
   description: defaultDescription,
   jobTitle: "Software Developer",
   email: "mailto:thanveerahd06@gmail.com",

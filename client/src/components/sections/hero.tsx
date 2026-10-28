@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { ArrowRight, Download, MapPin } from "lucide-react";
 import { Link } from "@/components/link";
 import { Button } from "@/components/ui/button";
@@ -20,43 +19,33 @@ export function Hero() {
       />
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 pt-14 pb-16 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:pb-24">
         <div className="order-2 lg:order-1">
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <p
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground"
           >
             <span className="size-1.5 rounded-full bg-success" />
             Available for select engineering work
-          </motion.p>
+          </p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="font-heading text-(length:--text-display) leading-[1.05] font-semibold tracking-tight text-balance"
+          <p className="mb-3 text-xl font-semibold tracking-tight sm:text-2xl">
+            Thanveer Ahammed N
+          </p>
+
+          <h1
+            className="font-heading text-(length:--text-h1) leading-[1.08] font-semibold tracking-tight text-balance"
           >
-            Hi, I&apos;m Thanveer.
-            <span className="mt-2 block text-muted-foreground">
-              I build software that <span className="text-primary">businesses run on.</span>
-            </span>
-          </motion.h1>
+            Software Developer building{" "}
+            <span className="text-primary">software businesses run on.</span>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+          <p
             className="mt-6 max-w-xl text-lg text-muted-foreground text-pretty"
           >
             Software developer designing secure, scalable web applications, enterprise
             systems, workflow automation, and AI-powered tools — from architecture to
             deployment.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
+          <div
             className="mt-8 flex flex-wrap items-center gap-3"
           >
             <Button asChild size="lg">
@@ -93,29 +82,23 @@ export function Hero() {
                 </a>
               </Button>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.dl
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.32 }}
+          <dl
             className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-border pt-6"
           >
             {stats.map((s) => (
-              <div key={s.label}>
+              <div key={s.label} className="flex flex-col-reverse">
+                <dt className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</dt>
                 <dd className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
                   <StatCounter value={s.value} suffix={s.suffix} />
                 </dd>
-                <dt className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</dt>
               </div>
             ))}
-          </motion.dl>
+          </dl>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+        <div
           className="relative order-1 mx-auto w-full max-w-72 sm:max-w-sm lg:order-2 lg:max-w-none"
         >
           <div
@@ -135,7 +118,7 @@ export function Hero() {
             <MapPin className="size-3.5 text-primary" />
             Kozhikode, Kerala
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

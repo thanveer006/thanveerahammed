@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
@@ -17,14 +17,20 @@ import { EASE_OUT_EXPO } from "@/components/motion/easing";
  */
 function ScrollManager() {
   const { pathname, hash } = useLocation();
+  const prevPathname = useRef<string | null>(null);
   useEffect(() => {
+    // Animate only same-page hash jumps; a cross-route hash lands instantly so it
+    // can't start mid-animation while the new page is still mounting.
+    const samePage = prevPathname.current === pathname;
+    prevPathname.current = pathname;
+    const smooth = samePage && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (hash) {
       const id = decodeURIComponent(hash.slice(1));
       let tries = 0;
       const tryScroll = () => {
         const el = document.getElementById(id);
         if (el) {
-          el.scrollIntoView({ block: "start" });
+          el.scrollIntoView({ block: "start", behavior: smooth ? "smooth" : "auto" });
         } else if (tries++ < 10) {
           requestAnimationFrame(tryScroll);
         }
@@ -32,7 +38,7 @@ function ScrollManager() {
       requestAnimationFrame(tryScroll);
       return;
     }
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "auto" });
   }, [pathname, hash]);
   return null;
 }

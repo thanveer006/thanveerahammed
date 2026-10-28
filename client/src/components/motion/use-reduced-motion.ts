@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useReducedMotion as useFramerReducedMotion } from "framer-motion";
 
 /**
@@ -8,41 +7,4 @@ import { useReducedMotion as useFramerReducedMotion } from "framer-motion";
  */
 export function useReducedMotion(): boolean {
   return useFramerReducedMotion() ?? false;
-}
-
-/** Coarse pointer (touch) devices — used to disable pointer-driven 3D effects. */
-export function useIsCoarsePointer(): boolean {
-  const [isCoarse, setIsCoarse] = React.useState(false);
-
-  React.useEffect(() => {
-    const mq = window.matchMedia("(pointer: coarse)");
-    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => setIsCoarse(e.matches);
-    handleChange(mq);
-    mq.addEventListener("change", handleChange);
-    return () => mq.removeEventListener("change", handleChange);
-  }, []);
-
-  return isCoarse;
-}
-
-/** Below this breakpoint, scroll-snap + WebGL are disabled site-wide (mobile Safari risk). */
-export function useIsAboveBreakpoint(query = "(min-width: 768px)"): boolean {
-  const [matches, setMatches] = React.useState(false);
-
-  React.useEffect(() => {
-    const mq = window.matchMedia(query);
-    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => setMatches(e.matches);
-    handleChange(mq);
-    mq.addEventListener("change", handleChange);
-    return () => mq.removeEventListener("change", handleChange);
-  }, [query]);
-
-  return matches;
-}
-
-/** True once mounted client-side — guards SSR/pre-hydration mismatches for motion upgrades. */
-export function useHasMounted(): boolean {
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
-  return mounted;
 }
