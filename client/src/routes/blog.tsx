@@ -17,6 +17,7 @@ export function Component() {
       />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <SectionHeading
+          as="h1"
           eyebrow="Writing"
           title="Blog"
           description="Notes on system design, security, and where AI actually belongs in a workflow."

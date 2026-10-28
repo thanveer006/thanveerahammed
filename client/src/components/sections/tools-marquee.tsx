@@ -54,7 +54,7 @@ export function ToolsMarquee() {
               key={i}
               className="flex items-center gap-2 whitespace-nowrap text-sm font-medium text-muted-foreground"
             >
-              <Icon size={20} color="default" />
+              <Icon size={20} color="default" title="" />
               {name}
             </span>
           ))}

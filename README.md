@@ -18,8 +18,7 @@ my-portfolio/
 │   │   │   ├── layout/        # Nav, Footer, Layout (providers + <Outlet/>)
 │   │   │   ├── sections/      # homepage sections
 │   │   │   ├── ui/            # shadcn/ui primitives (Radix)
-│   │   │   ├── motion/        # scroll-snap + parallax + tilt
-│   │   │   ├── three/         # WebGL hero (lazy)
+│   │   │   ├── motion/        # easing + reduced-motion / active-section hooks
 │   │   │   └── case-study/    # project detail blocks
 │   │   ├── lib/               # api client, data hooks, types, site meta
 │   │   └── generated/         # build-time API snapshot (git-ignored)
@@ -51,7 +50,7 @@ the wire format.
 
 | Layer | Tech |
 | --- | --- |
-| Client | React 19, Vite 6, React Router 6, `vite-react-ssg` (static prerender), Tailwind CSS v4, Framer Motion, three.js / R3F, `react-markdown` |
+| Client | React 19, Vite 6, React Router 6, `vite-react-ssg` (static prerender), Tailwind CSS v4, Framer Motion, `react-markdown` |
 | Server | Node, Express 4, Mongoose 8, Zod, Resend, `express-rate-limit`, Helmet |
 | Database | MongoDB |
 

@@ -1,4 +1,3 @@
-import { Code2, Puzzle, Layers, Sparkles } from "lucide-react";
 import { Section } from "@/components/section";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
@@ -14,22 +13,18 @@ const languages = [
 
 const pillars = [
   {
-    icon: Layers,
     title: "Architecture",
     body: "I design systems around how a business actually operates — data models, access boundaries, and integrations that hold up as requirements change.",
   },
   {
-    icon: Puzzle,
     title: "Problem Solving",
     body: "Most of the work is translating a messy manual process into a reliable one. I start from the constraint, not the framework.",
   },
   {
-    icon: Sparkles,
     title: "Applied AI & Automation",
     body: "I use LLMs and automation tools where they remove real work — approvals, notifications, reporting — not as a feature for its own sake.",
   },
   {
-    icon: Code2,
     title: "Craft",
     body: "A graphic design background before engineering means interfaces get the same attention as the systems behind them.",
   },
@@ -71,10 +66,7 @@ export function About() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold">
-                    <p.icon className="size-4.5 text-primary" aria-hidden />
-                    {p.title}
-                  </h3>
+                  <h3 className="mb-2 text-lg font-semibold">{p.title}</h3>
                   <p className="text-muted-foreground text-pretty">{p.body}</p>
                 </div>
               </li>

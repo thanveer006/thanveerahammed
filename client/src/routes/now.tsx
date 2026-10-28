@@ -6,6 +6,7 @@ export function Component() {
     <div className="mx-auto max-w-2xl px-6 py-20">
       <Seo title="Now" description="What I'm currently focused on." path="/now" />
       <SectionHeading
+        as="h1"
         eyebrow="Now"
         title="What I'm focused on."
         description="A snapshot, updated periodically — inspired by nownownow.com."

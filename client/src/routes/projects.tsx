@@ -11,6 +11,7 @@ export function Component() {
         path="/projects"
       />
       <SectionHeading
+        as="h1"
         eyebrow="All Projects"
         title="Systems in production, not tutorials."
         description="Search or filter by technology to find a specific project."

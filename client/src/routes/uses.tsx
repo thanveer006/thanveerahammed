@@ -33,6 +33,7 @@ export function Component() {
         path="/uses"
       />
       <SectionHeading
+        as="h1"
         eyebrow="Uses"
         title="What I build with."
         description="The tools that make up my day-to-day, updated as things change."

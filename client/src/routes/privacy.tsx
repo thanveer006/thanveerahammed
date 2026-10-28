@@ -5,7 +5,7 @@ export function Component() {
   return (
     <div className="mx-auto max-w-2xl px-6 py-20">
       <Seo title="Privacy Policy" description="How this site handles data." path="/privacy" />
-      <SectionHeading eyebrow="Legal" title="Privacy Policy" />
+      <SectionHeading as="h1" eyebrow="Legal" title="Privacy Policy" />
 
       <div className="space-y-6 text-sm text-muted-foreground">
         <p className="text-pretty">

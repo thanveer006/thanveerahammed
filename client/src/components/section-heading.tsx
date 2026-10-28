@@ -7,6 +7,7 @@ export function SectionHeading({
   description,
   align = "left",
   onDark = false,
+  as: Heading = "h2",
   className,
 }: {
   eyebrow?: string;
@@ -15,6 +16,8 @@ export function SectionHeading({
   align?: "left" | "center";
   /** Light text for use on a dark (`ink`) band. */
   onDark?: boolean;
+  /** Heading level; standalone pages pass "h1" (the homepage hero owns its h1). */
+  as?: "h1" | "h2";
   className?: string;
 }) {
   return (
@@ -31,9 +34,9 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="font-heading text-(length:--text-h2) leading-[1.12] font-semibold tracking-tight text-balance">
+      <Heading className="font-heading text-(length:--text-h2) leading-[1.12] font-semibold tracking-tight text-balance">
         {title}
-      </h2>
+      </Heading>
       {description ? (
         <p
           className={cn(
