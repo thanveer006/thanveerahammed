@@ -18,7 +18,7 @@
     "test": "npm run test --workspace server"
   },
   "engines": {
-    "node": ">=20 <23"
+    "node": "^20.19.0 || >=22.12.0 <23"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
