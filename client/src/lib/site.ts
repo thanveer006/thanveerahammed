@@ -27,3 +27,12 @@ export const defaultKeywords = [
   "AI automation developer",
   "freelance software developer Kerala",
 ].join(", ");
+
+/** InLine Cognition — the founder's AI engineering startup (featured on the homepage). */
+export const startup = {
+  name: "InLine Cognition",
+  url: "https://inlinecognition.io",
+  instagram: "https://www.instagram.com/inline.cognition",
+  tagline: "Intelligence, inline.",
+  role: "Founder & CEO",
+} as const;

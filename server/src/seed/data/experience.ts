@@ -12,6 +12,23 @@ export type ExperienceEntry = {
 
 export const experience: ExperienceEntry[] = [
   {
+    role: "Founder & CEO",
+    company: "InLine Cognition",
+    companyUrl: "https://inlinecognition.io",
+    start: "2026",
+    end: "Present",
+    type: "Startup",
+    impact:
+      "Building InLine Cognition, a small remote-first AI engineering team that embeds AI agents, workflow automation, integrations, and custom software into the way businesses already work.",
+    responsibilities: [
+      "Study how a client's business runs, then recommend and build what matters most — starting with a short, paid Business Study or a scoped, fixed-price project.",
+      "Design and deploy AI agents and chat assistants (WhatsApp and web) that answer from a client's own information.",
+      "Connect CRM, payments, WhatsApp, and internal tools through integrations and workflow automation.",
+      "Provide ongoing support — monitoring, improvements, and new automations — on an optional monthly retainer.",
+    ],
+    tech: ["AI Agents", "Workflow Automation", "WhatsApp Business API", "Integrations"],
+  },
+  {
     role: "Software Developer (IT Executive)",
     company: "DOPA Coaching",
     start: "April 2026",

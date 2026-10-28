@@ -2,6 +2,7 @@ import { ArrowRight, Download, MapPin } from "lucide-react";
 import { Link } from "@/components/link";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { StatCounter } from "@/components/stat-counter";
+import { startup } from "@/lib/site";
 
 const stats = [
   { value: 10, suffix: "+", label: "Production apps" },
@@ -41,7 +42,19 @@ export function Hero() {
             Available for select engineering work
           </p>
 
-          <p className="mb-3 text-lg font-medium text-highlight">Thanveer Ahammed N</p>
+          <p className="mb-3 text-lg font-medium text-highlight">
+            Thanveer Ahammed N
+            <span className="text-ink-foreground/60">
+              {" "}
+              &middot; {startup.role},{" "}
+              <Link
+                href="/#startup"
+                className="text-ink-foreground underline decoration-brand-light/60 underline-offset-4 transition-colors hover:text-brand-light"
+              >
+                {startup.name}
+              </Link>
+            </span>
+          </p>
 
           <h1 className="font-heading text-(length:--text-h1) leading-[1.08] font-semibold tracking-tight text-balance">
             Software Developer building{" "}
