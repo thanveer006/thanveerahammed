@@ -1,9 +1,7 @@
 import { Mail, Download, ArrowUpRight } from "lucide-react";
 import { Link } from "@/components/link";
 import { Section } from "@/components/section";
-import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
-import { Button } from "@/components/ui/button";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { ContactForm } from "@/components/contact-form";
 
@@ -30,52 +28,57 @@ const links = [
 
 export function Contact() {
   return (
-    <Section id="contact" tinted>
-        <SectionHeading
-          eyebrow="Contact"
-          title="Let's build something."
-          description="Open to full-time roles and select freelance engagements. Send a message directly, or reach me through any of the channels below."
-          align="center"
-          className="mb-16"
-        />
+    <Section id="contact">
+      <Reveal className="overflow-hidden rounded-[2rem] bg-primary text-primary-foreground">
+        <div className="grid grid-cols-1 gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:p-14">
+          <div className="flex flex-col">
+            <p className="mb-4 flex items-center gap-3 text-sm font-semibold tracking-wide uppercase opacity-80">
+              <span aria-hidden className="h-px w-8 bg-current" />
+              Contact
+            </p>
+            <h2 className="font-heading text-(length:--text-h2) leading-[1.12] font-semibold tracking-tight text-balance">
+              Let&apos;s build something.
+            </h2>
+            <p className="mt-4 max-w-md opacity-85 text-pretty">
+              Open to full-time roles and select freelance engagements. Send a message directly,
+              or reach me through any of the channels below.
+            </p>
 
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <ContactForm />
-          </Reveal>
-
-          <div className="flex flex-col gap-4">
-            <Reveal delay={0.05} className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            <ul className="mt-8 divide-y divide-current/20 border-y border-current/20">
               {links.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="group flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <link.icon className="size-5 shrink-0 text-primary" />
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium">{link.label}</p>
-                    <p className="flex items-center gap-1 truncate font-mono text-xs text-muted-foreground">
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="group flex items-center gap-3 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current"
+                  >
+                    <link.icon className="size-5 shrink-0" />
+                    <span className="text-sm font-medium">{link.label}</span>
+                    <span className="ml-auto flex min-w-0 items-center gap-1 truncate font-mono text-xs opacity-80">
                       {link.value}
-                      <ArrowUpRight className="size-3 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
-                    </p>
-                  </div>
-                </Link>
+                      <ArrowUpRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </span>
+                  </Link>
+                </li>
               ))}
-            </Reveal>
+            </ul>
 
-            <Reveal delay={0.1}>
-              <Button asChild size="lg" variant="outline" className="w-full">
-                <a href="/resume.pdf" download="Thanveer_Ahammed_Resume.pdf">
-                  <Download className="size-4" />
-                  Download Resume
-                </a>
-              </Button>
-            </Reveal>
+            <a
+              href="/resume.pdf"
+              download="Thanveer_Ahammed_Resume.pdf"
+              className="mt-8 inline-flex h-11 w-fit items-center gap-2 rounded-full border border-current/40 px-6 text-sm font-medium transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current"
+            >
+              <Download className="size-4" />
+              Download Resume
+            </a>
+          </div>
+
+          <div className="rounded-3xl bg-card p-6 text-card-foreground shadow-xl sm:p-8">
+            <ContactForm />
           </div>
         </div>
+      </Reveal>
     </Section>
   );
 }
