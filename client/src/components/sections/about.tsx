@@ -1,9 +1,8 @@
+import { Code2, Puzzle, Layers, Sparkles } from "lucide-react";
+import { Section } from "@/components/section";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
-import { Code2, Puzzle, Layers, Sparkles } from "lucide-react";
-import { SnapSection } from "@/components/motion/snap-section";
-import { Tilt3D } from "@/components/motion/tilt-3d";
 
 const languages = [
   { name: "Malayalam", level: "Native / Bilingual" },
@@ -38,44 +37,42 @@ const pillars = [
 
 export function About() {
   return (
-    <SnapSection id="about" className="border-b border-border">
-      <div className="mx-auto max-w-350 px-6">
-        <SectionHeading
-          eyebrow="About"
-          title="I build software that businesses run on."
-          description="Based in Kozhikode, Kerala, India. I work across the stack — from database schema to production deployment — with a focus on internal platforms, workflow automation, and applied AI for organizations that need software to actually work, every day."
-        />
+    <Section id="about">
+      <SectionHeading
+        eyebrow="About"
+        title="I build software that businesses run on."
+        description="Based in Kozhikode, Kerala, India. I work across the stack — from database schema to production deployment — with a focus on internal platforms, workflow automation, and applied AI for organizations that need software to actually work, every day."
+      />
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {pillars.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.08}>
-              <Tilt3D>
-                <div className="h-full rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40">
-                  <p.icon className="mb-4 size-5 text-primary" />
-                  <h3 className="mb-2 font-medium">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground text-pretty">{p.body}</p>
-                </div>
-              </Tilt3D>
-            </Reveal>
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        {pillars.map((p, i) => (
+          <Reveal key={p.title} delay={(i % 2) * 0.08}>
+            <div className="h-full rounded-2xl border border-border bg-card p-6 transition-shadow hover:shadow-md">
+              <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <p.icon className="size-5" />
+              </div>
+              <h3 className="mb-2 font-semibold">{p.title}</h3>
+              <p className="text-sm text-muted-foreground text-pretty">{p.body}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={0.2} className="mt-10">
+        <p className="mb-3 text-sm font-medium text-muted-foreground">Languages</p>
+        <div className="flex flex-wrap gap-2">
+          {languages.map((lang) => (
+            <Badge
+              key={lang.name}
+              variant="outline"
+              className="rounded-full border-border bg-card px-3 py-1 font-normal"
+            >
+              {lang.name}
+              <span className="ml-1.5 text-muted-foreground">&middot; {lang.level}</span>
+            </Badge>
           ))}
         </div>
-
-        <Reveal delay={0.3} className="mt-10">
-          <p className="mb-4 text-sm font-medium text-muted-foreground">Languages</p>
-          <div className="flex flex-wrap gap-2">
-            {languages.map((lang) => (
-              <Badge
-                key={lang.name}
-                variant="outline"
-                className="rounded-full border-border px-3 py-1 font-normal"
-              >
-                {lang.name}
-                <span className="ml-1.5 text-muted-foreground">&middot; {lang.level}</span>
-              </Badge>
-            ))}
-          </div>
-        </Reveal>
-      </div>
-    </SnapSection>
+      </Reveal>
+    </Section>
   );
 }

@@ -7,9 +7,7 @@ import { Experience } from "@/components/sections/experience";
 import { ProjectsPreview } from "@/components/sections/projects-preview";
 import { Skills } from "@/components/sections/skills";
 import { Services } from "@/components/sections/services";
-import { Stats } from "@/components/sections/stats";
 import { Contact } from "@/components/sections/contact";
-import { SnapContainer } from "@/components/motion/snap-container";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -17,7 +15,7 @@ const personJsonLd = {
   name: "Thanveer Ahammed N",
   alternateName: ["Thanveer Ahammed", "Thanveer"],
   url: siteUrl,
-  image: `${siteUrl}/og.png`,
+  image: `${siteUrl}/founder.jpg`,
   description: defaultDescription,
   jobTitle: "Software Developer",
   email: "mailto:thanveerahd06@gmail.com",
@@ -61,17 +59,14 @@ export function Component() {
   return (
     <>
       <Seo path="/" jsonLd={[personJsonLd, siteJsonLd]} />
-      <SnapContainer>
-        <Hero />
-        <ToolsMarquee />
-        <About />
-        <Experience />
-        <ProjectsPreview />
-        <Skills />
-        <Services />
-        <Stats />
-        <Contact />
-      </SnapContainer>
+      <Hero />
+      <ToolsMarquee />
+      <About />
+      <Experience />
+      <ProjectsPreview />
+      <Skills />
+      <Services />
+      <Contact />
     </>
   );
 }

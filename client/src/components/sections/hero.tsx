@@ -1,54 +1,46 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Activity, GitBranch, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Download, MapPin } from "lucide-react";
 import { Link } from "@/components/link";
 import { Button } from "@/components/ui/button";
-import { HeroCanvas } from "@/components/three/hero-canvas";
-import { ParallaxLayer } from "@/components/motion/parallax-layer";
-import { Tilt3D } from "@/components/motion/tilt-3d";
-import { SnapSection } from "@/components/motion/snap-section";
+import { GitHubIcon, LinkedInIcon } from "@/components/icons";
+import { StatCounter } from "@/components/stat-counter";
 
-const trustItems = [
-  "Production Systems Shipped",
-  "Enterprise Clients",
-  "Based in Kerala, India",
+const stats = [
+  { value: 10, suffix: "+", label: "Production apps" },
+  { value: 6, suffix: "", label: "Enterprise systems" },
+  { value: 100, suffix: "%", label: "Full-stack ownership" },
 ];
 
 export function Hero() {
   return (
-    <SnapSection id="hero" bleed className="overflow-hidden border-b border-border">
-      <HeroCanvas className="pointer-events-none absolute inset-0 -z-10" />
-      <div className="mx-auto grid min-h-[calc(100svh-var(--nav-height))] max-w-350 grid-cols-1 items-center gap-16 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-0">
-        <div>
+    <section id="hero" className="relative scroll-mt-(--nav-height) overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-130 bg-linear-to-b from-primary/8 to-transparent"
+      />
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 pt-14 pb-16 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:pb-24">
+        <div className="order-2 lg:order-1">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 font-mono text-xs text-muted-foreground"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground"
           >
             <span className="size-1.5 rounded-full bg-success" />
             Available for select engineering work
           </motion.p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.02 }}
-            className="mb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
+            transition={{ duration: 0.6, delay: 0.05 }}
+            className="font-heading text-(length:--text-display) leading-[1.05] font-semibold tracking-tight text-balance"
           >
-            Thanveer Ahammed N
-          </motion.p>
-
-          <Tilt3D>
-            <motion.h1
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="font-heading text-(length:--text-display) leading-[1.05] font-semibold tracking-tight text-balance"
-            >
-              Software Developer building{" "}
-              <span className="text-primary">production-grade software</span> for real businesses.
-            </motion.h1>
-          </Tilt3D>
+            Hi, I&apos;m Thanveer.
+            <span className="mt-2 block text-muted-foreground">
+              I build software that <span className="text-primary">businesses run on.</span>
+            </span>
+          </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -56,16 +48,16 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="mt-6 max-w-xl text-lg text-muted-foreground text-pretty"
           >
-            I design and develop secure, scalable web applications, enterprise
-            management systems, workflow automation platforms, and AI-powered
-            solutions — from architecture to deployment.
+            Software developer designing secure, scalable web applications, enterprise
+            systems, workflow automation, and AI-powered tools — from architecture to
+            deployment.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="mt-10 flex flex-wrap items-center gap-3"
+            className="mt-8 flex flex-wrap items-center gap-3"
           >
             <Button asChild size="lg">
               <Link href="/#projects">
@@ -76,86 +68,75 @@ export function Hero() {
             <Button asChild size="lg" variant="outline">
               <a href="/resume.pdf" download="Thanveer_Ahammed_Resume.pdf">
                 <Download className="size-4" />
-                Download Resume
+                Resume
               </a>
             </Button>
-            <Button asChild size="lg" variant="ghost">
-              <Link href="/#contact">Contact Me</Link>
-            </Button>
+            <div className="ml-1 flex items-center gap-1">
+              <Button asChild size="icon" variant="ghost">
+                <a
+                  href="https://github.com/thanveer006"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
+                  <GitHubIcon className="size-4" />
+                </a>
+              </Button>
+              <Button asChild size="icon" variant="ghost">
+                <a
+                  href="https://www.linkedin.com/in/thanveer-ahammed-dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <LinkedInIcon className="size-4" />
+                </a>
+              </Button>
+            </div>
           </motion.div>
 
-          <motion.ul
+          <motion.dl
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.32 }}
-            className="mt-8 flex flex-wrap gap-x-6 gap-y-2"
+            className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-border pt-6"
           >
-            {trustItems.map((item) => (
-              <li key={item} className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <CheckCircle2 className="size-4 text-success" />
-                {item}
-              </li>
+            {stats.map((s) => (
+              <div key={s.label}>
+                <dd className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+                  <StatCounter value={s.value} suffix={s.suffix} />
+                </dd>
+                <dt className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</dt>
+              </div>
             ))}
-          </motion.ul>
+          </motion.dl>
         </div>
 
-        <div className="relative hidden h-105 lg:block" aria-hidden>
-          <ParallaxLayer className="absolute left-0 top-6 w-64" yRange={[24, -60]}>
-            <div className="rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-medium text-muted-foreground">Deployment</span>
-                <span className="flex items-center gap-1 rounded-full bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
-                  Live
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <GitBranch className="size-4 text-primary" />
-                <span className="font-mono text-sm">main @ a1c93f2</span>
-              </div>
-              <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                <div className="h-full w-full rounded-full bg-primary" />
-              </div>
-            </div>
-          </ParallaxLayer>
-
-          <ParallaxLayer className="absolute right-2 top-40 w-60" yRange={[-20, 40]}>
-            <div className="rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm">
-              <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-                <ShieldCheck className="size-4 text-primary" />
-                Access Control
-              </div>
-              <div className="space-y-2 font-mono text-xs">
-                <div className="flex justify-between rounded-md bg-secondary px-2 py-1.5">
-                  <span>role: admin</span>
-                  <span className="text-success">allow</span>
-                </div>
-                <div className="flex justify-between rounded-md bg-secondary px-2 py-1.5">
-                  <span>role: mentor</span>
-                  <span className="text-success">allow</span>
-                </div>
-              </div>
-            </div>
-          </ParallaxLayer>
-
-          <ParallaxLayer className="absolute bottom-4 left-10 w-56" yRange={[40, -30]}>
-            <div className="rounded-xl border border-border bg-card/80 p-4 shadow-lg backdrop-blur-sm">
-              <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-                <Activity className="size-4 text-primary" />
-                Uptime
-              </div>
-              <div className="flex items-end gap-1">
-                {[40, 65, 50, 80, 60, 90, 75].map((h, i) => (
-                  <div
-                    key={i}
-                    className="w-3 rounded-sm bg-primary/70"
-                    style={{ height: `${h * 0.5}px` }}
-                  />
-                ))}
-              </div>
-            </div>
-          </ParallaxLayer>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="relative order-1 mx-auto w-full max-w-72 sm:max-w-sm lg:order-2 lg:max-w-none"
+        >
+          <div
+            aria-hidden
+            className="absolute -inset-3 -z-10 rounded-[2rem] bg-linear-to-br from-primary/25 to-transparent blur-2xl"
+          />
+          <img
+            src="/founder.jpg"
+            alt="Portrait of Thanveer Ahammed N"
+            width={640}
+            height={640}
+            fetchPriority="high"
+            decoding="async"
+            className="aspect-square w-full rounded-3xl border border-border object-cover shadow-xl"
+          />
+          <div className="absolute -bottom-4 left-4 flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-2 text-xs font-medium shadow-lg sm:left-6">
+            <MapPin className="size-3.5 text-primary" />
+            Kozhikode, Kerala
+          </div>
+        </motion.div>
       </div>
-    </SnapSection>
+    </section>
   );
 }

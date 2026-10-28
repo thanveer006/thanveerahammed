@@ -38,8 +38,8 @@ const tools = [
 
 export function ToolsMarquee() {
   return (
-    <section aria-label="Tools and technologies I use" className="border-b border-transparent py-10">
-      <p className="mx-auto mb-6 max-w-350 px-6 font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground">
+    <section aria-label="Tools and technologies I use" className="border-y border-border py-8">
+      <p className="mx-auto mb-6 max-w-6xl px-6 text-center text-sm font-medium text-muted-foreground">
         Tools &amp; Technologies I Use
       </p>
 
@@ -52,7 +52,7 @@ export function ToolsMarquee() {
           {[...tools, ...tools].map(({ name, Icon }, i) => (
             <span
               key={i}
-              className="flex items-center gap-2 whitespace-nowrap font-mono text-sm text-muted-foreground"
+              className="flex items-center gap-2 whitespace-nowrap text-sm font-medium text-muted-foreground"
             >
               <Icon size={20} color="default" />
               {name}

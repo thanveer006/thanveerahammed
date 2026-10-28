@@ -48,33 +48,33 @@
 :root {
   --font-inter: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-jetbrains-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-space-grotesk: "Space Grotesk", var(--font-inter);
+  --font-space-grotesk: var(--font-inter);
 }
 
 /* Light mode (default): blue-accented, light-first system. */
 :root {
-  --background: #e6f0fb;
+  --background: #fafbfc;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
   --popover: #ffffff;
   --popover-foreground: #0f172a;
-  --primary: #2563eb;
+  --primary: #2556e8;
   --primary-foreground: #f7f9fc;
-  --secondary: #d7e6f8;
+  --secondary: #f1f4f8;
   --secondary-foreground: #0f172a;
-  --muted: #d7e6f8;
-  --muted-foreground: #5b6b80;
-  --accent: #2563eb;
+  --muted: #f1f4f8;
+  --muted-foreground: #566377;
+  --accent: #2556e8;
   --accent-foreground: #f7f9fc;
-  --accent-2: #7c3aed;
+  --accent-2: #2556e8;
   --accent-2-foreground: #f7f9fc;
   --success: #16a34a;
   --success-foreground: #f7f9fc;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #c3d9f0;
-  --input: #c3d9f0;
-  --ring: #2563eb;
+  --border: #e3e8ef;
+  --input: #e3e8ef;
+  --ring: #2556e8;
   --radius: 0.75rem;
 
   --gradient-hero: radial-gradient(
@@ -96,28 +96,28 @@
 
 /* Dark mode: same blue accent on a near-black, blue-tinted surface. */
 .dark {
-  --background: #070b14;
+  --background: #0a0d14;
   --foreground: #f3f6fb;
-  --card: #0f1522;
+  --card: #10141d;
   --card-foreground: #f3f6fb;
-  --popover: #0f1522;
+  --popover: #10141d;
   --popover-foreground: #f3f6fb;
-  --primary: #3b82f6;
+  --primary: #5b8bff;
   --primary-foreground: #070b14;
-  --secondary: #161e2e;
+  --secondary: #151a25;
   --secondary-foreground: #f3f6fb;
-  --muted: #161e2e;
-  --muted-foreground: #94a3b8;
-  --accent: #3b82f6;
+  --muted: #151a25;
+  --muted-foreground: #98a3b5;
+  --accent: #5b8bff;
   --accent-foreground: #070b14;
-  --accent-2: #a78bfa;
+  --accent-2: #5b8bff;
   --accent-2-foreground: #070b14;
   --success: #22c55e;
   --success-foreground: #070b14;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: #1f2937;
-  --input: #1f2937;
-  --ring: #3b82f6;
+  --border: #1f2633;
+  --input: #1f2633;
+  --ring: #5b8bff;
 
   --gradient-hero: radial-gradient(
       120% 100% at 15% 0%,
@@ -162,6 +162,16 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
     animation: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 

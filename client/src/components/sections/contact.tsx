@@ -1,11 +1,11 @@
 import { Mail, Download, ArrowUpRight } from "lucide-react";
 import { Link } from "@/components/link";
+import { Section } from "@/components/section";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { ContactForm } from "@/components/contact-form";
-import { SnapSection } from "@/components/motion/snap-section";
 
 const links = [
   {
@@ -30,8 +30,7 @@ const links = [
 
 export function Contact() {
   return (
-    <SnapSection id="contact">
-      <div className="mx-auto max-w-350 px-6">
+    <Section id="contact" tinted>
         <SectionHeading
           eyebrow="Contact"
           title="Let's build something."
@@ -41,7 +40,7 @@ export function Contact() {
         />
 
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal className="rounded-xl border border-border bg-card p-6 sm:p-8">
+          <Reveal className="rounded-2xl border border-border bg-card p-6 sm:p-8">
             <ContactForm />
           </Reveal>
 
@@ -53,7 +52,7 @@ export function Contact() {
                   href={link.href}
                   target={link.href.startsWith("http") ? "_blank" : undefined}
                   rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="group flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <link.icon className="size-5 shrink-0 text-primary" />
                   <div className="min-w-0">
@@ -77,7 +76,6 @@ export function Contact() {
             </Reveal>
           </div>
         </div>
-      </div>
-    </SnapSection>
+    </Section>
   );
 }

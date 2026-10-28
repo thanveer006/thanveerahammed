@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useProjects } from "@/lib/queries";
-import { Tilt3D } from "@/components/motion/tilt-3d";
 
 export function ProjectsExplorer() {
   const { data: projects } = useProjects();
@@ -81,8 +80,8 @@ export function ProjectsExplorer() {
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {filtered.map((project) => (
-            <Tilt3D key={project.slug}>
               <Link
+                key={project.slug}
                 href={`/projects/${project.slug}`}
                 className="group flex h-full flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
@@ -102,7 +101,6 @@ export function ProjectsExplorer() {
                   ))}
                 </div>
               </Link>
-            </Tilt3D>
           ))}
         </div>
       )}

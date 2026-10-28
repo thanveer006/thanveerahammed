@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Logo } from "@/components/logo";
-import { useSnapWouldBeActive } from "@/components/motion/use-reduced-motion";
 import { useActiveSection } from "@/components/motion/use-active-section";
 
 const navLinks = [
@@ -35,20 +34,7 @@ const inPageSectionIds = navLinks
 export function Nav() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const pathname = useLocation().pathname;
-  // Shares SnapContainer's exact activation predicate so the two can't drift.
-  const snapWouldBeActive = useSnapWouldBeActive();
-  const snapLikelyActive = pathname === "/" && snapWouldBeActive;
   const activeSectionId = useActiveSection(inPageSectionIds);
-
-  const handleInPageLink = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!snapLikelyActive || !href.startsWith("/#")) return;
-    const id = href.slice(2);
-    const target = document.getElementById(id);
-    if (!target) return;
-    e.preventDefault();
-    window.history.pushState(null, "", href);
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   // Close the mobile Sheet if the viewport grows past the lg breakpoint while it's open.
   React.useEffect(() => {
@@ -62,19 +48,17 @@ export function Nav() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-md supports-backdrop-filter:bg-background/60">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-350 items-center justify-between px-6"
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6"
       >
         <Link
           href="/"
           className="group mr-4 flex shrink-0 items-center gap-2 font-semibold tracking-tight whitespace-nowrap text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
         >
           <Logo className="size-6 shrink-0 text-primary" />
-          <span className="hidden xl:inline">Thanveer Ahammed N</span>
-          <span className="xl:hidden">Thanveer</span>
-          <span className="text-primary">.</span>
+          <span>Thanveer Ahammed</span>
         </Link>
 
         <div className="hidden lg:flex lg:items-center lg:gap-6">
@@ -84,7 +68,6 @@ export function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={handleInPageLink(link.href)}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
                   "relative py-1 text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm",
@@ -107,7 +90,7 @@ export function Nav() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Button asChild size="sm" className="hidden sm:inline-flex">
-            <Link href="/#contact" onClick={handleInPageLink("/#contact")}>
+            <Link href="/#contact">
               Contact Me
             </Link>
           </Button>
@@ -129,8 +112,7 @@ export function Nav() {
                     <SheetClose asChild key={link.href}>
                       <Link
                         href={link.href}
-                        onClick={handleInPageLink(link.href)}
-                        aria-current={isActive ? "true" : undefined}
+                                aria-current={isActive ? "true" : undefined}
                         className={cn(
                           "rounded-md px-3 py-2.5 text-base hover:bg-secondary",
                           isActive ? "text-primary font-medium" : "text-foreground"

@@ -46,17 +46,3 @@ export function useHasMounted(): boolean {
   React.useEffect(() => setMounted(true), []);
   return mounted;
 }
-
-/**
- * Single source of truth for whether `SnapContainer` would activate scroll-snap:
- * mounted, motion not reduced, and viewport wide enough. `SnapContainer` uses this
- * to decide its own rendering; anything outside its subtree (e.g. `Nav`, which can't
- * read `SnapActiveContext` since it isn't a descendant) uses it to predict the same
- * answer instead of re-deriving the condition and risking drift.
- */
-export function useSnapWouldBeActive(): boolean {
-  const mounted = useHasMounted();
-  const reducedMotion = useReducedMotion();
-  const isWide = useIsAboveBreakpoint("(min-width: 768px)");
-  return mounted && !reducedMotion && isWide;
-}
