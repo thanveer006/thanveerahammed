@@ -25,7 +25,9 @@ export function Component() {
           <p className="text-pretty">
             If you submit the contact form, your name, email address, and message are stored by
             the site owner and sent via email (through Resend), solely to respond to your
-            message. This data is not sold or shared with any other third party.
+            message. Stored submissions, along with your IP address and browser details used to
+            limit spam, are automatically deleted after 180 days. This data is not sold or shared
+            with any other third party.
           </p>
         </div>
         <div>
