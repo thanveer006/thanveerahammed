@@ -6,7 +6,7 @@ type LinkProps = Omit<React.ComponentProps<"a">, "href"> & {
 };
 
 const isExternal = (href: string) =>
-  /^(https?:|mailto:|tel:)/.test(href) ||
+  /^(https?:|mailto:|tel:|\/\/)/i.test(href) ||
   href.endsWith(".pdf") ||
   href.endsWith(".xml") ||
   href.endsWith(".txt");
@@ -20,8 +20,11 @@ const isExternal = (href: string) =>
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   ({ href, children, ...rest }, ref) => {
     if (isExternal(href) || rest.target === "_blank") {
+      // Any new-tab link must not leak window.opener.
+      const rel =
+        rest.target === "_blank" ? [rest.rel, "noopener noreferrer"].filter(Boolean).join(" ") : rest.rel;
       return (
-        <a ref={ref} href={href} {...rest}>
+        <a ref={ref} href={href} {...rest} rel={rel}>
           {children}
         </a>
       );

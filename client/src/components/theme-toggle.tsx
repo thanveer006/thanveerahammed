@@ -14,7 +14,7 @@ export function ThemeToggle() {
   React.useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className="size-9" aria-hidden />;
+    return <div className="size-9 pointer-coarse:size-11" aria-hidden />;
   }
 
   const isDark = resolvedTheme === "dark";

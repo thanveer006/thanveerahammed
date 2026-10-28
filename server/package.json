@@ -13,7 +13,8 @@
     "start": "node dist/server.js",
     "seed": "tsx src/seed/run.ts",
     "gen:posts": "node scripts/gen-post-data.mjs",
-    "lint": "eslint \"src/**/*.ts\" \"scripts/**/*.mjs\""
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\" \"scripts/**/*.mjs\"",
+    "test": "node --import tsx --test test/*.test.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

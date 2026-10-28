@@ -15,8 +15,8 @@ const PREVIEW_COUNT = 4;
 const slots = [
   { span: "md:col-span-4", tint: "bg-primary/10 hover:border-primary/50", label: "text-primary" },
   { span: "md:col-span-2", tint: "bg-highlight/15 hover:border-highlight/60", label: "text-accent" },
-  { span: "md:col-span-2", tint: "bg-coral/10 hover:border-coral/50", label: "text-coral" },
-  { span: "md:col-span-4", tint: "bg-indigo/10 hover:border-indigo/50", label: "text-indigo" },
+  { span: "md:col-span-2", tint: "bg-coral/10 hover:border-coral/50", label: "text-coral-text" },
+  { span: "md:col-span-4", tint: "bg-indigo/10 hover:border-indigo/50", label: "text-indigo-text" },
 ];
 
 export function ProjectsPreview() {

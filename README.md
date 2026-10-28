@@ -34,7 +34,7 @@ my-portfolio/
     │   ├── services/          # business logic (email, feeds, content)
     │   ├── views/             # V — JSON serializers + XML templates
     │   └── middleware/        # error handler, validation, rate limit
-    └── seed/                  # seed.ts + content sources (projects, blog .mdx)
+    └── seed/                  # index.ts/run.ts + content sources (projects, blog .mdx)
 ```
 
 **Component-based client** — every screen is a route-level component composed
@@ -114,10 +114,12 @@ fall back to client-side rendering.
 | --- | --- |
 | `PORT` | default `4000` |
 | `CLIENT_URL` | comma-separated allowed CORS origins (client dev + prod URLs) |
-| `PUBLIC_SITE_URL` | absolute site URL used in `sitemap.xml` / `rss.xml` |
+| `PUBLIC_SITE_URL` | public URL of the website (not the API), used in `sitemap.xml` / `rss.xml`; also allowed by CORS |
 | `MONGODB_URI` | **required** |
 | `RESEND_API_KEY`, `CONTACT_TO_EMAIL` | optional — blank disables sending (submissions still stored) |
-| `CONTACT_FROM_EMAIL` | optional verified sender |
+| `CONTACT_FROM_EMAIL` | optional verified sender (blank = Resend sandbox sender) |
+
+Blank values are treated as unset. `npm test` (server) runs the node:test suite; it needs no database or email.
 
 **client/.env**
 

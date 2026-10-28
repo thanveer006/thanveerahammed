@@ -6,7 +6,7 @@ import { usePosts } from "@/lib/queries";
 import { SectionHeading } from "@/components/section-heading";
 
 export function Component() {
-  const { data: posts } = usePosts();
+  const { data: posts, loading, error } = usePosts();
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-20">
@@ -33,6 +33,15 @@ export function Component() {
       </div>
 
       <div className="mt-12 divide-y divide-border border-t border-border">
+        {posts.length === 0 && (
+          <p className="py-16 text-center text-sm text-muted-foreground">
+            {loading
+              ? "Loading posts…"
+              : error
+                ? "Couldn't load posts right now. Please try again shortly."
+                : "No posts yet."}
+          </p>
+        )}
         {posts.map((post) => (
           <Link
             key={post.slug}

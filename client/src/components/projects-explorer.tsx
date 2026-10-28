@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useProjects } from "@/lib/queries";
 
 export function ProjectsExplorer() {
-  const { data: projects } = useProjects();
+  const { data: projects, loading, error } = useProjects();
   const [query, setQuery] = React.useState("");
   const [activeTag, setActiveTag] = React.useState<string | null>(null);
 
@@ -75,7 +75,13 @@ export function ProjectsExplorer() {
 
       {filtered.length === 0 ? (
         <p className="py-16 text-center text-sm text-muted-foreground">
-          No projects match your search.
+          {projects.length > 0
+            ? "No projects match your search."
+            : loading
+              ? "Loading projects…"
+              : error
+                ? "Couldn't load projects right now. Please try again shortly."
+                : "No projects yet."}
         </p>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

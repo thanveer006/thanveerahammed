@@ -32,14 +32,14 @@ export function Contact() {
       <Reveal className="overflow-hidden rounded-[2rem] bg-primary text-primary-foreground">
         <div className="grid grid-cols-1 gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:p-14">
           <div className="flex flex-col">
-            <p className="mb-4 flex items-center gap-3 text-sm font-semibold tracking-wide uppercase opacity-80">
+            <p className="mb-4 flex items-center gap-3 text-sm font-semibold tracking-wide uppercase opacity-90">
               <span aria-hidden className="h-px w-8 bg-current" />
               Contact
             </p>
             <h2 className="font-heading text-(length:--text-h2) leading-[1.12] font-semibold tracking-tight text-balance">
               Let&apos;s build something.
             </h2>
-            <p className="mt-4 max-w-md opacity-85 text-pretty">
+            <p className="mt-4 max-w-md opacity-90 text-pretty">
               Open to full-time roles and select freelance engagements. Send a message directly,
               or reach me through any of the channels below.
             </p>
@@ -55,7 +55,7 @@ export function Contact() {
                   >
                     <link.icon className="size-5 shrink-0" />
                     <span className="text-sm font-medium">{link.label}</span>
-                    <span className="ml-auto flex min-w-0 items-center gap-1 truncate font-mono text-xs opacity-80">
+                    <span className="ml-auto flex min-w-0 items-center gap-1 truncate font-mono text-xs opacity-90">
                       {link.value}
                       <ArrowUpRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </span>

@@ -10,6 +10,7 @@ export async function listProjects(_req: Request, res: Response) {
 export async function getProject(req: Request, res: Response) {
   const project = await Project.findOne({ slug: req.params.slug }).lean();
   if (!project) {
+    res.removeHeader("Cache-Control");
     return res.status(404).json({ error: "Project not found" });
   }
   res.json(serializeProject(project));

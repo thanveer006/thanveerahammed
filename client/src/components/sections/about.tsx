@@ -60,17 +60,17 @@ export function About() {
 
         <ol className="divide-y divide-border border-y border-border">
           {pillars.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.07}>
-              <li className="flex gap-5 py-7 sm:gap-8">
-                <span className="font-heading text-4xl leading-none font-semibold text-highlight sm:text-5xl">
+            <li key={p.title}>
+              <Reveal delay={i * 0.07} className="flex gap-5 py-7 sm:gap-8">
+                <span className="font-heading text-4xl leading-none font-semibold text-accent sm:text-5xl">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
                   <h3 className="mb-2 text-lg font-semibold">{p.title}</h3>
                   <p className="text-muted-foreground text-pretty">{p.body}</p>
                 </div>
-              </li>
-            </Reveal>
+              </Reveal>
+            </li>
           ))}
         </ol>
       </div>

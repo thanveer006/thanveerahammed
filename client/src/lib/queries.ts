@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { apiFetch } from "./api";
+import { useEffect, useState } from "react";
+import { ApiError, apiFetch } from "./api";
 import { snapshot } from "@/generated/content";
 import type { ExperienceEntry, Post, PostMeta, Project, Skills } from "./types";
 
@@ -18,33 +18,35 @@ function useResource<T>(path: string, initial: T): Resource<T> {
   const [data, setData] = useState<T>(initial);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const loadedPath = useRef(path);
+  const [loadedPath, setLoadedPath] = useState(path);
 
-  if (loadedPath.current !== path) {
-    loadedPath.current = path;
+  if (loadedPath !== path) {
+    setLoadedPath(path);
     setData(initial);
     setError(null);
     setLoading(true);
   }
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
     setLoading(true);
-    apiFetch<T>(path)
+    apiFetch<T>(path, controller.signal)
       .then((json) => {
-        if (cancelled) return;
+        if (controller.signal.aborted) return;
         setData(json);
         setError(null);
       })
       .catch((e: unknown) => {
-        if (!cancelled) setError(e instanceof Error ? e.message : String(e));
+        if (controller.signal.aborted) return;
+        // A 404 on a detail endpoint means the entry doesn't exist (e.g. removed
+        // since the snapshot): drop the stale seeded value so the route shows 404.
+        if (e instanceof ApiError && e.status === 404) setData(null as T);
+        setError(e instanceof Error ? e.message : String(e));
       })
       .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       });
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, [path]);
 
   return { data, loading, error };
@@ -55,7 +57,7 @@ export const useProjects = () =>
 
 export const useProject = (slug: string) =>
   useResource<Project | null>(
-    `/api/projects/${slug}`,
+    `/api/projects/${encodeURIComponent(slug)}`,
     snapshot.projects.find((p) => p.slug === slug) ?? null
   );
 
@@ -63,7 +65,7 @@ export const usePosts = () => useResource<PostMeta[]>("/api/posts", snapshot.pos
 
 export const usePost = (slug: string) =>
   useResource<Post | null>(
-    `/api/posts/${slug}`,
+    `/api/posts/${encodeURIComponent(slug)}`,
     snapshot.fullPosts.find((p) => p.slug === slug) ?? null
   );
 

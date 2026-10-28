@@ -14,7 +14,7 @@ const heroButton =
   "inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-[background-color,border-color,transform] duration-200 motion-safe:hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-brand-light/50";
 
 const iconLink =
-  "flex size-10 items-center justify-center rounded-full text-ink-foreground/80 transition-colors hover:bg-white/10 hover:text-ink-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-brand-light/50";
+  "flex size-11 items-center justify-center rounded-full text-ink-foreground/80 transition-colors hover:bg-white/10 hover:text-ink-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-brand-light/50";
 
 /**
  * Dark band in both themes. Content is rendered visible (no fade-in) so the
@@ -38,7 +38,7 @@ export function Hero() {
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 pt-16 pb-20 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-28">
         <div className="order-2 lg:order-1">
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-ink-foreground/80">
-            <span className="size-1.5 rounded-full bg-success" />
+            <span aria-hidden className="size-1.5 rounded-full bg-success" />
             Available for select engineering work
           </p>
 
@@ -129,6 +129,7 @@ export function Hero() {
             height={640}
             fetchPriority="high"
             decoding="async"
+            loading="eager"
             className="relative aspect-square w-full rounded-[2rem] object-cover shadow-2xl"
           />
           <div className="absolute -bottom-3 -left-2 flex items-center gap-2 rounded-full bg-highlight px-3.5 py-2 text-xs font-semibold text-ink shadow-lg sm:-left-5">

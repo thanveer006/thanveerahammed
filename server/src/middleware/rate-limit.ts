@@ -11,3 +11,12 @@ export const contactRateLimit = rateLimit({
     message: "Too many messages sent — please try again later.",
   },
 });
+
+/** Generous per-IP cap on the whole API so a scraper can't hammer Mongo. */
+export const apiRateLimit = rateLimit({
+  windowMs: 60 * 1000,
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests" },
+});

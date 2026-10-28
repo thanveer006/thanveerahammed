@@ -15,6 +15,8 @@
   --color-highlight: var(--highlight);
   --color-coral: var(--coral);
   --color-indigo: var(--indigo);
+  --color-coral-text: var(--coral-text);
+  --color-indigo-text: var(--indigo-text);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-ring: var(--ring);
@@ -65,13 +67,13 @@
   --card-foreground: #11181c;
   --popover: #ffffff;
   --popover-foreground: #11181c;
-  --primary: #0f766e;
+  --primary: #0d6b64;
   --primary-foreground: #ffffff;
   --secondary: #ece8df;
   --secondary-foreground: #11181c;
   --muted: #ece8df;
   --muted-foreground: #5b635f;
-  --accent: #b45309;
+  --accent: #9a4a07;
   --accent-foreground: #ffffff;
   --accent-2: #0f766e;
   --accent-2-foreground: #ffffff;
@@ -80,7 +82,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: #ded8cb;
   --input: #ded8cb;
-  --ring: #0f766e;
+  --ring: #0d6b64;
   --radius: 0.75rem;
 
   /* Dark "ink" bands (hero, skills) stay dark in both themes. */
@@ -90,6 +92,9 @@
   --highlight: #f5b942;
   --coral: #e8664a;
   --indigo: #5b5bd6;
+  /* Text-safe (>=4.5:1 on cream and tinted cards) variants of the decorative accents. */
+  --coral-text: #b03a21;
+  --indigo-text: #4545b5;
 }
 
 /* Dark mode: same teal accent on a deep green-black surface. */
@@ -123,6 +128,8 @@
   --highlight: #fbbf24;
   --coral: #fb8a72;
   --indigo: #9a9cff;
+  --coral-text: #fb8a72;
+  --indigo-text: #9a9cff;
 }
 
 :root {
@@ -149,6 +156,9 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
     animation: none;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }
 

@@ -16,10 +16,24 @@ const here = dirname(fileURLToPath(import.meta.url));
 const outDir = join(here, "..", "src", "generated");
 const base = process.env.VITE_API_URL ?? "http://localhost:4000";
 
+// The API is on a free tier that cold-starts for up to ~a minute, so give each
+// request a generous timeout and retry a few times before giving up.
+const TIMEOUT_MS = 60_000;
+const ATTEMPTS = 3;
+
 async function get(path) {
-  const res = await fetch(base + path);
-  if (!res.ok) throw new Error(`${path} → ${res.status}`);
-  return res.json();
+  let lastErr;
+  for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+    try {
+      const res = await fetch(base + path, { signal: AbortSignal.timeout(TIMEOUT_MS) });
+      if (!res.ok) throw new Error(`${path} → ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      lastErr = err;
+      if (attempt < ATTEMPTS) await new Promise((r) => setTimeout(r, 2_000 * attempt));
+    }
+  }
+  throw lastErr;
 }
 
 async function main() {
@@ -61,6 +75,12 @@ async function main() {
         `, ${experience.length} experience, ${skills.categories.length} skill groups`
     );
   } catch (err) {
+    if (process.env.VERCEL) {
+      // Shipping an empty prerender to production is worse than keeping the
+      // previous deployment live, so fail the deploy build instead.
+      console.error(`snapshot: API unreachable at ${base} (${err.message}). Failing the Vercel build.`);
+      process.exit(1);
+    }
     console.warn(`snapshot: API unreachable at ${base} (${err.message}). Writing empty stub.`);
   }
 

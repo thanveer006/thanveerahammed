@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,11 +18,31 @@ export function ContactForm() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [pending, setPending] = useState(false);
   const reducedMotion = useReducedMotion();
+  // State updates are async, so a fast double-submit could slip past `disabled`.
+  const inFlight = useRef(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (inFlight.current) return;
     const form = e.currentTarget;
     const data = new FormData(form);
+
+    // noValidate is set (for consistent styling), so validate here.
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+    if (!name || !email || !message) {
+      setStatus("error");
+      setErrorMessage("Please fill in your name, email and message.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus("error");
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+
+    inFlight.current = true;
     setPending(true);
     setStatus("idle");
     setErrorMessage(undefined);
@@ -37,9 +57,9 @@ export function ContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: String(data.get("name") ?? ""),
-          email: String(data.get("email") ?? ""),
-          message: String(data.get("message") ?? ""),
+          name,
+          email,
+          message,
           company: String(data.get("company") ?? ""),
         }),
         signal: controller.signal,
@@ -72,6 +92,7 @@ export function ContactForm() {
       );
     } finally {
       clearTimeout(timeout);
+      inFlight.current = false;
       setPending(false);
     }
   }

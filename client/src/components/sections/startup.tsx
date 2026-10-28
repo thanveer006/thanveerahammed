@@ -66,7 +66,7 @@ export function Startup() {
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link href={startup.instagram} target="_blank" rel="noopener noreferrer">
-                  <SiInstagram size={16} color="currentColor" title="" />
+                  <SiInstagram size={16} color="currentColor" aria-hidden />
                   Instagram
                 </Link>
               </Button>
@@ -92,7 +92,7 @@ export function Startup() {
             <ol className="grid grid-cols-2 gap-3">
               {steps.map((s, i) => (
                 <li key={s} className="flex items-start gap-3 text-sm">
-                  <span className="font-heading text-xl leading-none font-semibold text-highlight">
+                  <span className="font-heading text-xl leading-none font-semibold text-accent">
                     {i + 1}
                   </span>
                   <span className="text-pretty">{s}</span>

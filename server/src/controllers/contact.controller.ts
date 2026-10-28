@@ -7,7 +7,12 @@ const requiredField = { required_error: "Please fill in every field." };
 
 export const contactSchema = z.object({
   name: z.string(requiredField).trim().min(1, "Please fill in every field.").max(200),
-  email: z.string(requiredField).trim().min(1, "Please fill in every field.").max(320),
+  email: z
+    .string(requiredField)
+    .trim()
+    .min(1, "Please fill in every field.")
+    .max(320)
+    .email("Please enter a valid email address."),
   message: z
     .string(requiredField)
     .trim()
@@ -18,10 +23,6 @@ export const contactSchema = z.object({
 });
 
 type ContactInput = z.infer<typeof contactSchema>;
-
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
 
 export async function submitContact(
   req: Request<unknown, unknown, ContactInput>,
@@ -34,34 +35,31 @@ export async function submitContact(
     return res.json({ status: "success" });
   }
 
-  if (!isValidEmail(email)) {
-    return res
-      .status(400)
-      .json({ status: "error", message: "Please enter a valid email address." });
-  }
-
   const result = await sendContactEmail({ name, email, message });
 
-  // Persist the submission, de-duplicating retries: if the same person resends
-  // the same message within 10 minutes (e.g. after an "email not configured"
-  // error), update that row instead of inserting a new one.
-  const since = new Date(Date.now() - 10 * 60 * 1000);
-  const existing = await Message.findOne({
-    email,
-    message,
-    createdAt: { $gte: since },
-  });
-  if (existing) {
-    await Message.findByIdAndUpdate(existing._id, { emailed: result.ok });
-  } else {
-    await Message.create({
-      name,
-      email,
-      message,
-      emailed: result.ok,
-      userAgent: req.get("user-agent"),
-      ip: req.ip,
-    });
+  // Persisting is best-effort once the email went out: a DB hiccup must not turn
+  // a delivered message into an error the visitor retries (duplicate emails).
+  // De-duplicate retries: the same person resending the same message within 10
+  // minutes (e.g. after an "email not configured" error) updates that row.
+  try {
+    const since = new Date(Date.now() - 10 * 60 * 1000);
+    const existing = await Message.findOneAndUpdate(
+      { email, message, createdAt: { $gte: since } },
+      { emailed: result.ok }
+    );
+    if (!existing) {
+      await Message.create({
+        name,
+        email,
+        message,
+        emailed: result.ok,
+        userAgent: req.get("user-agent")?.slice(0, 500),
+        ip: req.ip,
+      });
+    }
+  } catch (err) {
+    console.error("Contact form: failed to store message:", err);
+    if (!result.ok) throw err;
   }
 
   if (!result.ok) {

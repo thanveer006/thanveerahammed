@@ -56,7 +56,7 @@ export function Nav() {
       >
         <Link
           href="/"
-          className="group mr-4 flex shrink-0 items-center gap-2 font-semibold tracking-tight whitespace-nowrap text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+          className="group mr-4 flex min-h-11 shrink-0 items-center gap-2 font-semibold tracking-tight whitespace-nowrap text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
         >
           <Logo className="size-6 shrink-0 text-primary" />
           <span>Thanveer Ahammed</span>
@@ -71,7 +71,7 @@ export function Nav() {
                 href={link.href}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
-                  "relative py-1 text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm",
+                  "relative inline-flex min-h-8 items-center py-1 text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm",
                   isActive ? "text-foreground font-medium" : "text-muted-foreground"
                 )}
               >
@@ -115,7 +115,7 @@ export function Nav() {
                         href={link.href}
                         aria-current={isActive ? "true" : undefined}
                         className={cn(
-                          "rounded-md px-3 py-2.5 text-base hover:bg-secondary",
+                          "block rounded-md px-3 py-3 text-base hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                           isActive ? "text-primary font-medium" : "text-foreground"
                         )}
                       >

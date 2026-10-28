@@ -35,9 +35,9 @@ export default defineConfig({
         const dynamic: string[] = JSON.parse(
           readFileSync(new URL("./src/generated/routes.json", import.meta.url), "utf8")
         );
-        return [...staticPaths, ...dynamic];
+        return [...staticPaths, ...dynamic, "/404"];
       } catch {
-        return staticPaths;
+        return [...staticPaths, "/404"];
       }
     },
   },

@@ -4,12 +4,44 @@
  */
 export const apiBase = import.meta.env.VITE_API_URL ?? "";
 
-export async function apiFetch<T>(path: string): Promise<T> {
-  const res = await fetch(`${apiBase}${path}`, {
-    headers: { accept: "application/json" },
-  });
-  if (!res.ok) throw new Error(`Request failed: ${path} → ${res.status}`);
-  return res.json() as Promise<T>;
+/** The API runs on a free tier that can cold-start; bound every wait. */
+const REQUEST_TIMEOUT_MS = 30_000;
+
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    readonly status?: number
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
+export async function apiFetch<T>(path: string, signal?: AbortSignal): Promise<T> {
+  const controller = new AbortController();
+  const onAbort = () => controller.abort();
+  if (signal?.aborted) controller.abort();
+  else signal?.addEventListener("abort", onAbort, { once: true });
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, REQUEST_TIMEOUT_MS);
+
+  try {
+    const res = await fetch(`${apiBase}${path}`, {
+      headers: { accept: "application/json" },
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new ApiError(`Request failed: ${path} → ${res.status}`, res.status);
+    return (await res.json()) as T;
+  } catch (err) {
+    if (timedOut) throw new ApiError(`Request timed out: ${path}`);
+    throw err;
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener("abort", onAbort);
+  }
 }
 
 export const rssUrl = `${apiBase}/rss.xml`;

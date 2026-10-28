@@ -6,20 +6,29 @@ import { z } from "zod";
 // Load server/.env regardless of the process's cwd (dist/ is two levels deep).
 dotenv.config({ path: resolve(dirname(fileURLToPath(import.meta.url)), "../../.env") });
 
+// Blank values (`KEY=` in .env, or an unset-but-declared var on a host) mean "not set".
+const raw = Object.fromEntries(
+  Object.entries(process.env).filter(([, v]) => v !== undefined && v.trim() !== "")
+);
+
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-  PORT: z.coerce.number().default(4000),
+  PORT: z.coerce.number().int().min(1).max(65535).default(4000),
   CLIENT_URL: z.string().default("http://localhost:5173"),
-  PUBLIC_SITE_URL: z.string().url().default("https://thanveerahammed.in"),
+  PUBLIC_SITE_URL: z
+    .string()
+    .url()
+    .default("https://thanveerahammed.in")
+    .transform((v) => v.replace(/\/+$/, "")),
   MONGODB_URI: z.string().min(1, "MONGODB_URI is required"),
   RESEND_API_KEY: z.string().optional(),
-  CONTACT_TO_EMAIL: z.string().optional(),
+  CONTACT_TO_EMAIL: z.string().email("CONTACT_TO_EMAIL must be a valid email").optional(),
   CONTACT_FROM_EMAIL: z
     .string()
     .default("Portfolio Contact Form <onboarding@resend.dev>"),
 });
 
-const parsed = schema.safeParse(process.env);
+const parsed = schema.safeParse(raw);
 
 if (!parsed.success) {
   console.error("Invalid environment configuration:");
@@ -36,7 +45,9 @@ export const env = parsed.data;
  */
 export const allowedOrigins = Array.from(
   new Set([
-    ...env.CLIENT_URL.split(",").map((o) => o.trim()).filter(Boolean),
+    ...env.CLIENT_URL.split(",")
+      .map((o) => o.trim().replace(/\/+$/, ""))
+      .filter(Boolean),
     new URL(env.PUBLIC_SITE_URL).origin,
   ])
 );

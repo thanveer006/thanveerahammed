@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,14 +23,19 @@ function ScrollManager() {
     // can't start mid-animation while the new page is still mounting.
     const samePage = prevPathname.current === pathname;
     prevPathname.current = pathname;
-    const smooth = samePage && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const smooth =
+      samePage &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (hash) {
       const id = decodeURIComponent(hash.slice(1));
       let tries = 0;
       const tryScroll = () => {
         const el = document.getElementById(id);
         if (el) {
-          el.scrollIntoView({ block: "start", behavior: smooth ? "smooth" : "auto" });
+          el.scrollIntoView({
+            block: "start",
+            behavior: smooth ? "smooth" : "auto",
+          });
         } else if (tries++ < 10) {
           requestAnimationFrame(tryScroll);
         }
@@ -74,23 +79,29 @@ function PageTransition() {
 export function Layout() {
   return (
     <ThemeProvider>
-      <TooltipProvider delayDuration={200}>
-        <ScrollManager />
-        <div className="min-h-full flex flex-col bg-background text-foreground">
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-          >
-            Skip to content
-          </a>
-          <Nav />
-          <main id="main-content" className="flex-1">
-            <PageTransition />
-          </main>
-          <Footer />
-        </div>
-        <Analytics />
-      </TooltipProvider>
+      <MotionConfig reducedMotion="user">
+        <TooltipProvider delayDuration={200}>
+          <ScrollManager />
+          <div className="min-h-full flex flex-col bg-background text-foreground">
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+            >
+              Skip to content
+            </a>
+            <Nav />
+            <main
+              id="main-content"
+              tabIndex={-1}
+              className="flex-1 outline-none"
+            >
+              <PageTransition />
+            </main>
+            <Footer />
+          </div>
+          <Analytics />
+        </TooltipProvider>
+      </MotionConfig>
     </ThemeProvider>
   );
 }

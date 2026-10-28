@@ -22,12 +22,22 @@ async function main() {
     console.log(`API listening on http://localhost:${env.PORT} (${env.NODE_ENV})`);
   });
 
+  let shuttingDown = false;
   const shutdown = (signal: string) => {
+    if (shuttingDown) return;
+    shuttingDown = true;
     console.log(`${signal} received — shutting down.`);
     server.close(async () => {
-      await disconnectDB();
-      process.exit(0);
+      try {
+        await disconnectDB();
+        process.exit(0);
+      } catch (err) {
+        console.error("Error while disconnecting from MongoDB:", err);
+        process.exit(1);
+      }
     });
+    // Keep-alive sockets would otherwise hold close() open until the timeout.
+    server.closeIdleConnections();
     // Don't hang forever if connections won't drain.
     setTimeout(() => process.exit(1), 10_000).unref();
   };

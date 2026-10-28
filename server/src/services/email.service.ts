@@ -1,6 +1,12 @@
 import { Resend } from "resend";
 import { env } from "../config/env.js";
 
+const SEND_TIMEOUT_MS = 10_000;
+
+/** Collapses CR/LF and other control characters so user input can't break out of a header line. */
+// eslint-disable-next-line no-control-regex
+const singleLine = (value: string) => value.replace(/[\u0000-\u001f\u007f\u2028\u2029]+/g, " ").trim();
+
 export type SendResult = { ok: true } | { ok: false; reason: "unconfigured" | "error" };
 
 /**
@@ -24,13 +30,25 @@ export async function sendContactEmail(input: {
 
   try {
     const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({
-      from,
-      to,
-      replyTo: input.email,
-      subject: `New message from ${input.name} (portfolio site)`,
-      text: `From: ${input.name} <${input.email}>\n\n${input.message}`,
+    const name = singleLine(input.name).slice(0, 100) || "Anonymous";
+    const email = singleLine(input.email);
+    let timer: NodeJS.Timeout | undefined;
+    const timeout = new Promise<never>((_, reject) => {
+      timer = setTimeout(
+        () => reject(new Error(`Resend request timed out after ${SEND_TIMEOUT_MS}ms`)),
+        SEND_TIMEOUT_MS
+      );
     });
+    const { error } = await Promise.race([
+      resend.emails.send({
+        from,
+        to,
+        replyTo: email,
+        subject: `New message from ${name} (portfolio site)`,
+        text: `From: ${name} <${email}>\n\n${input.message}`,
+      }),
+      timeout,
+    ]).finally(() => clearTimeout(timer));
 
     if (error) {
       console.error("Resend error:", error);

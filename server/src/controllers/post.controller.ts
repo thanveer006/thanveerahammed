@@ -11,6 +11,7 @@ export async function listPosts(_req: Request, res: Response) {
 export async function getPost(req: Request, res: Response) {
   const post = await Post.findOne({ slug: req.params.slug }).lean();
   if (!post) {
+    res.removeHeader("Cache-Control");
     return res.status(404).json({ error: "Post not found" });
   }
   res.json(serializePost(post));

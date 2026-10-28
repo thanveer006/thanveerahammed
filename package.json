@@ -14,7 +14,8 @@
     "build": "npm run build --workspace server && npm run build --workspace client",
     "start": "npm run start --workspace server",
     "seed": "npm run seed --workspace server",
-    "lint": "npm run lint --workspace client && npm run lint --workspace server"
+    "lint": "npm run lint --workspace client && npm run lint --workspace server",
+    "test": "npm run test --workspace server"
   },
   "engines": {
     "node": ">=20 <23"
