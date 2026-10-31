@@ -62,7 +62,7 @@ export function ProjectsExplorer() {
             type="button"
             onClick={() => setActiveTag((t) => (t === tag ? null : tag))}
             aria-pressed={activeTag === tag}
-            className="inline-flex items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring py-0.5 pointer-coarse:min-h-11"
+            className="inline-flex items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring pointer-coarse:min-h-11"
           >
             <Badge
               variant={activeTag === tag ? "default" : "outline"}
