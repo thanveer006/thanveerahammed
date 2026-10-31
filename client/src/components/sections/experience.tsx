@@ -31,7 +31,7 @@ export function Experience() {
               />
               <div className="mb-3 md:mb-0 md:pr-4 md:text-right">
                 <p className="text-sm font-semibold text-primary">
-                  {entry.start} &ndash; {entry.end}
+                  {entry.start} to {entry.end}
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {entry.company}

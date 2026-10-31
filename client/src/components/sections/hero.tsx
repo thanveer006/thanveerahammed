@@ -63,7 +63,7 @@ export function Hero() {
 
           <p className="mt-6 max-w-xl text-lg text-ink-foreground/70 text-pretty">
             Software developer designing secure, scalable web applications, enterprise
-            systems, workflow automation, and AI-powered tools — from architecture to
+            systems, workflow automation, and AI-powered tools, from architecture to
             deployment.
           </p>
 

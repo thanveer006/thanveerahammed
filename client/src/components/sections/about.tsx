@@ -14,7 +14,7 @@ const languages = [
 const pillars = [
   {
     title: "Architecture",
-    body: "I design systems around how a business actually operates — data models, access boundaries, and integrations that hold up as requirements change.",
+    body: "I design systems around how a business actually operates: data models, access boundaries, and integrations that hold up as requirements change.",
   },
   {
     title: "Problem Solving",
@@ -22,7 +22,7 @@ const pillars = [
   },
   {
     title: "Applied AI & Automation",
-    body: "I use LLMs and automation tools where they remove real work — approvals, notifications, reporting — not as a feature for its own sake.",
+    body: "I use LLMs and automation tools where they remove real work, like approvals, notifications, and reporting, not as a feature for its own sake.",
   },
   {
     title: "Craft",
@@ -38,7 +38,7 @@ export function About() {
           <SectionHeading
             eyebrow="About"
             title="I build software that businesses run on."
-            description="Based in Kozhikode, Kerala, India. I work across the stack — from database schema to production deployment — with a focus on internal platforms, workflow automation, and applied AI for organizations that need software to actually work, every day."
+            description="Based in Kozhikode, Kerala, India. I work across the stack, from database schema to production deployment, with a focus on internal platforms, workflow automation, and applied AI for organizations that need software to actually work, every day."
             className="mb-8"
           />
           <Reveal delay={0.1}>
@@ -62,7 +62,7 @@ export function About() {
           {pillars.map((p, i) => (
             <li key={p.title}>
               <Reveal delay={i * 0.07} className="flex gap-5 py-7 sm:gap-8">
-                <span className="font-heading text-4xl leading-none font-semibold text-accent sm:text-5xl">
+                <span className="w-12 shrink-0 font-heading text-4xl leading-none font-semibold text-accent tabular-nums sm:w-16 sm:text-5xl">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>

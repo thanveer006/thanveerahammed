@@ -62,7 +62,7 @@ export function Seo({
       <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Thanveer Ahammed N — Software Developer" />
+      <meta property="og:image:alt" content="Thanveer Ahammed N, Software Developer" />
       {publishedTime ? (
         <meta property="article:published_time" content={publishedTime} />
       ) : null}

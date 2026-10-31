@@ -169,7 +169,7 @@ export function ContactForm() {
                   className={`flex items-center gap-2 text-sm ${isSuccess ? "text-success" : "text-destructive"}`}
                 >
                   <Icon className="size-4" />
-                  {isSuccess ? "Message sent — I'll get back to you soon." : errorMessage}
+                  {isSuccess ? "Message sent. I'll get back to you soon." : errorMessage}
                 </motion.p>
               );
             })()}

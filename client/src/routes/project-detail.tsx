@@ -120,7 +120,7 @@ export function Component() {
             {project.features.map((feature) => (
               <li
                 key={feature}
-                className="rounded-lg border border-border bg-card p-4 text-sm text-foreground/90 text-pretty"
+                className="rounded-lg border border-border bg-card p-4 text-sm text-foreground/90 text-pretty sm:[&:last-child:nth-child(odd)]:col-span-2"
               >
                 {feature}
               </li>

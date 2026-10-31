@@ -81,7 +81,7 @@
   --success-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
   --border: #ded8cb;
-  --input: #ded8cb;
+  --input: #858c82;
   --ring: #0d6b64;
   --radius: 0.75rem;
 
@@ -119,7 +119,7 @@
   --success-foreground: #042622;
   --destructive: oklch(0.704 0.191 22.216);
   --border: #22302c;
-  --input: #22302c;
+  --input: #6b7a74;
   --ring: #2dd4bf;
 
   --ink: #070c0b;

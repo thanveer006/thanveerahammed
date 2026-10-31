@@ -74,7 +74,7 @@ export function Contact() {
             </a>
           </div>
 
-          <div className="rounded-3xl bg-card p-6 text-card-foreground shadow-xl sm:p-8">
+          <div className="rounded-3xl bg-card p-6 text-card-foreground shadow-xl sm:p-8 lg:self-start">
             <ContactForm />
           </div>
         </div>

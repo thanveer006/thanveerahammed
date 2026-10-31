@@ -6,12 +6,12 @@ import { cn } from "@/lib/utils";
 const services = [
   {
     title: "Full-Stack Web Development",
-    body: "Production web applications and internal platforms built end to end with Next.js, TypeScript, and Node.js — from database schema to deployment.",
+    body: "Production web applications and internal platforms built end to end with Next.js, TypeScript, and Node.js, from database schema to deployment.",
     bar: "bg-primary",
   },
   {
     title: "AI Workflow Automation",
-    body: "Automation pipelines, APIs, and AI agents that remove repetitive manual work — approvals, notifications, reporting — without fragile automation nobody trusts.",
+    body: "Automation pipelines, APIs, and AI agents that remove repetitive manual work (approvals, notifications, reporting) without fragile automation nobody trusts.",
     bar: "bg-highlight",
   },
   {
@@ -21,7 +21,7 @@ const services = [
   },
   {
     title: "Enterprise Internal Tools",
-    body: "Role-based, secure systems — auth, RBAC, payroll, scheduling — for organizations replacing manual, spreadsheet-driven processes.",
+    body: "Role-based, secure systems (auth, RBAC, payroll, scheduling) for organizations replacing manual, spreadsheet-driven processes.",
     bar: "bg-indigo",
   },
 ];
@@ -32,7 +32,7 @@ export function Services() {
       <SectionHeading
         eyebrow="Services"
         title="What I can build for you."
-        description="Freelance and contract engineering work, focused on production systems — not demos."
+        description="Freelance and contract engineering work, focused on production systems, not demos."
       />
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">

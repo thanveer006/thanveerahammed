@@ -49,7 +49,7 @@ export function Startup() {
             <p className="mt-5 text-muted-foreground text-pretty">
               {startup.name} is an AI engineering team that embeds intelligence directly into the way
               businesses already work. We partner with companies to design, build, and deploy AI
-              agents, automations, and custom software — so teams save time, reduce manual work, and
+              agents, automations, and custom software, so teams save time, reduce manual work, and
               grow faster. I&apos;m the {startup.role}.
             </p>
 

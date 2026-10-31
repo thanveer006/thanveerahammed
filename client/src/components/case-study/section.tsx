@@ -9,7 +9,7 @@ export function CaseStudySection({
   children: ReactNode;
 }) {
   return (
-    <section className="border-t border-border py-12 first:border-t-0 first:pt-0">
+    <section className="border-t border-border py-12 first:border-t-0">
       <Reveal>
         <h2 className="font-heading mb-6 text-(length:--text-h3) font-semibold tracking-tight">
           {title}

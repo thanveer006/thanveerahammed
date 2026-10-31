@@ -3,7 +3,7 @@ import { SectionHeading } from "@/components/section-heading";
 
 export function Component() {
   return (
-    <div className="mx-auto max-w-2xl px-6 py-20">
+    <div className="mx-auto max-w-3xl px-6 py-20">
       <Seo title="Privacy Policy" description="How this site handles data." path="/privacy" />
       <SectionHeading as="h1" eyebrow="Legal" title="Privacy Policy" />
 

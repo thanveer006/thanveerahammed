@@ -25,7 +25,7 @@ export function Component() {
         />
         <a
           href={rssUrl}
-          className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground min-h-8 pointer-coarse:min-h-11"
         >
           <Rss className="size-4" />
           RSS
