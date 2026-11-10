@@ -1,0 +1,14 @@
+# Pings the API every ~10 minutes so Render's free tier doesn't sleep (it idles
+# out after ~15 min, making the first contact-form submit wait ~50s).
+name: keep-alive
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+permissions: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - run: curl -fsS --retry 3 --max-time 60 https://thanveerahammed-api.onrender.com/api/health
