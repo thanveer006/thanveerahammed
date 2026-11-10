@@ -14,6 +14,7 @@ import { dirname, join } from "node:path";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const outDir = join(here, "..", "src", "generated");
+const publicDir = join(here, "..", "public");
 const base = process.env.VITE_API_URL ?? "http://localhost:4000";
 
 // The API is on a free tier that cold-starts for up to ~a minute, so give each
@@ -91,6 +92,37 @@ async function main() {
       `export const snapshot: Snapshot = ${JSON.stringify(snapshot, null, 2)};\n`
   );
   writeFileSync(join(outDir, "routes.json"), JSON.stringify(routes, null, 2) + "\n");
+  writeSitemap(snapshot);
+}
+
+/**
+ * Writes public/sitemap.xml so it ships as a static file from the CDN. Proxying it
+ * (and robots.txt) to the free-tier API risked 30s+ cold-start timeouts, which
+ * Googlebot treats as the site being blocked.
+ */
+function writeSitemap(snap) {
+  const site = (process.env.PUBLIC_SITE_URL ?? "https://thanveerahammed.in").replace(/\/+$/, "");
+  const esc = (v) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const iso = (d) => {
+    const t = new Date(d);
+    return Number.isNaN(t.getTime()) ? undefined : t.toISOString().slice(0, 10);
+  };
+  const entries = [
+    ...["", "/projects", "/blog", "/resume", "/uses", "/now", "/privacy"].map((p) => ({ loc: site + p })),
+    ...snap.projects.map((p) => ({ loc: `${site}/projects/${p.slug}` })),
+    ...snap.posts.map((p) => ({ loc: `${site}/blog/${p.slug}`, lastmod: iso(p.date) })),
+  ];
+  const body = entries
+    .map(
+      (e) =>
+        `  <url>\n    <loc>${esc(e.loc)}</loc>${e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : ""}\n  </url>`
+    )
+    .join("\n");
+  mkdirSync(publicDir, { recursive: true });
+  writeFileSync(
+    join(publicDir, "sitemap.xml"),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`
+  );
 }
 
 main();

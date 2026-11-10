@@ -10,14 +10,6 @@
     {
       "source": "/rss.xml",
       "destination": "https://thanveerahammed-api.onrender.com/rss.xml"
-    },
-    {
-      "source": "/sitemap.xml",
-      "destination": "https://thanveerahammed-api.onrender.com/sitemap.xml"
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "https://thanveerahammed-api.onrender.com/robots.txt"
     }
   ],
   "headers": [
