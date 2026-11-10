@@ -37,6 +37,9 @@ export function ProjectsExplorer() {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            name="q"
+            type="search"
+            autoComplete="off"
             placeholder="Search projects..."
             className="pl-11"
             aria-label="Search projects"

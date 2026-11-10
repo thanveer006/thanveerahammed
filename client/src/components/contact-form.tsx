@@ -111,6 +111,7 @@ export function ContactForm() {
           <Input
             id="name"
             name="name"
+            autoComplete="name"
             placeholder="Your name"
             required
             maxLength={200}
@@ -124,6 +125,7 @@ export function ContactForm() {
             id="email"
             name="email"
             type="email"
+            autoComplete="email"
             placeholder="you@company.com"
             required
             maxLength={320}
