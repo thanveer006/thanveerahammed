@@ -9,7 +9,7 @@ export function ArchitectureDiagram({ layers }: { layers: ArchitectureLayer[] })
         <li key={layer.layer} className="relative">
           <span
             aria-hidden
-            className="absolute top-5 -left-8 size-3.75 rounded-full border-[3px] border-background bg-primary"
+            className="absolute top-5 -left-8 size-3.75 rounded-full border-[3px] border-background bg-accent"
           />
           <div className="rounded-2xl border border-border bg-card p-4 sm:p-5">
             <p className="mb-1 font-mono text-xs font-medium tracking-[0.18em] text-accent uppercase">

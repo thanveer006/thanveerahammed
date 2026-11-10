@@ -20,18 +20,9 @@ function Word({
   );
 }
 
-/**
- * Scroll-scrubbed statement: words light up one by one as the paragraph crosses the
- * viewport, and dim again when scrolling back. Falls back to plain text under
- * reduced motion. The full sentence stays available to assistive tech.
- */
-export function ScrollText({ text, className }: { text: string; className?: string }) {
+function ScrubbedText({ words, text, className }: { words: string[]; text: string; className?: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
-  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
-  const words = text.split(" ");
-
-  if (reduced) return <p className={className}>{text}</p>;
 
   return (
     <p ref={ref} className={cn("flex flex-wrap gap-x-[0.28em]", className)}>
@@ -49,4 +40,20 @@ export function ScrollText({ text, className }: { text: string; className?: stri
       })}
     </p>
   );
+}
+
+/**
+ * Scroll-scrubbed statement: words light up one by one as the paragraph crosses the
+ * viewport, and dim again when scrolling back. Under reduced motion it renders plain
+ * text and registers no scroll listener (the scrubbing lives in a child component, so
+ * the hooks are never called in that branch). The full sentence stays available to
+ * assistive tech.
+ */
+export function ScrollText({ text, className }: { text: string; className?: string }) {
+  const reduced = useReducedMotion();
+  // Split on any whitespace run so double/trailing spaces never create empty words.
+  const words = text.split(/\s+/).filter(Boolean);
+
+  if (reduced) return <p className={className}>{words.join(" ")}</p>;
+  return <ScrubbedText words={words} text={words.join(" ")} className={className} />;
 }

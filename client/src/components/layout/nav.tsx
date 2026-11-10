@@ -66,13 +66,13 @@ export function Nav() {
     <header className="sticky top-0 z-50 px-3 pt-3 sm:px-6">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 rounded-full border border-border bg-background/70 py-2 pr-2 pl-4 shadow-[0_8px_32px_-12px_rgb(0_0_0/0.45)] backdrop-blur-xl backdrop-saturate-150"
+        className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 rounded-full border border-border bg-background/90 py-2 pr-2 pl-4 shadow-[0_8px_32px_-12px_rgb(0_0_0/0.45)] backdrop-blur-xl backdrop-saturate-150"
       >
         <Link
           href="/"
           className="group flex min-h-11 shrink-0 items-center gap-2.5 rounded-full font-semibold tracking-tight whitespace-nowrap text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <Logo className="size-7 shrink-0 text-primary transition-transform duration-300 group-hover:-rotate-6" />
+          <Logo className="size-7 shrink-0 transition-transform duration-300 group-hover:-rotate-6" />
           <span className="hidden sm:inline">Thanveer Ahammed</span>
         </Link>
 
@@ -136,7 +136,7 @@ export function Nav() {
                       )}
                     >
                       {link.label}
-                      {isActive(link.href) && <span aria-hidden className="size-1.5 rounded-full bg-primary" />}
+                      {isActive(link.href) && <span aria-hidden className="size-1.5 rounded-full bg-accent" />}
                     </Link>
                   </SheetClose>
                 ))}

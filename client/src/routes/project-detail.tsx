@@ -121,7 +121,7 @@ export function Component() {
               <p className="mb-2 font-mono text-xs tracking-[0.18em] text-muted-foreground uppercase">Problem</p>
               <p className="text-foreground/90 text-pretty">{project.problem}</p>
             </div>
-            <div className="rounded-2xl border border-primary/40 bg-card p-6">
+            <div className="rounded-2xl border border-accent/40 bg-card p-6">
               <p className="mb-2 font-mono text-xs tracking-[0.18em] text-accent uppercase">Solution</p>
               <p className="text-foreground/90 text-pretty">{project.solution}</p>
             </div>

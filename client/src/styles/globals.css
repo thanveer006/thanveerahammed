@@ -96,6 +96,10 @@
   --ink-foreground: #f2f3f5;
   --brand-light: #c6f135;
   --nav-height: 4.5rem;
+  /* Real height of the floating header (pt-3 + h-14); the hero pulls up by this much. */
+  --header-height: 4.25rem;
+  --logo-tile: #08090c;
+  --logo-glyph: #c6f135;
 }
 
 .dark {
@@ -121,6 +125,8 @@
   --warning: #fbbf24;
   --info: #7aa7ff;
   --destructive: #ff7a70;
+  --logo-tile: #c6f135;
+  --logo-glyph: #0c0e04;
 }
 
 @keyframes marquee {

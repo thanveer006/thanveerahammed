@@ -3,6 +3,7 @@ import { Link } from "@/components/link";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { Logo } from "@/components/logo";
 import { startup } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 const socials = [
   { href: "mailto:thanveerahd06@gmail.com", label: "Email", icon: Mail },
@@ -51,7 +52,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Link href="/" className="inline-flex items-center gap-2.5 rounded-full text-lg font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light">
-              <Logo className="size-8 text-primary" />
+              <Logo className="size-8 [--logo-glyph:#0c0e04] [--logo-tile:#c6f135]" />
               Thanveer Ahammed N
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-foreground/60 text-pretty">
@@ -62,7 +63,7 @@ export function Footer() {
               href={startup.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${footLink} mt-3 text-ink-foreground`}
+              className={cn(footLink, "mt-3 text-ink-foreground")}
             >
               Founder, {startup.name}
               <ArrowUpRight className="size-3.5" />
@@ -71,9 +72,9 @@ export function Footer() {
 
           {columns.map((col) => (
             <nav key={col.title} aria-label={`Footer ${col.title}`}>
-              <h2 className="mb-3 font-mono text-xs font-medium tracking-[0.18em] text-ink-foreground/45 uppercase">
+              <p aria-hidden className="mb-3 font-mono text-xs font-medium tracking-[0.18em] text-ink-foreground/45 uppercase">
                 {col.title}
-              </h2>
+              </p>
               <ul>
                 {col.links.map((link) => (
                   <li key={link.href}>

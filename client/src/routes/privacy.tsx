@@ -41,7 +41,7 @@ export function Component() {
             Questions about this policy can be sent to{" "}
             <a
               href="mailto:thanveerahd06@gmail.com"
-              className="text-foreground underline decoration-primary underline-offset-4"
+              className="text-foreground underline decoration-accent underline-offset-4"
             >
               thanveerahd06@gmail.com
             </a>

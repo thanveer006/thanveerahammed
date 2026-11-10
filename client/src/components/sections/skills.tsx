@@ -22,7 +22,7 @@ export function Skills() {
           <Reveal key={category.name} delay={(i % 4) * 0.06} className="bg-background">
             <div className="h-full p-7">
               <h3 className="mb-5 flex items-center gap-2.5 text-lg font-semibold">
-                <span aria-hidden className="size-1.5 rounded-full bg-primary" />
+                <span aria-hidden className="size-1.5 rounded-full bg-accent" />
                 {category.name}
               </h3>
               <ul className="space-y-2.5 text-sm text-muted-foreground">
@@ -45,7 +45,7 @@ export function Skills() {
           {highlightedIntegrations.map((item) => (
             <span
               key={item}
-              className="rounded-full border border-border bg-card/50 px-3.5 py-1.5 text-sm text-foreground/85 transition-colors hover:border-primary hover:text-accent"
+              className="rounded-full border border-border bg-card/50 px-3.5 py-1.5 text-sm text-foreground/85 transition-colors hover:border-accent hover:text-accent"
             >
               {item}
             </span>

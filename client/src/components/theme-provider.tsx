@@ -19,9 +19,11 @@ function applyTheme(theme: Theme) {
 }
 
 /**
- * Minimal class-based theme provider (replaces next-themes). Dark is opt-in,
- * default is light, choice persists in localStorage. An inline script in
- * index.html applies the stored value before first paint to avoid a flash.
+ * Minimal class-based theme provider (replaces next-themes). Dark is the
+ * default (a deliberate design choice, not derived from `prefers-color-scheme`);
+ * light is opt-in and persists in localStorage. Three places assume dark and must
+ * change together: `<html class="dark">` in index.html, the inline script there
+ * (which removes the class for a stored "light"), and the initial state below.
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = React.useState<Theme>("dark");

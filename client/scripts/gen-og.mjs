@@ -16,13 +16,14 @@ const here = dirname(fileURLToPath(import.meta.url));
 const publicDir = process.env.PUBLIC_DIR ?? join(here, "..", "public");
 mkdirSync(publicDir, { recursive: true });
 
-const regular = readFileSync("C:/Windows/Fonts/segoeui.ttf");
-const bold = readFileSync("C:/Windows/Fonts/segoeuib.ttf");
+// Fonts: set FONT_REGULAR / FONT_BOLD to any TTF paths to build on macOS/Linux;
+// the defaults are the Windows system Segoe UI files.
+const regular = readFileSync(process.env.FONT_REGULAR ?? "C:/Windows/Fonts/segoeui.ttf");
+const bold = readFileSync(process.env.FONT_BOLD ?? "C:/Windows/Fonts/segoeuib.ttf");
 const portrait = `data:image/jpeg;base64,${readFileSync(join(publicDir, "founder.jpg")).toString("base64")}`;
 
 const INK = "#08090c";
-const TEAL = "#c6f135";
-const AMBER = "#f2f3f5";
+const LIME = "#c6f135";
 const TEXT = "#f2f3f5";
 
 const tree = {
@@ -64,7 +65,7 @@ const tree = {
             },
             {
               type: "div",
-              props: { style: { display: "flex", color: AMBER, fontSize: 32, fontWeight: 700, marginBottom: 14 }, children: "Thanveer Ahammed N" },
+              props: { style: { display: "flex", color: TEXT, fontSize: 32, fontWeight: 700, marginBottom: 14 }, children: "Thanveer Ahammed N" },
             },
             {
               type: "div",
@@ -78,17 +79,17 @@ const tree = {
                       style: { display: "flex" },
                       children: [
                         { type: "span", props: { style: { marginRight: 14 }, children: "building" } },
-                        { type: "span", props: { style: { color: TEAL }, children: "software" } },
+                        { type: "span", props: { style: { color: LIME }, children: "software" } },
                       ],
                     },
                   },
-                  { type: "div", props: { style: { display: "flex", color: TEAL }, children: "businesses run on." } },
+                  { type: "div", props: { style: { display: "flex", color: LIME }, children: "businesses run on." } },
                 ],
               },
             },
             {
               type: "div",
-              props: { style: { display: "flex", color: TEAL, fontSize: 28, marginTop: 34 }, children: "thanveerahammed.in" },
+              props: { style: { display: "flex", color: LIME, fontSize: 28, marginTop: 34 }, children: "thanveerahammed.in" },
             },
           ],
         },

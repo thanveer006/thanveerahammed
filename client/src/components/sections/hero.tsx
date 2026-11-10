@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Download, MapPin, ArrowDown } from "lucide-react";
 import { Link } from "@/components/link";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
@@ -31,6 +31,10 @@ export function Hero() {
 
   const copyY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 120]);
   const copyOpacity = useTransform(scrollYProgress, [0, 0.75], reduced ? [1, 1] : [1, 0]);
+  // Once the copy has faded out, take its links/buttons out of the tab order and
+  // hit-testing so keyboard focus never lands on invisible controls.
+  const [copyHidden, setCopyHidden] = useState(false);
+  useMotionValueEvent(copyOpacity, "change", (v) => setCopyHidden(v < 0.1));
   const portraitY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -70]);
   const portraitScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 1.08]);
   const glowY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 220]);
@@ -39,7 +43,7 @@ export function Hero() {
     <section
       ref={ref}
       id="hero"
-      className="noise relative -mt-17 scroll-mt-(--nav-height) overflow-hidden bg-ink text-ink-foreground"
+      className="noise relative -mt-(--header-height) scroll-mt-(--nav-height) overflow-hidden bg-ink text-ink-foreground"
     >
       <div
         aria-hidden
@@ -52,7 +56,11 @@ export function Hero() {
       />
 
       <div className="relative mx-auto grid min-h-[min(100dvh,60rem)] max-w-6xl grid-cols-1 items-center gap-14 px-6 pt-28 pb-20 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12 lg:pt-32">
-        <motion.div style={{ y: copyY, opacity: copyOpacity }} className="order-2 lg:order-1">
+        <motion.div
+          style={{ y: copyY, opacity: copyOpacity }}
+          inert={copyHidden}
+          className="order-2 lg:order-1"
+        >
           <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/4 py-1.5 pr-4 pl-3 font-mono text-xs text-ink-foreground/80">
             <span aria-hidden className="relative flex size-2">
               <span className="absolute inset-0 rounded-full bg-success motion-safe:animate-[pulse-ring_2s_ease-out_infinite]" />

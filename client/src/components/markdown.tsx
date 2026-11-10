@@ -28,7 +28,7 @@ const components: Components = {
     const external = /^https?:\/\//i.test(href ?? "");
     return (
       <a
-        className="text-foreground underline decoration-primary decoration-2 underline-offset-4 transition-colors hover:bg-primary hover:text-primary-foreground"
+        className="text-foreground underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:bg-primary hover:text-primary-foreground"
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         {...props}
@@ -46,7 +46,7 @@ const components: Components = {
     />
   ),
   blockquote: ({ node: _node, ...props }) => (
-    <blockquote className="mb-5 border-l-2 border-primary pl-5 font-serif text-xl text-foreground/80 italic" {...props} />
+    <blockquote className="mb-5 border-l-2 border-accent pl-5 font-serif text-xl text-foreground/80 italic" {...props} />
   ),
   hr: ({ node: _node, ...props }) => <hr className="my-10 border-border" {...props} />,
 };

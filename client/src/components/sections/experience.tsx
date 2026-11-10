@@ -33,7 +33,7 @@ export function Experience() {
         <motion.span
           aria-hidden
           style={{ scaleY: reduced ? 1 : draw }}
-          className="absolute top-2 bottom-2 left-1 w-0.75 origin-top rounded-full bg-primary md:left-57"
+          className="absolute top-2 bottom-2 left-1 w-0.75 origin-top rounded-full bg-accent md:left-57"
         />
 
         {experience.map((entry, i) => (
@@ -42,7 +42,7 @@ export function Experience() {
               <span
                 aria-hidden
                 className={`absolute top-1.5 left-0 size-3.25 rounded-full border-[3px] border-background md:left-56 ${
-                  i === 0 ? "bg-primary ring-4 ring-primary/25" : "bg-muted-foreground"
+                  i === 0 ? "bg-accent ring-4 ring-accent/25" : "bg-muted-foreground"
                 }`}
               />
               <div className="mb-3 md:mb-0 md:pr-4 md:text-right">
