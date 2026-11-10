@@ -24,7 +24,7 @@ export default defineConfig({
     },
   },
   ssgOptions: {
-    script: "async",
+    script: "defer",
     formatting: "none",
     // Static routes come from the route table; dynamic project/blog pages are
     // expanded from src/generated/routes.json, written by
