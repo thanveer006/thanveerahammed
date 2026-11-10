@@ -1,7 +1,7 @@
 import { Section } from "@/components/section";
-import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
-import { Badge } from "@/components/ui/badge";
+import { ScrollText } from "@/components/scroll-text";
+import { SpotlightCard } from "@/components/spotlight-card";
 
 const languages = [
   { name: "Malayalam", level: "Native / Bilingual" },
@@ -30,50 +30,57 @@ const pillars = [
   },
 ];
 
+const statement =
+  "I build software that businesses run on. From the database schema to production deployment, I focus on internal platforms, workflow automation, and applied AI for organizations that need software to actually work, every day.";
+
 export function About() {
   return (
     <Section id="about">
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-        <div className="lg:sticky lg:top-28 lg:self-start">
-          <SectionHeading
-            eyebrow="About"
-            title="I build software that businesses run on."
-            description="Based in Kozhikode, Kerala, India. I work across the stack, from database schema to production deployment, with a focus on internal platforms, workflow automation, and applied AI for organizations that need software to actually work, every day."
-            className="mb-8"
-          />
-          <Reveal delay={0.1}>
-            <p className="mb-3 text-sm font-medium text-muted-foreground">Languages</p>
-            <div className="flex flex-wrap gap-2">
-              {languages.map((lang) => (
-                <Badge
-                  key={lang.name}
-                  variant="outline"
-                  className="rounded-full border-border bg-card px-3 py-1 font-normal"
-                >
-                  {lang.name}
-                  <span className="ml-1.5 text-muted-foreground">&middot; {lang.level}</span>
-                </Badge>
-              ))}
-            </div>
-          </Reveal>
-        </div>
+      <Reveal>
+        <p className="mb-8 flex items-center gap-3 font-mono text-xs font-medium tracking-[0.18em] text-accent uppercase">
+          <span className="opacity-60">01</span>
+          <span aria-hidden className="h-px w-8 bg-current opacity-60" />
+          About
+        </p>
+      </Reveal>
 
-        <ol className="divide-y divide-border border-y border-border">
-          {pillars.map((p, i) => (
-            <li key={p.title}>
-              <Reveal delay={i * 0.07} className="flex gap-5 py-7 sm:gap-8">
-                <span className="w-12 shrink-0 font-heading text-4xl leading-none font-semibold text-accent tabular-nums sm:w-16 sm:text-5xl">
+      {/* Scroll-scrubbed manifesto: each word lights up as it crosses the viewport. */}
+      <h2 className="sr-only">About</h2>
+      <ScrollText
+        text={statement}
+        className="max-w-5xl text-[clamp(1.75rem,1.2rem+2.6vw,3.75rem)] leading-[1.12] font-semibold tracking-[-0.035em]"
+      />
+
+      <div className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-2">
+        <span className="mr-2 font-mono text-xs tracking-[0.18em] text-muted-foreground uppercase">
+          Languages
+        </span>
+        {languages.map((lang) => (
+          <span
+            key={lang.name}
+            className="rounded-full border border-border bg-card/50 px-3 py-1 text-sm text-foreground"
+          >
+            {lang.name}
+            <span className="ml-1.5 text-muted-foreground">&middot; {lang.level}</span>
+          </span>
+        ))}
+      </div>
+
+      <ol className="mt-20 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {pillars.map((p, i) => (
+          <li key={p.title}>
+            <Reveal delay={(i % 2) * 0.08} className="h-full">
+              <SpotlightCard className="h-full p-7 transition-colors hover:border-foreground/25 sm:p-8">
+                <span className="font-mono text-sm text-accent tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <div>
-                  <h3 className="mb-2 text-lg font-semibold">{p.title}</h3>
-                  <p className="text-muted-foreground text-pretty">{p.body}</p>
-                </div>
-              </Reveal>
-            </li>
-          ))}
-        </ol>
-      </div>
+                <h3 className="mt-6 mb-3 text-2xl font-semibold tracking-tight">{p.title}</h3>
+                <p className="text-muted-foreground text-pretty">{p.body}</p>
+              </SpotlightCard>
+            </Reveal>
+          </li>
+        ))}
+      </ol>
     </Section>
   );
 }

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 const tones = {
   base: "",
-  tinted: "bg-secondary/60",
+  tinted: "bg-card/50 border-y border-border",
   ink: "bg-ink text-ink-foreground",
 } as const;
 
@@ -23,7 +23,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn("scroll-mt-(--nav-height) py-20 sm:py-28", tones[tone], className)}
+      className={cn("relative scroll-mt-(--nav-height) py-24 sm:py-32", tones[tone], className)}
     >
       <div className="mx-auto max-w-6xl px-6">{children}</div>
     </section>

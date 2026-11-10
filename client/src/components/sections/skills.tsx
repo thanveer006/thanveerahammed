@@ -8,22 +8,28 @@ export function Skills() {
   const { categories: skillCategories, highlightedIntegrations } = skills;
 
   return (
-    <Section id="skills" tone="ink">
+    <Section id="skills">
       <SectionHeading
-        onDark
+        index="05"
         eyebrow="Skills"
-        title="A stack built around shipping real systems."
+        title="A stack built around"
+        accent="shipping real systems."
         description="Organized by where each piece sits in a production system, not a logo wall."
       />
 
-      <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {skillCategories.map((category, i) => (
-          <Reveal key={category.name} delay={(i % 4) * 0.06}>
-            <div className="h-full border-t-2 border-brand-light/70 pt-4">
-              <h3 className="mb-4 font-heading text-lg font-semibold">{category.name}</h3>
-              <ul className="space-y-2 text-sm text-ink-foreground/70">
+          <Reveal key={category.name} delay={(i % 4) * 0.06} className="bg-background">
+            <div className="h-full p-7">
+              <h3 className="mb-5 flex items-center gap-2.5 text-lg font-semibold">
+                <span aria-hidden className="size-1.5 rounded-full bg-primary" />
+                {category.name}
+              </h3>
+              <ul className="space-y-2.5 text-sm text-muted-foreground">
                 {category.skills.map((skill) => (
-                  <li key={skill}>{skill}</li>
+                  <li key={skill} className="transition-colors hover:text-foreground">
+                    {skill}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -31,15 +37,15 @@ export function Skills() {
         ))}
       </div>
 
-      <Reveal delay={0.2} className="mt-14 border-t border-white/10 pt-8">
-        <p className="mb-4 text-sm font-medium text-ink-foreground/60">
+      <Reveal delay={0.2} className="mt-14">
+        <p className="mb-4 font-mono text-xs tracking-[0.18em] text-muted-foreground uppercase">
           Integrations shipped in production
         </p>
         <div className="flex flex-wrap gap-2">
           {highlightedIntegrations.map((item) => (
             <span
               key={item}
-              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-ink-foreground/85 transition-colors hover:border-highlight/70 hover:text-highlight"
+              className="rounded-full border border-border bg-card/50 px-3.5 py-1.5 text-sm text-foreground/85 transition-colors hover:border-primary hover:text-accent"
             >
               {item}
             </span>

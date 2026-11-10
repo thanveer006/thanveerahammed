@@ -6,6 +6,7 @@ import { siteUrl } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import { usePost } from "@/lib/queries";
 import { Markdown } from "@/components/markdown";
+import { Breadcrumbs } from "@/components/page-header";
 
 export function Component() {
   const { slug = "" } = useParams();
@@ -15,15 +16,13 @@ export function Component() {
     return (
       <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-6 py-20 text-center">
         <Seo title="Post not found" path={`/blog/${slug}`} noIndex />
-        <p className="font-mono text-sm text-primary">{loading ? "Loading…" : "404"}</p>
+        <p className="font-mono text-sm text-accent">{loading ? "Loading…" : "404"}</p>
         {!loading && (
           <>
-            <h1 className="font-heading mt-3 text-(length:--text-h3) font-semibold tracking-tight">
-              Post not found.
-            </h1>
+            <h1 className="mt-3 text-(length:--text-h3) font-semibold">Post not found.</h1>
             <Button asChild className="mt-8">
               <Link href="/blog">
-                <ArrowLeft className="size-4" />
+                <ArrowLeft />
                 Back to blog
               </Link>
             </Button>
@@ -44,7 +43,7 @@ export function Component() {
   };
 
   return (
-    <article className="mx-auto max-w-2xl px-6 py-20">
+    <article className="mx-auto max-w-3xl px-6 pt-12 pb-28">
       <Seo
         title={post.title}
         description={post.description}
@@ -54,45 +53,54 @@ export function Component() {
         jsonLd={articleJsonLd}
       />
 
-      <Button asChild variant="ghost" size="sm" className="mb-8 -ml-3">
-        <Link href="/blog">
-          <ArrowLeft className="size-4" />
-          Back to blog
-        </Link>
-      </Button>
+      <Breadcrumbs
+        className="mb-12"
+        items={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: post.title }]}
+      />
 
-      <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-        <time dateTime={post.date}>
-          {new Date(post.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </time>
-        <span aria-hidden>&middot;</span>
-        <span className="flex items-center gap-1">
-          <Clock className="size-3.5" />
-          {post.readingTime}
-        </span>
-      </div>
-
-      <h1 className="font-heading mb-4 text-(length:--text-h1) leading-[1.1] font-semibold tracking-tight text-balance">
-        {post.title}
-      </h1>
-
-      <div className="mb-10 flex flex-wrap gap-2">
-        {post.tags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full border border-border px-2.5 py-0.5 font-mono text-xs text-muted-foreground"
-          >
-            {tag}
+      <header className="mb-12 border-b border-border pb-10">
+        <div className="mb-6 flex flex-wrap items-center gap-3 font-mono text-xs text-muted-foreground">
+          <time dateTime={post.date}>
+            {new Date(post.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
+          <span aria-hidden>&middot;</span>
+          <span className="flex items-center gap-1">
+            <Clock className="size-3.5" />
+            {post.readingTime}
           </span>
-        ))}
-      </div>
+        </div>
+
+        <h1 className="mb-6 text-(length:--text-h1) leading-[1.04] font-semibold text-balance">
+          {post.title}
+        </h1>
+
+        <div className="flex flex-wrap gap-1.5">
+          {post.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-md border border-border px-2 py-0.5 font-mono text-xs text-muted-foreground"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </header>
 
       <div>
         <Markdown>{post.content}</Markdown>
+      </div>
+
+      <div className="mt-16 border-t border-border pt-8">
+        <Button asChild variant="outline">
+          <Link href="/blog">
+            <ArrowLeft />
+            All posts
+          </Link>
+        </Button>
       </div>
     </article>
   );

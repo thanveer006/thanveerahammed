@@ -5,18 +5,24 @@ import { Button } from "@/components/ui/button";
 
 export function Component() {
   return (
-    <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-6 py-20 text-center">
+    <div className="relative mx-auto flex min-h-[70vh] max-w-lg flex-col items-center justify-center overflow-hidden px-6 py-20 text-center">
       <Seo title="Page not found" noIndex />
-      <p className="font-mono text-sm text-primary">404</p>
-      <h1 className="font-heading mt-3 text-(length:--text-h3) font-semibold tracking-tight">
-        Page not found.
+      <p
+        aria-hidden
+        className="pointer-events-none absolute -z-10 text-[clamp(10rem,40vw,22rem)] leading-none font-semibold tracking-[-0.06em] text-foreground/4 select-none"
+      >
+        404
+      </p>
+      <p className="font-mono text-sm tracking-[0.18em] text-accent uppercase">Error 404</p>
+      <h1 className="mt-4 text-(length:--text-h1) leading-none font-semibold">
+        Page <span className="em-serif">not found.</span>
       </h1>
-      <p className="mt-3 text-sm text-muted-foreground text-pretty">
+      <p className="mt-5 text-muted-foreground text-pretty">
         The page you&apos;re looking for doesn&apos;t exist, or has moved.
       </p>
-      <Button asChild className="mt-8">
+      <Button asChild size="lg" className="mt-9">
         <Link href="/">
-          <ArrowLeft className="size-4" />
+          <ArrowLeft />
           Back home
         </Link>
       </Button>

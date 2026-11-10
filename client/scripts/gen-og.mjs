@@ -1,6 +1,6 @@
 /**
  * One-off generator for the static social-share image (public/og.png).
- * Matches the site theme: dark "ink" band, teal/amber accents, portrait on the right.
+ * Matches the site theme: near-black ink, volt-lime accent, portrait on the right.
  *
  * Run locally to regenerate:  node scripts/gen-og.mjs
  * (satori + @resvg/resvg-js are installed ad hoc; they are NOT project deps.
@@ -20,10 +20,10 @@ const regular = readFileSync("C:/Windows/Fonts/segoeui.ttf");
 const bold = readFileSync("C:/Windows/Fonts/segoeuib.ttf");
 const portrait = `data:image/jpeg;base64,${readFileSync(join(publicDir, "founder.jpg")).toString("base64")}`;
 
-const INK = "#0c1513";
-const TEAL = "#2dd4bf";
-const AMBER = "#f5b942";
-const TEXT = "#e9f1ee";
+const INK = "#08090c";
+const TEAL = "#c6f135";
+const AMBER = "#f2f3f5";
+const TEXT = "#f2f3f5";
 
 const tree = {
   type: "div",
@@ -36,7 +36,7 @@ const tree = {
       position: "relative",
       padding: "70px 80px",
       backgroundColor: INK,
-      backgroundImage: "radial-gradient(circle at 85% 10%, rgba(45,212,191,0.22), transparent 45%)",
+      backgroundImage: "radial-gradient(circle at 85% 10%, rgba(198,241,53,0.16), transparent 45%)",
     },
     children: [
       {
@@ -57,7 +57,7 @@ const tree = {
                   },
                   {
                     type: "span",
-                    props: { style: { color: "#9aa8a3", fontSize: 24 }, children: "Available for select engineering work" },
+                    props: { style: { color: "#9aa1ae", fontSize: 24 }, children: "Available for select engineering work" },
                   },
                 ],
               },
@@ -108,7 +108,7 @@ const tree = {
                   width: 340,
                   height: 340,
                   borderRadius: 40,
-                  border: "3px solid rgba(45,212,191,0.6)",
+                  border: "3px solid rgba(198,241,53,0.5)",
                   display: "flex",
                 },
               },

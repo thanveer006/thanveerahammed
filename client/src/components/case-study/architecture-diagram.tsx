@@ -1,22 +1,24 @@
-import { ArrowDown } from "lucide-react";
 import type { ArchitectureLayer } from "@/lib/types";
 
+/** Layered stack, top to bottom, joined by a single vertical rail. */
 export function ArchitectureDiagram({ layers }: { layers: ArchitectureLayer[] }) {
   return (
-    <div className="flex flex-col items-stretch gap-2">
-      {layers.map((layer, i) => (
-        <div key={layer.layer} className="flex flex-col items-center gap-2">
-          <div className="w-full rounded-lg border border-border bg-secondary/40 p-4 sm:p-5">
-            <p className="mb-1 font-mono text-xs font-medium uppercase tracking-widest text-primary">
+    <ol className="relative space-y-3 pl-8">
+      <span aria-hidden className="absolute top-3 bottom-3 left-1.75 w-px bg-border" />
+      {layers.map((layer) => (
+        <li key={layer.layer} className="relative">
+          <span
+            aria-hidden
+            className="absolute top-5 -left-8 size-3.75 rounded-full border-[3px] border-background bg-primary"
+          />
+          <div className="rounded-2xl border border-border bg-card p-4 sm:p-5">
+            <p className="mb-1 font-mono text-xs font-medium tracking-[0.18em] text-accent uppercase">
               {layer.layer}
             </p>
             <p className="text-sm text-muted-foreground text-pretty">{layer.detail}</p>
           </div>
-          {i < layers.length - 1 && (
-            <ArrowDown className="size-4 shrink-0 text-muted-foreground" aria-hidden />
-          )}
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }

@@ -1,7 +1,10 @@
-import { ArrowRight, Download, MapPin } from "lucide-react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, Download, MapPin, ArrowDown } from "lucide-react";
 import { Link } from "@/components/link";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { StatCounter } from "@/components/stat-counter";
+import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { startup } from "@/lib/site";
 
 const stats = [
@@ -11,66 +14,75 @@ const stats = [
 ];
 
 const heroButton =
-  "inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-[background-color,border-color,transform] duration-200 motion-safe:hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-brand-light/50";
+  "inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-[0.95rem] font-medium transition-[background-color,border-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-brand-light/50 motion-safe:active:scale-[0.97]";
 
 const iconLink =
-  "flex size-11 items-center justify-center rounded-full text-ink-foreground/80 transition-colors hover:bg-white/10 hover:text-ink-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-brand-light/50";
+  "flex size-11 items-center justify-center rounded-full border border-white/10 text-ink-foreground/80 transition-colors hover:border-white/30 hover:bg-white/10 hover:text-ink-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-brand-light/50";
 
 /**
- * Dark band in both themes. Content is rendered visible (no fade-in) so the
- * prerendered HTML and the portrait (LCP) paint before JS hydrates.
+ * Dark stage in both themes. Content is rendered visible (no fade-in) so the
+ * prerendered HTML and the portrait (LCP) paint before JS hydrates; scroll only
+ * adds parallax on top (transform + opacity).
  */
 export function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+
+  const copyY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 120]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.75], reduced ? [1, 1] : [1, 0]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -70]);
+  const portraitScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 1.08]);
+  const glowY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 220]);
+
   return (
     <section
+      ref={ref}
       id="hero"
-      className="relative scroll-mt-(--nav-height) overflow-hidden bg-ink text-ink-foreground"
+      className="noise relative -mt-17 scroll-mt-(--nav-height) overflow-hidden bg-ink text-ink-foreground"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-60 [background-image:radial-gradient(color-mix(in_oklab,var(--ink-foreground)_14%,transparent)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_70%_40%,black,transparent_70%)]"
+        className="bg-grid pointer-events-none absolute inset-0 mask-[radial-gradient(ellipse_at_60%_30%,black,transparent_72%)]"
       />
-      <div
+      <motion.div
         aria-hidden
-        className="pointer-events-none absolute -top-32 -right-[10%] size-136 rounded-full bg-brand-light/20 blur-[120px]"
+        style={{ y: glowY }}
+        className="pointer-events-none absolute -top-40 right-[-12%] size-176 rounded-full bg-brand-light/13 blur-[140px]"
       />
 
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 pt-16 pb-20 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-28">
-        <div className="order-2 lg:order-1">
-          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-ink-foreground/80">
-            <span aria-hidden className="size-1.5 rounded-full bg-success" />
+      <div className="relative mx-auto grid min-h-[min(100dvh,60rem)] max-w-6xl grid-cols-1 items-center gap-14 px-6 pt-28 pb-20 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12 lg:pt-32">
+        <motion.div style={{ y: copyY, opacity: copyOpacity }} className="order-2 lg:order-1">
+          <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/4 py-1.5 pr-4 pl-3 font-mono text-xs text-ink-foreground/80">
+            <span aria-hidden className="relative flex size-2">
+              <span className="absolute inset-0 rounded-full bg-success motion-safe:animate-[pulse-ring_2s_ease-out_infinite]" />
+              <span className="relative size-2 rounded-full bg-success" />
+            </span>
             Available for select engineering work
           </p>
 
-          <p className="mb-3 text-lg font-medium text-highlight">
-            Thanveer Ahammed N
-            <span className="text-ink-foreground/60">
-              {" "}
-              &middot; {startup.role},{" "}
-              <Link
-                href="/#startup"
-                className="text-ink-foreground underline decoration-brand-light/60 underline-offset-4 transition-colors hover:text-brand-light"
-              >
-                {startup.name}
-              </Link>
-            </span>
-          </p>
-
-          <h1 className="font-heading text-(length:--text-h1) leading-[1.08] font-semibold tracking-tight text-balance">
-            Software Developer building{" "}
-            <span className="text-brand-light">software businesses run on.</span>
+          <h1 className="text-(length:--text-display) leading-[0.94] font-semibold tracking-[-0.045em] text-balance">
+            Software developer building{" "}
+            <span className="em-serif text-brand-light">software businesses run on.</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg text-ink-foreground/70 text-pretty">
-            Software developer designing secure, scalable web applications, enterprise
-            systems, workflow automation, and AI-powered tools, from architecture to
-            deployment.
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-foreground/65 text-pretty sm:text-xl">
+            <span className="font-medium text-ink-foreground">Thanveer Ahammed N</span> &middot;{" "}
+            {startup.role},{" "}
+            <Link
+              href="/#startup"
+              className="text-ink-foreground underline decoration-brand-light/60 underline-offset-4 transition-colors hover:text-brand-light"
+            >
+              {startup.name}
+            </Link>
+            . I design secure, scalable web applications, enterprise systems, workflow automation,
+            and AI-powered tools, from architecture to deployment.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="/#projects"
-              className={`${heroButton} bg-brand-light text-ink hover:bg-brand-light/90`}
+              className={`${heroButton} bg-primary text-primary-foreground hover:brightness-105 hover:shadow-[0_8px_40px_-8px_rgb(198_241_53/0.6)]`}
             >
               View Projects
               <ArrowRight className="size-4" />
@@ -78,12 +90,12 @@ export function Hero() {
             <a
               href="/resume.pdf"
               download="Thanveer_Ahammed_Resume.pdf"
-              className={`${heroButton} border border-white/20 hover:bg-white/10`}
+              className={`${heroButton} border border-white/15 hover:border-white/35 hover:bg-white/6`}
             >
               <Download className="size-4" />
               Resume
             </a>
-            <div className="ml-1 flex items-center gap-1">
+            <div className="ml-1 flex items-center gap-2">
               <a
                 href="https://github.com/thanveer006"
                 target="_blank"
@@ -105,39 +117,57 @@ export function Hero() {
             </div>
           </div>
 
-          <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/10 pt-6">
+          <dl className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-7">
             {stats.map((s) => (
               <div key={s.label} className="flex flex-col-reverse">
-                <dt className="mt-1 text-xs text-ink-foreground/60 sm:text-sm">{s.label}</dt>
-                <dd className="font-heading text-3xl font-semibold tracking-tight text-highlight sm:text-4xl">
+                <dt className="mt-1.5 text-xs text-ink-foreground/55 sm:text-sm">{s.label}</dt>
+                <dd className="text-4xl font-semibold tracking-tight text-ink-foreground tabular-nums sm:text-5xl">
                   <StatCounter value={s.value} suffix={s.suffix} />
                 </dd>
               </div>
             ))}
           </dl>
-        </div>
+        </motion.div>
 
-        <div className="relative order-1 mx-auto w-full max-w-72 sm:max-w-sm lg:order-2 lg:max-w-none">
+        <motion.div
+          style={{ y: portraitY }}
+          className="relative order-1 mx-auto w-full max-w-44 sm:max-w-xs lg:order-2 lg:max-w-none"
+        >
           <div
             aria-hidden
-            className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] border-2 border-brand-light/60 sm:translate-x-5 sm:translate-y-5"
+            className="absolute -inset-3 rounded-[2.25rem] border border-brand-light/30"
           />
-          <img
-            src="/founder.jpg"
-            alt="Portrait of Thanveer Ahammed N"
-            width={640}
-            height={640}
-            fetchPriority="high"
-            decoding="async"
-            loading="eager"
-            className="relative aspect-square w-full rounded-[2rem] object-cover shadow-2xl"
-          />
-          <div className="absolute -bottom-3 -left-2 flex items-center gap-2 rounded-full bg-highlight px-3.5 py-2 text-xs font-semibold text-ink shadow-lg sm:-left-5">
+          <div className="relative aspect-4/5 overflow-hidden rounded-[1.75rem] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)]">
+            <motion.img
+              src="/founder.jpg"
+              alt="Portrait of Thanveer Ahammed N"
+              width={640}
+              height={640}
+              fetchPriority="high"
+              decoding="async"
+              loading="eager"
+              style={{ scale: portraitScale }}
+              className="size-full object-cover"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-linear-to-t from-ink/70 via-transparent to-transparent"
+            />
+          </div>
+          <div className="absolute -bottom-4 -left-3 flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-xl sm:-left-6">
             <MapPin className="size-3.5" />
             Kozhikode, Kerala
           </div>
-        </div>
+        </motion.div>
       </div>
+
+      <a
+        href="#about"
+        aria-label="Scroll to About"
+        className="absolute bottom-6 left-1/2 hidden size-11 -translate-x-1/2 items-center justify-center rounded-full border border-white/10 text-ink-foreground/60 transition-colors hover:text-ink-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-brand-light/50 lg:flex"
+      >
+        <ArrowDown className="size-4 motion-safe:animate-bounce" />
+      </a>
     </section>
   );
 }

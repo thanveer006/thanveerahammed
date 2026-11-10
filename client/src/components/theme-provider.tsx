@@ -24,7 +24,7 @@ function applyTheme(theme: Theme) {
  * index.html applies the stored value before first paint to avoid a flash.
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = React.useState<Theme>("light");
+  const [theme, setThemeState] = React.useState<Theme>("dark");
 
   React.useEffect(() => {
     const stored = (typeof localStorage !== "undefined" &&
@@ -57,7 +57,7 @@ export function useTheme(): ThemeContextValue {
   const ctx = React.useContext(ThemeContext);
   if (!ctx) {
     // Safe default when rendered outside a provider (e.g. during SSG probing).
-    return { theme: "light", resolvedTheme: "light", setTheme: () => {} };
+    return { theme: "dark", resolvedTheme: "dark", setTheme: () => {} };
   }
   return ctx;
 }

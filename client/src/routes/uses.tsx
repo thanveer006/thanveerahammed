@@ -1,5 +1,6 @@
 import { Seo } from "@/components/seo";
-import { SectionHeading } from "@/components/section-heading";
+import { PageHeader } from "@/components/page-header";
+import { Reveal } from "@/components/reveal";
 
 const groups = [
   {
@@ -26,33 +27,39 @@ const groups = [
 
 export function Component() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
+    <div className="mx-auto max-w-4xl px-6 pt-12 pb-28">
       <Seo
         title="Uses"
         description="The editor, stack, and tools behind the work."
         path="/uses"
       />
-      <SectionHeading
-        as="h1"
+      <PageHeader
+        crumbs={[{ label: "Home", href: "/" }, { label: "Uses" }]}
         eyebrow="Uses"
-        title="What I build with."
+        title="What I"
+        accent="build with."
         description="The tools that make up my day-to-day, updated as things change."
       />
 
-      <div className="space-y-10">
-        {groups.map((group) => (
-          <div key={group.title}>
-            <h2 className="mb-3 font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              {group.title}
-            </h2>
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3">
-              {group.items.map((item) => (
-                <li key={item} className="text-sm text-foreground/90">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {groups.map((group, i) => (
+          <Reveal key={group.title} delay={(i % 2) * 0.06} className="h-full">
+            <section className="h-full rounded-3xl border border-border bg-card p-7">
+              <h2 className="mb-5 font-mono text-xs font-medium tracking-[0.18em] text-accent uppercase">
+                {group.title}
+              </h2>
+              <ul className="flex flex-wrap gap-1.5">
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground/90"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </Reveal>
         ))}
       </div>
     </div>

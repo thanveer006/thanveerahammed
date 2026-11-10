@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { EASE_OUT_EXPO } from "@/components/motion/easing";
 
@@ -65,10 +66,10 @@ function PageTransition() {
     <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.3, ease: EASE_OUT_EXPO }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25, ease: EASE_OUT_EXPO }}
       >
         <Outlet />
       </motion.div>
@@ -89,6 +90,7 @@ export function Layout() {
             >
               Skip to content
             </a>
+            <ScrollProgress />
             <Nav />
             <main
               id="main-content"

@@ -34,37 +34,47 @@ const steps = ["Discover the problem", "Design a focused solution", "Build and d
 export function Startup() {
   return (
     <Section id="startup" tone="tinted">
-      <Reveal className="overflow-hidden rounded-[2rem] border border-border bg-card">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="p-7 sm:p-10 lg:p-12">
-            <p className="mb-4 flex items-center gap-3 text-sm font-semibold tracking-wide text-primary uppercase">
-              <span aria-hidden className="h-px w-8 bg-current" />
+      <Reveal className="noise relative overflow-hidden rounded-3xl border border-border bg-ink text-ink-foreground">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-32 -left-24 size-112 rounded-full bg-brand-light/12 blur-[110px]"
+        />
+        <div className="relative grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="p-8 sm:p-12 lg:p-14">
+            <p className="mb-6 flex items-center gap-3 font-mono text-xs font-medium tracking-[0.18em] text-brand-light uppercase">
+              <span className="opacity-60">04</span>
+              <span aria-hidden className="h-px w-8 bg-current opacity-60" />
               My startup
             </p>
-            <h2 className="font-heading text-(length:--text-h2) leading-[1.12] font-semibold tracking-tight text-balance">
-              Building {startup.name}.
+            <h2 className="text-(length:--text-h2) leading-[1.04] font-semibold text-balance">
+              Building <span className="em-serif text-brand-light">{startup.name}.</span>
             </h2>
-            <p className="font-heading mt-2 text-xl font-semibold text-primary">{startup.tagline}</p>
+            <p className="mt-3 text-xl font-medium text-ink-foreground/80">{startup.tagline}</p>
 
-            <p className="mt-5 text-muted-foreground text-pretty">
+            <p className="mt-6 text-ink-foreground/65 text-pretty">
               {startup.name} is an AI engineering team that embeds intelligence directly into the way
               businesses already work. We partner with companies to design, build, and deploy AI
               agents, automations, and custom software, so teams save time, reduce manual work, and
               grow faster. I&apos;m the {startup.role}.
             </p>
 
-            <blockquote className="mt-6 border-l-2 border-highlight pl-4 font-heading text-lg text-foreground text-pretty">
+            <blockquote className="em-serif mt-8 border-l-2 border-brand-light pl-5 text-2xl leading-snug text-pretty">
               We build AI into your workflow, so your business runs smarter without starting over.
             </blockquote>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-10 flex flex-wrap items-center gap-3">
               <Button asChild size="lg">
                 <Link href={startup.url} target="_blank" rel="noopener noreferrer">
                   Visit inlinecognition.io
-                  <ArrowUpRight className="size-4" />
+                  <ArrowUpRight />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-white/15 bg-transparent text-ink-foreground hover:border-white/35 hover:bg-white/6"
+              >
                 <Link href={startup.instagram} target="_blank" rel="noopener noreferrer">
                   <SiInstagram size={16} color="currentColor" aria-hidden />
                   Instagram
@@ -73,27 +83,27 @@ export function Startup() {
             </div>
           </div>
 
-          <div className="border-t border-border bg-secondary/50 p-7 sm:p-10 lg:border-t-0 lg:border-l lg:p-12">
-            <h3 className="mb-5 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+          <div className="border-t border-white/10 bg-white/3 p-8 sm:p-12 lg:border-t-0 lg:border-l lg:p-14">
+            <h3 className="mb-5 font-mono text-xs font-medium tracking-[0.18em] text-ink-foreground/50 uppercase">
               What we do
             </h3>
-            <ul className="divide-y divide-border border-y border-border">
+            <ul className="divide-y divide-white/10 border-y border-white/10">
               {offerings.map((o) => (
-                <li key={o.title} className="py-3.5">
+                <li key={o.title} className="py-4">
                   <p className="font-medium">{o.title}</p>
-                  <p className="text-sm text-muted-foreground text-pretty">{o.body}</p>
+                  <p className="mt-0.5 text-sm text-ink-foreground/60 text-pretty">{o.body}</p>
                 </li>
               ))}
             </ul>
 
-            <h3 className="mt-8 mb-4 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+            <h3 className="mt-10 mb-5 font-mono text-xs font-medium tracking-[0.18em] text-ink-foreground/50 uppercase">
               How we work
             </h3>
-            <ol className="grid grid-cols-2 gap-3">
+            <ol className="grid grid-cols-2 gap-x-4 gap-y-5">
               {steps.map((s, i) => (
                 <li key={s} className="flex items-start gap-3 text-sm">
-                  <span className="font-heading text-xl leading-none font-semibold text-accent">
-                    {i + 1}
+                  <span className="font-mono text-sm leading-5 text-brand-light">
+                    {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-pretty">{s}</span>
                 </li>

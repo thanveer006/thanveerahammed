@@ -3,7 +3,9 @@ import { cn } from "@/lib/utils";
 
 export function SectionHeading({
   eyebrow,
+  index,
   title,
+  accent,
   description,
   align = "left",
   onDark = false,
@@ -11,7 +13,11 @@ export function SectionHeading({
   className,
 }: {
   eyebrow?: string;
+  /** Optional section number rendered before the eyebrow, e.g. "02". */
+  index?: string;
   title: string;
+  /** Trailing words of the title set in the serif accent face. */
+  accent?: string;
   description?: string;
   align?: "left" | "center";
   /** Light text for use on a dark (`ink`) band. */
@@ -21,27 +27,40 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <Reveal className={cn("mb-12 max-w-2xl", align === "center" && "mx-auto text-center", className)}>
+    <Reveal className={cn("mb-14 max-w-3xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow ? (
         <p
           className={cn(
-            "mb-4 flex items-center gap-3 text-sm font-semibold tracking-wide uppercase",
+            "mb-5 flex items-center gap-3 font-mono text-xs font-medium tracking-[0.18em] uppercase",
             align === "center" && "justify-center",
-            onDark ? "text-brand-light" : "text-primary"
+            onDark ? "text-brand-light" : "text-accent"
           )}
         >
-          <span aria-hidden className="h-px w-8 bg-current" />
+          {index ? <span className="opacity-60">{index}</span> : null}
+          <span aria-hidden className="h-px w-8 bg-current opacity-60" />
           {eyebrow}
         </p>
       ) : null}
-      <Heading className="font-heading text-(length:--text-h2) leading-[1.12] font-semibold tracking-tight text-balance">
+      <Heading
+        className={cn(
+          "text-(length:--text-h2) leading-[1.05] font-semibold text-balance",
+          onDark && "text-ink-foreground"
+        )}
+      >
         {title}
+        {accent ? (
+          <>
+            {" "}
+            <span className="em-serif text-[1.08em]">{accent}</span>
+          </>
+        ) : null}
       </Heading>
       {description ? (
         <p
           className={cn(
-            "mt-4 text-base text-pretty",
-            onDark ? "text-ink-foreground/70" : "text-muted-foreground"
+            "mt-5 max-w-2xl text-lg leading-relaxed text-pretty",
+            align === "center" && "mx-auto",
+            onDark ? "text-ink-foreground/65" : "text-muted-foreground"
           )}
         >
           {description}

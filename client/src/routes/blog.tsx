@@ -1,40 +1,41 @@
-import { Clock, Rss } from "lucide-react";
+import { ArrowUpRight, Clock, Rss } from "lucide-react";
 import { Link } from "@/components/link";
 import { Seo } from "@/components/seo";
 import { rssUrl } from "@/lib/api";
 import { usePosts } from "@/lib/queries";
-import { SectionHeading } from "@/components/section-heading";
+import { PageHeader } from "@/components/page-header";
+import { Reveal } from "@/components/reveal";
+import { Button } from "@/components/ui/button";
 
 export function Component() {
   const { data: posts, loading, error } = usePosts();
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
+    <div className="mx-auto max-w-4xl px-6 pt-12 pb-28">
       <Seo
         title="Blog"
         description="Notes on software engineering, system design, AI integration, and automation."
         path="/blog"
       />
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <SectionHeading
-          as="h1"
-          eyebrow="Writing"
-          title="Blog"
-          description="Notes on system design, security, and where AI actually belongs in a workflow."
-          className="mb-0"
-        />
-        <a
-          href={rssUrl}
-          className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground min-h-8 pointer-coarse:min-h-11"
-        >
-          <Rss className="size-4" />
-          RSS
-        </a>
-      </div>
+      <PageHeader
+        crumbs={[{ label: "Home", href: "/" }, { label: "Blog" }]}
+        eyebrow="Writing"
+        title="Notes from the"
+        accent="workshop."
+        description="Notes on system design, security, and where AI actually belongs in a workflow."
+        actions={
+          <Button asChild variant="outline" size="sm">
+            <a href={rssUrl}>
+              <Rss />
+              RSS
+            </a>
+          </Button>
+        }
+      />
 
-      <div className="mt-12 divide-y divide-border border-t border-border">
+      <div className="divide-y divide-border border-b border-border">
         {posts.length === 0 && (
-          <p className="py-16 text-center text-sm text-muted-foreground">
+          <p className="py-20 text-center text-sm text-muted-foreground">
             {loading
               ? "Loading posts…"
               : error
@@ -42,41 +43,44 @@ export function Component() {
                 : "No posts yet."}
           </p>
         )}
-        {posts.map((post) => (
-          <Link
-            key={post.slug}
-            href={`/blog/${post.slug}`}
-            className="group block py-8 focus-visible:outline-none"
-          >
-            <div className="mb-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-              <time dateTime={post.date}>
-                {new Date(post.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-              <span aria-hidden>&middot;</span>
-              <span className="flex items-center gap-1">
-                <Clock className="size-3.5" />
-                {post.readingTime}
-              </span>
-            </div>
-            <h2 className="font-heading mb-2 text-(length:--text-h4) font-semibold text-balance transition-colors group-hover:text-primary">
-              {post.title}
-            </h2>
-            <p className="mb-3 text-sm text-muted-foreground text-pretty">{post.description}</p>
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-border px-2.5 py-0.5 font-mono text-xs text-muted-foreground"
-                >
-                  {tag}
+        {posts.map((post, i) => (
+          <Reveal key={post.slug} delay={Math.min(i, 3) * 0.05}>
+            <Link
+              href={`/blog/${post.slug}`}
+              className="group grid gap-4 py-9 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[9rem_1fr_auto] sm:gap-8"
+            >
+              <div className="flex flex-col gap-1 font-mono text-xs text-muted-foreground">
+                <time dateTime={post.date}>
+                  {new Date(post.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </time>
+                <span className="flex items-center gap-1">
+                  <Clock className="size-3.5" />
+                  {post.readingTime}
                 </span>
-              ))}
-            </div>
-          </Link>
+              </div>
+              <div>
+                <h2 className="mb-2 text-(length:--text-h3) leading-tight font-semibold text-balance transition-colors group-hover:text-accent">
+                  {post.title}
+                </h2>
+                <p className="mb-4 text-muted-foreground text-pretty">{post.description}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-md border border-border px-2 py-0.5 font-mono text-xs text-muted-foreground"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <ArrowUpRight className="hidden size-6 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent sm:block" />
+            </Link>
+          </Reveal>
         ))}
       </div>
     </div>

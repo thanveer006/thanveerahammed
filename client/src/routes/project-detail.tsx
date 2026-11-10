@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
-import { ArrowLeft, Calendar, User } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Calendar, User } from "lucide-react";
 import { Link } from "@/components/link";
 import { Seo } from "@/components/seo";
 import { siteUrl } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProject, useProjects } from "@/lib/queries";
+import { Breadcrumbs } from "@/components/page-header";
+import { Reveal } from "@/components/reveal";
 import { CaseStudySection } from "@/components/case-study/section";
 import { ArchitectureDiagram } from "@/components/case-study/architecture-diagram";
 import { CodeBlock } from "@/components/case-study/code-block";
@@ -19,15 +21,13 @@ export function Component() {
     return (
       <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-6 py-20 text-center">
         <Seo title="Project not found" path={`/projects/${slug}`} noIndex />
-        <p className="font-mono text-sm text-primary">{loading ? "Loading…" : "404"}</p>
+        <p className="font-mono text-sm text-accent">{loading ? "Loading…" : "404"}</p>
         {!loading && (
           <>
-            <h1 className="font-heading mt-3 text-(length:--text-h3) font-semibold tracking-tight">
-              Project not found.
-            </h1>
+            <h1 className="mt-3 text-(length:--text-h3) font-semibold">Project not found.</h1>
             <Button asChild className="mt-8">
               <Link href="/projects">
-                <ArrowLeft className="size-4" />
+                <ArrowLeft />
                 Back to projects
               </Link>
             </Button>
@@ -50,7 +50,7 @@ export function Component() {
   };
 
   return (
-    <div className="border-b border-border">
+    <div>
       <Seo
         title={project.name}
         description={project.oneLiner}
@@ -59,68 +59,85 @@ export function Component() {
         jsonLd={projectJsonLd}
       />
 
-      <div className="border-b border-border">
-        <div className="mx-auto max-w-3xl px-6 py-16">
-          <Button asChild variant="ghost" size="sm" className="mb-8 -ml-3">
-            <Link href="/projects">
-              <ArrowLeft className="size-4" />
-              Back to projects
-            </Link>
-          </Button>
+      <header className="relative overflow-hidden border-b border-border">
+        <div
+          aria-hidden
+          className="bg-grid pointer-events-none absolute inset-0 opacity-60 mask-[radial-gradient(ellipse_at_70%_0%,black,transparent_70%)]"
+        />
+        <div className="relative mx-auto max-w-6xl px-6 pt-12 pb-16">
+          <Breadcrumbs
+            className="mb-12"
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Projects", href: "/projects" },
+              { label: project.name },
+            ]}
+          />
+          <Reveal>
+            <p className="mb-5 font-mono text-xs font-medium tracking-[0.18em] text-accent uppercase">
+              {project.category}
+            </p>
+            <h1 className="max-w-4xl text-(length:--text-h1) leading-[1.02] font-semibold text-balance">
+              {project.name}
+            </h1>
+            <p className="mt-6 max-w-2xl text-xl text-muted-foreground text-pretty">{project.oneLiner}</p>
 
-          <p className="mb-3 font-mono text-xs font-medium uppercase tracking-widest text-primary">
-            {project.category}
-          </p>
-          <h1 className="font-heading text-(length:--text-h1) leading-[1.1] font-semibold tracking-tight text-balance">
-            {project.name}
-          </h1>
-          <p className="mt-4 text-lg text-muted-foreground text-pretty">{project.oneLiner}</p>
+            <dl className="mt-10 grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2">
+              <div className="flex items-center gap-3 bg-background p-4">
+                <Calendar className="size-4 text-accent" aria-hidden />
+                <div>
+                  <dt className="font-mono text-[0.7rem] tracking-[0.14em] text-muted-foreground uppercase">
+                    Timeline
+                  </dt>
+                  <dd className="text-sm">{project.timeline}</dd>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-background p-4">
+                <User className="size-4 text-accent" aria-hidden />
+                <div>
+                  <dt className="font-mono text-[0.7rem] tracking-[0.14em] text-muted-foreground uppercase">
+                    Role
+                  </dt>
+                  <dd className="text-sm">{project.role}</dd>
+                </div>
+              </div>
+            </dl>
 
-          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <Calendar className="size-4" />
-              {project.timeline}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <User className="size-4" />
-              {project.role}
-            </span>
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {project.tech.map((t) => (
-              <Badge key={t} variant="secondary" className="font-mono text-xs font-normal">
-                {t}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-3xl px-6">
-        <CaseStudySection title="Overview">
-          <div className="space-y-4">
-            <div>
-              <p className="mb-1 text-sm font-medium text-foreground">Problem</p>
-              <p className="text-sm text-muted-foreground text-pretty">{project.problem}</p>
+            <div className="mt-6 flex flex-wrap gap-1.5">
+              {project.tech.map((t) => (
+                <Badge key={t} variant="secondary">
+                  {t}
+                </Badge>
+              ))}
             </div>
-            <div>
-              <p className="mb-1 text-sm font-medium text-foreground">Solution</p>
-              <p className="text-sm text-muted-foreground text-pretty">{project.solution}</p>
+          </Reveal>
+        </div>
+      </header>
+
+      <div className="mx-auto max-w-6xl px-6">
+        <CaseStudySection index="01" title="Overview">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-card p-6">
+              <p className="mb-2 font-mono text-xs tracking-[0.18em] text-muted-foreground uppercase">Problem</p>
+              <p className="text-foreground/90 text-pretty">{project.problem}</p>
+            </div>
+            <div className="rounded-2xl border border-primary/40 bg-card p-6">
+              <p className="mb-2 font-mono text-xs tracking-[0.18em] text-accent uppercase">Solution</p>
+              <p className="text-foreground/90 text-pretty">{project.solution}</p>
             </div>
           </div>
         </CaseStudySection>
 
-        <CaseStudySection title="Architecture">
+        <CaseStudySection index="02" title="Architecture">
           <ArchitectureDiagram layers={project.architectureLayers} />
         </CaseStudySection>
 
-        <CaseStudySection title="Feature Breakdown">
+        <CaseStudySection index="03" title="Feature Breakdown">
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {project.features.map((feature) => (
               <li
                 key={feature}
-                className="rounded-lg border border-border bg-card p-4 text-sm text-foreground/90 text-pretty sm:[&:last-child:nth-child(odd)]:col-span-2"
+                className="rounded-2xl border border-border bg-card p-5 text-sm text-foreground/90 text-pretty sm:[&:last-child:nth-child(odd)]:col-span-2"
               >
                 {feature}
               </li>
@@ -128,22 +145,22 @@ export function Component() {
           </ul>
         </CaseStudySection>
 
-        <CaseStudySection title="Implementation Detail">
+        <CaseStudySection index="04" title="Implementation Detail">
           <CodeBlock label={project.codeSnippet.label} code={project.codeSnippet.code} />
         </CaseStudySection>
 
-        <CaseStudySection title="Challenge & Solution">
-          <div className="rounded-lg border border-border bg-card p-5">
-            <p className="mb-2 text-sm font-medium text-foreground">{project.challenge.challenge}</p>
-            <p className="text-sm text-muted-foreground text-pretty">{project.challenge.solution}</p>
+        <CaseStudySection index="05" title="Challenge & Solution">
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <p className="mb-3 text-lg font-medium text-balance">{project.challenge.challenge}</p>
+            <p className="text-muted-foreground text-pretty">{project.challenge.solution}</p>
           </div>
         </CaseStudySection>
 
-        <CaseStudySection title="Results">
+        <CaseStudySection index="06" title="Results">
           <ul className="space-y-3">
             {project.results.map((result) => (
-              <li key={result} className="flex gap-2 text-sm text-foreground/90">
-                <span className="mt-2 size-1 shrink-0 rounded-full bg-success" aria-hidden />
+              <li key={result} className="flex gap-3 text-foreground/90">
+                <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-success" aria-hidden />
                 <span className="text-pretty">{result}</span>
               </li>
             ))}
@@ -152,18 +169,23 @@ export function Component() {
       </div>
 
       {otherProjects.length > 0 && (
-        <div className="border-t border-border">
-          <div className="mx-auto max-w-3xl px-6 py-16">
-            <h2 className="mb-6 text-sm font-medium text-muted-foreground">More projects</h2>
+        <div className="border-t border-border bg-card/50">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <h2 className="mb-8 font-mono text-xs tracking-[0.18em] text-muted-foreground uppercase">
+              More projects
+            </h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {otherProjects.map((p) => (
                 <Link
                   key={p.slug}
                   href={`/projects/${p.slug}`}
-                  className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group flex items-start justify-between gap-4 rounded-3xl border border-border bg-card p-7 transition-colors hover:border-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <p className="mb-1 font-mono text-xs text-muted-foreground">{p.category}</p>
-                  <p className="font-medium">{p.name}</p>
+                  <div>
+                    <p className="mb-2 font-mono text-xs tracking-[0.18em] text-accent uppercase">{p.category}</p>
+                    <p className="text-xl font-semibold tracking-tight">{p.name}</p>
+                  </div>
+                  <ArrowUpRight className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
                 </Link>
               ))}
             </div>
