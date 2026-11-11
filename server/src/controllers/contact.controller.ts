@@ -3,23 +3,21 @@ import { z } from "zod";
 import { Message } from "../models/message.model.js";
 import { sendContactEmail } from "../services/email.service.js";
 
-const requiredField = { required_error: "Please fill in every field." };
+const REQUIRED = "Please fill in every field.";
+/** Retry window in which an identical resubmission updates the stored row instead of adding one. */
+const DEDUPE_WINDOW_MS = 10 * 60 * 1000;
+
+// Missing or non-string values get the same friendly message as blanks.
+const requiredText = (max: number, tooLong = `Please keep this under ${max} characters.`) =>
+  z.string({ error: REQUIRED }).trim().min(1, REQUIRED).max(max, tooLong);
 
 export const contactSchema = z.object({
-  name: z.string(requiredField).trim().min(1, "Please fill in every field.").max(200),
-  email: z
-    .string(requiredField)
-    .trim()
-    .min(1, "Please fill in every field.")
-    .max(320)
-    .email("Please enter a valid email address."),
-  message: z
-    .string(requiredField)
-    .trim()
-    .min(1, "Please fill in every field.")
-    .max(5000, "Message is too long."),
-  // Honeypot — bots tend to fill every input, real users never see it.
-  company: z.string().optional(),
+  name: requiredText(200),
+  email: requiredText(320).pipe(z.email("Please enter a valid email address.")),
+  message: requiredText(5000, "Message is too long."),
+  // Honeypot — bots tend to fill every input, real users never see it. Bounded so
+  // it can't be used to push oversized strings through validation.
+  company: z.string().max(500).optional(),
 });
 
 type ContactInput = z.infer<typeof contactSchema>;
@@ -42,7 +40,7 @@ export async function submitContact(
   // De-duplicate retries: the same person resending the same message within 10
   // minutes (e.g. after an "email not configured" error) updates that row.
   try {
-    const since = new Date(Date.now() - 10 * 60 * 1000);
+    const since = new Date(Date.now() - DEDUPE_WINDOW_MS);
     const existing = await Message.findOneAndUpdate(
       { email, message, createdAt: { $gte: since } },
       { emailed: result.ok }
@@ -64,7 +62,8 @@ export async function submitContact(
 
   if (!result.ok) {
     if (result.reason === "unconfigured") {
-      return res.status(500).json({
+      // 503: a deployment/config gap, not a crash — the request itself was fine.
+      return res.status(503).json({
         status: "error",
         message:
           "The contact form isn't fully configured yet — please email me directly instead.",

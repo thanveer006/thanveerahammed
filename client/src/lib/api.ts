@@ -44,4 +44,9 @@ export async function apiFetch<T>(path: string, signal?: AbortSignal): Promise<T
   }
 }
 
-export const rssUrl = `${apiBase}/rss.xml`;
+/**
+ * Site-relative on purpose: production serves a static copy generated at build
+ * time by scripts/snapshot-content.mjs (no cold-start wait on the API), and the
+ * Vite dev server proxies it to the API.
+ */
+export const rssUrl = "/rss.xml";

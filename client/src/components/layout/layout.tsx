@@ -3,7 +3,6 @@ import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/theme-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { ScrollProgress } from "@/components/scroll-progress";
@@ -28,8 +27,14 @@ function ScrollManager() {
       samePage &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (hash) {
-      const id = decodeURIComponent(hash.slice(1));
+      let id = hash.slice(1);
+      try {
+        id = decodeURIComponent(id);
+      } catch {
+        // Malformed escape in a hand-typed URL: fall back to the raw fragment.
+      }
       let tries = 0;
+      let frame = 0;
       const tryScroll = () => {
         const el = document.getElementById(id);
         if (el) {
@@ -38,11 +43,12 @@ function ScrollManager() {
             behavior: smooth ? "smooth" : "auto",
           });
         } else if (tries++ < 10) {
-          requestAnimationFrame(tryScroll);
+          frame = requestAnimationFrame(tryScroll);
         }
       };
-      requestAnimationFrame(tryScroll);
-      return;
+      frame = requestAnimationFrame(tryScroll);
+      // A newer navigation must not be yanked back to this one's target.
+      return () => cancelAnimationFrame(frame);
     }
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [pathname, hash]);
@@ -81,28 +87,22 @@ export function Layout() {
   return (
     <ThemeProvider>
       <MotionConfig reducedMotion="user">
-        <TooltipProvider delayDuration={200}>
-          <ScrollManager />
-          <div className="min-h-dvh flex flex-col bg-background text-foreground">
-            <a
-              href="#main-content"
-              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-            >
-              Skip to content
-            </a>
-            <ScrollProgress />
-            <Nav />
-            <main
-              id="main-content"
-              tabIndex={-1}
-              className="flex-1 outline-none"
-            >
-              <PageTransition />
-            </main>
-            <Footer />
-          </div>
-          <Analytics />
-        </TooltipProvider>
+        <ScrollManager />
+        <div className="min-h-dvh flex flex-col bg-background text-foreground">
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+          >
+            Skip to content
+          </a>
+          <ScrollProgress />
+          <Nav />
+          <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+            <PageTransition />
+          </main>
+          <Footer />
+        </div>
+        <Analytics />
       </MotionConfig>
     </ThemeProvider>
   );

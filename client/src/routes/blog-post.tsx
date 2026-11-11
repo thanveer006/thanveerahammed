@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { usePost } from "@/lib/queries";
 import { Markdown } from "@/components/markdown";
 import { Breadcrumbs } from "@/components/page-header";
+import { formatDate } from "@/lib/format";
 
 export function Component() {
   const { slug = "" } = useParams();
@@ -16,7 +17,9 @@ export function Component() {
     return (
       <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-6 py-20 text-center">
         <Seo title="Post not found" path={`/blog/${slug}`} noIndex />
-        <p className="font-mono text-sm text-accent">{loading ? "Loading…" : "404"}</p>
+        <p className="font-mono text-sm text-accent" role="status">
+          {loading ? "Loading…" : "404"}
+        </p>
         {!loading && (
           <>
             <h1 className="mt-3 text-(length:--text-h3) font-semibold">Post not found.</h1>
@@ -60,13 +63,7 @@ export function Component() {
 
       <header className="mb-12 border-b border-border pb-10">
         <div className="mb-6 flex flex-wrap items-center gap-3 font-mono text-xs text-muted-foreground">
-          <time dateTime={post.date}>
-            {new Date(post.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
+          <time dateTime={post.date}>{formatDate(post.date, "long")}</time>
           <span aria-hidden>&middot;</span>
           <span className="flex items-center gap-1">
             <Clock className="size-3.5" />

@@ -69,6 +69,7 @@ export async function seedIfEmpty(): Promise<void> {
     Experience.estimatedDocumentCount(),
     SkillCategory.estimatedDocumentCount(),
     Post.estimatedDocumentCount(),
+    SiteMeta.estimatedDocumentCount(),
   ]);
   if (counts.every((n) => n > 0)) return;
   console.log("Content collections empty or incomplete — seeding from bundled data…");

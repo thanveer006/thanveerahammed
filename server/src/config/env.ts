@@ -16,13 +16,12 @@ const schema = z.object({
   PORT: z.coerce.number().int().min(1).max(65535).default(4000),
   CLIENT_URL: z.string().default("http://localhost:5173"),
   PUBLIC_SITE_URL: z
-    .string()
     .url()
     .default("https://thanveerahammed.in")
     .transform((v) => v.replace(/\/+$/, "")),
   MONGODB_URI: z.string().min(1, "MONGODB_URI is required"),
   RESEND_API_KEY: z.string().optional(),
-  CONTACT_TO_EMAIL: z.string().email("CONTACT_TO_EMAIL must be a valid email").optional(),
+  CONTACT_TO_EMAIL: z.email("CONTACT_TO_EMAIL must be a valid email").optional(),
   CONTACT_FROM_EMAIL: z
     .string()
     .default("Portfolio Contact Form <onboarding@resend.dev>"),
@@ -32,7 +31,7 @@ const parsed = schema.safeParse(raw);
 
 if (!parsed.success) {
   console.error("Invalid environment configuration:");
-  console.error(parsed.error.flatten().fieldErrors);
+  console.error(z.flattenError(parsed.error).fieldErrors);
   process.exit(1);
 }
 

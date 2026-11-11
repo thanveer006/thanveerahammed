@@ -50,7 +50,6 @@ function ProjectCard({ project, index, className }: { project: Project; index: n
   );
 }
 
-
 const headingProps = {
   index: "03",
   eyebrow: "Featured Projects",
@@ -96,21 +95,49 @@ function HorizontalTrack({ projects }: { projects: Project[] }) {
   const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
   const bar = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
+  /**
+   * Keyboard support: the track only moves with vertical scroll, so tabbing to a
+   * card that is translated off-screen would leave focus invisible. Scroll the
+   * page to the point where the focused item sits centred in the viewport.
+   */
+  const revealFocused = (e: React.FocusEvent<HTMLDivElement>) => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    const item = (e.target as HTMLElement).closest<HTMLElement>("[data-track-item]");
+    if (!section || !track || !item || distance === 0) return;
+    // Both rects carry the same translateX, so their difference is the untransformed offset.
+    const itemRect = item.getBoundingClientRect();
+    const offset = itemRect.left - track.getBoundingClientRect().left;
+    const viewport = document.documentElement.clientWidth;
+    const progress = Math.min(1, Math.max(0, (offset + itemRect.width / 2 - viewport / 2) / distance));
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    const range = section.offsetHeight - window.innerHeight;
+    window.scrollTo({ top: sectionTop + progress * range, behavior: "auto" });
+  };
+
   return (
     // Height = one viewport + the horizontal distance, so vertical scroll maps 1:1 onto the track.
     <div ref={sectionRef} style={{ height: `calc(100vh + ${distance}px)` }} className="relative">
-      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden pt-20">
+      {/* overflow-clip (not hidden): a hidden box can still be scrolled sideways by
+          the browser when a link inside it takes focus, which would knock the
+          track out of alignment with its transform. */}
+      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-clip pt-20">
         <div className="mx-auto w-full max-w-6xl px-6">
           <SectionHeading {...headingProps} className="mb-10" />
         </div>
 
-        <motion.div ref={trackRef} style={{ x }} className="flex w-max gap-6 pr-6 pl-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))]">
+        <motion.div
+          ref={trackRef}
+          style={{ x }}
+          onFocus={revealFocused}
+          className="flex w-max gap-6 pr-6 pl-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))]"
+        >
           {projects.map((project, i) => (
-            <div key={project.slug} className="w-[min(32rem,70vw)] shrink-0">
+            <div key={project.slug} data-track-item className="w-[min(32rem,70vw)] shrink-0">
               <ProjectCard project={project} index={i} />
             </div>
           ))}
-          <div className="flex w-[min(20rem,50vw)] shrink-0 items-center">
+          <div data-track-item className="flex w-[min(20rem,50vw)] shrink-0 items-center">
             <Button asChild size="lg" variant="outline">
               <Link href="/projects">
                 Browse all projects

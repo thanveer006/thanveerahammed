@@ -72,7 +72,7 @@ export function Footer() {
 
           {columns.map((col) => (
             <nav key={col.title} aria-label={`Footer ${col.title}`}>
-              <p aria-hidden className="mb-3 font-mono text-xs font-medium tracking-[0.18em] text-ink-foreground/45 uppercase">
+              <p aria-hidden className="mb-3 font-mono text-xs font-medium tracking-[0.18em] text-ink-foreground/60 uppercase">
                 {col.title}
               </p>
               <ul>
@@ -97,7 +97,11 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-center gap-4 border-t border-white/10 pt-6 text-sm text-ink-foreground/55 sm:flex-row sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} Thanveer Ahammed N. All rights reserved.</p>
+          {/* The year is baked in at build time; after New Year the client's value
+              differs until the next deploy, which must not trigger a hydration error. */}
+          <p suppressHydrationWarning>
+            &copy; {new Date().getFullYear()} Thanveer Ahammed N. All rights reserved.
+          </p>
           <div className="flex items-center gap-1">
             {socials.map(({ href, label, icon: Icon }) => (
               <Link

@@ -15,7 +15,8 @@
     "start": "npm run start --workspace server",
     "seed": "npm run seed --workspace server",
     "lint": "npm run lint --workspace client && npm run lint --workspace server",
-    "test": "npm run test --workspace server"
+    "test": "npm run test --workspace server && npm run test --workspace client",
+    "typecheck": "npm run typecheck --workspace client && npm run build --workspace server -- --noEmit"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0 <23"
@@ -25,6 +26,8 @@
   },
   "overrides": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "express": "^4.22.3",
+    "qs": "^6.16.2"
   }
 }

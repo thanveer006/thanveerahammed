@@ -32,9 +32,10 @@ my-portfolio/
     │   ├── controllers/       # C — request handlers
     │   ├── routes/            # URL → controller
     │   ├── services/          # business logic (email, feeds, content)
-    │   ├── views/             # V — JSON serializers + XML templates
-    │   └── middleware/        # error handler, validation, rate limit
-    └── seed/                  # index.ts/run.ts + content sources (projects, blog .mdx)
+    │   ├── views/             # V — JSON serializers
+    │   ├── middleware/        # error handler, validation, rate limit
+    │   └── seed/              # index.ts (auto-seed) / run.ts + bundled data
+    └── seed/content/blog/     # editable .mdx posts → `npm run gen:posts`
 ```
 
 **Component-based client** — every screen is a route-level component composed
@@ -43,14 +44,14 @@ from small presentational components; content comes from the API via typed hooks
 
 **MVC server** — Mongoose **models** are the source of truth, **controllers**
 stay thin (parse → call a service → send a serialized view), **routes** only map
-URLs to controllers, and **views** (`views/serializers.ts`, `views/*.xml`) own
-the wire format.
+URLs to controllers, and **views** (`views/serializers.ts`) own the JSON wire
+format; feed XML is rendered by `services/feed.service.ts`.
 
 ### Stack
 
 | Layer | Tech |
 | --- | --- |
-| Client | React 19, Vite 6, React Router 6, `vite-react-ssg` (static prerender), Tailwind CSS v4, Framer Motion, `react-markdown` |
+| Client | React 19, Vite 7, React Router 6, `vite-react-ssg` (static prerender), Tailwind CSS v4, Framer Motion, `react-markdown` |
 | Server | Node, Express 4, Mongoose 8, Zod, Resend, `express-rate-limit`, Helmet |
 | Database | MongoDB |
 
@@ -119,7 +120,7 @@ fall back to client-side rendering.
 | `RESEND_API_KEY`, `CONTACT_TO_EMAIL` | optional — blank disables sending (submissions still stored) |
 | `CONTACT_FROM_EMAIL` | optional verified sender (blank = Resend sandbox sender) |
 
-Blank values are treated as unset. `npm test` (server) runs the node:test suite; it needs no database or email.
+Blank values are treated as unset. `npm test` runs the server and client node:test suites; neither needs a database or email.
 
 **client/.env**
 
@@ -148,8 +149,10 @@ Deploy in this order — the client's build snapshots the API.
 - Vercel project → Settings → General → **Root Directory = `client`**,
   Framework Preset = **Other** (config lives in `vercel.json`).
 - Settings → Environment Variables → `VITE_API_URL` = the Render URL.
-- Redeploy. `vercel.json` handles clean URLs and proxies `/rss.xml`,
-  `/sitemap.xml`, `/robots.txt` to the API so they stay on the apex domain.
+- Redeploy. `vercel.json` handles clean URLs and security headers. `/rss.xml`
+  and `/sitemap.xml` are generated as static files at build time by
+  `scripts/snapshot-content.mjs`, and `robots.txt` is static in `client/public/`,
+  so crawlers and feed readers never wait on an API cold start.
 
 **3. Domain** — point `thanveerahammed.in` at the Vercel project (Vercel →
 Domains). The API keeps its `onrender.com` URL.

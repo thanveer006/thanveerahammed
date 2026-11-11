@@ -10,8 +10,6 @@ services:
     runtime: node
     region: singapore
     plan: free
-    # While testing before the merge, override this to feat/mern-architecture in
-    # the Render dashboard (Settings → Branch). Switch it back to main after merge.
     branch: main
     # --include=dev is required: NODE_ENV=production below would otherwise make
     # `npm ci` skip typescript/tsx, which the build needs.

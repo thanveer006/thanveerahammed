@@ -14,7 +14,8 @@ export function ThemeToggle() {
   React.useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className="size-9 pointer-coarse:size-11" aria-hidden />;
+    // Same box as the icon Button (size-10 / coarse size-11) so hydration doesn't shift the nav.
+    return <div className="size-10 pointer-coarse:size-11" aria-hidden />;
   }
 
   const isDark = resolvedTheme === "dark";

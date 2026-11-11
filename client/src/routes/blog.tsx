@@ -6,6 +6,7 @@ import { usePosts } from "@/lib/queries";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
+import { formatDate } from "@/lib/format";
 
 export function Component() {
   const { data: posts, loading, error } = usePosts();
@@ -35,7 +36,7 @@ export function Component() {
 
       <div className="divide-y divide-border border-b border-border">
         {posts.length === 0 && (
-          <p className="py-20 text-center text-sm text-muted-foreground">
+          <p className="py-20 text-center text-sm text-muted-foreground" role="status">
             {loading
               ? "Loading posts…"
               : error
@@ -50,13 +51,7 @@ export function Component() {
               className="group grid gap-4 py-9 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[9rem_1fr_auto] sm:gap-8"
             >
               <div className="flex flex-col gap-1 font-mono text-xs text-muted-foreground">
-                <time dateTime={post.date}>
-                  {new Date(post.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </time>
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span className="flex items-center gap-1">
                   <Clock className="size-3.5" />
                   {post.readingTime}

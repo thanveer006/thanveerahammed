@@ -92,8 +92,23 @@ async function main() {
       `export const snapshot: Snapshot = ${JSON.stringify(snapshot, null, 2)};\n`
   );
   writeFileSync(join(outDir, "routes.json"), JSON.stringify(routes, null, 2) + "\n");
+  mkdirSync(publicDir, { recursive: true });
   writeSitemap(snapshot);
+  writeRss(snapshot);
 }
+
+const site = (process.env.PUBLIC_SITE_URL ?? "https://thanveerahammed.in").replace(/\/+$/, "");
+const esc = (v) =>
+  String(v)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+const parseDate = (d) => {
+  const t = new Date(d);
+  return Number.isNaN(t.getTime()) ? undefined : t;
+};
 
 /**
  * Writes public/sitemap.xml so it ships as a static file from the CDN. Proxying it
@@ -101,12 +116,7 @@ async function main() {
  * Googlebot treats as the site being blocked.
  */
 function writeSitemap(snap) {
-  const site = (process.env.PUBLIC_SITE_URL ?? "https://thanveerahammed.in").replace(/\/+$/, "");
-  const esc = (v) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  const iso = (d) => {
-    const t = new Date(d);
-    return Number.isNaN(t.getTime()) ? undefined : t.toISOString().slice(0, 10);
-  };
+  const iso = (d) => parseDate(d)?.toISOString().slice(0, 10);
   const entries = [
     ...["", "/projects", "/blog", "/resume", "/uses", "/now", "/privacy"].map((p) => ({ loc: site + p })),
     ...snap.projects.map((p) => ({ loc: `${site}/projects/${p.slug}` })),
@@ -118,10 +128,44 @@ function writeSitemap(snap) {
         `  <url>\n    <loc>${esc(e.loc)}</loc>${e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : ""}\n  </url>`
     )
     .join("\n");
-  mkdirSync(publicDir, { recursive: true });
   writeFileSync(
     join(publicDir, "sitemap.xml"),
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`
+  );
+}
+
+/**
+ * Writes public/rss.xml for the same reason as the sitemap: feed readers polling a
+ * cold-starting API would time out. Mirrors renderRss() in
+ * server/src/services/feed.service.ts (which still serves /rss.xml on the API host).
+ */
+function writeRss(snap) {
+  const items = snap.posts
+    .map((p) => {
+      const link = esc(`${site}/blog/${p.slug}`);
+      const pub = parseDate(p.date);
+      return (
+        `\n    <item>\n      <title>${esc(p.title)}</title>\n      <link>${link}</link>\n` +
+        `      <guid isPermaLink="true">${link}</guid>\n` +
+        (pub ? `      <pubDate>${pub.toUTCString()}</pubDate>\n` : "") +
+        `      <description>${esc(p.description)}</description>\n    </item>`
+      );
+    })
+    .join("");
+  writeFileSync(
+    join(publicDir, "rss.xml"),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Thanveer Ahammed N — Blog</title>
+    <link>${esc(`${site}/blog`)}</link>
+    <atom:link href="${esc(`${site}/rss.xml`)}" rel="self" type="application/rss+xml" />
+    <description>Notes on software engineering, system design, AI integration, and automation.</description>
+    <language>en-us</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>${items}
+  </channel>
+</rss>
+`
   );
 }
 

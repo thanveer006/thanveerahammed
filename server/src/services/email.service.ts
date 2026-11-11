@@ -5,7 +5,7 @@ const SEND_TIMEOUT_MS = 10_000;
 
 /** Collapses CR/LF and other control characters so user input can't break out of a header line. */
 // eslint-disable-next-line no-control-regex
-const singleLine = (value: string) => value.replace(/[\u0000-\u001f\u007f\u2028\u2029]+/g, " ").trim();
+export const singleLine = (value: string) => value.replace(/[\u0000-\u001f\u007f\u2028\u2029]+/g, " ").trim();
 
 export type SendResult = { ok: true } | { ok: false; reason: "unconfigured" | "error" };
 

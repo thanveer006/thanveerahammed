@@ -52,7 +52,12 @@ export function Seo({
       ) : (
         <link rel="canonical" href={url} />
       )}
-      <link rel="alternate" type="application/rss+xml" href={`${siteUrl}/rss.xml`} />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={`${siteName} — Blog`}
+        href={`${siteUrl}/rss.xml`}
+      />
 
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />

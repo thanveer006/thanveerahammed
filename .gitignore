@@ -37,3 +37,4 @@ yarn-error.log*
 
 # generated at build time by snapshot-content.mjs
 client/public/sitemap.xml
+client/public/rss.xml

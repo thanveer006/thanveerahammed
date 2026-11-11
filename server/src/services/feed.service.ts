@@ -4,7 +4,10 @@ import { env } from "../config/env.js";
 
 const siteUrl = env.PUBLIC_SITE_URL;
 
-function escapeXml(value: string): string {
+/** Public pages that exist independently of the database content. */
+export const STATIC_ROUTES = ["", "/projects", "/blog", "/resume", "/uses", "/now", "/privacy"];
+
+export function escapeXml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -13,47 +16,51 @@ function escapeXml(value: string): string {
     .replace(/'/g, "&apos;");
 }
 
-/** RSS 2.0 feed of blog posts. Ported from `app/rss.xml/route.ts`. */
-export async function buildRssXml(): Promise<string> {
-  const posts = await Post.find().select("-content").sort({ date: -1 }).lean();
+/** ISO timestamp, or undefined for a missing/unparseable date. */
+function iso(d: unknown): string | undefined {
+  if (d === undefined || d === null || d === "") return undefined;
+  const t = new Date(d as string | number | Date);
+  return Number.isNaN(t.getTime()) ? undefined : t.toISOString();
+}
 
+type FeedPost = { slug: string; title: string; description: string; date: string };
+
+/** Pure RSS 2.0 renderer (no I/O) so it can be unit-tested. */
+export function renderRss(posts: FeedPost[], site = siteUrl, now = new Date()): string {
   const items = posts
-    .map(
-      (post) => `
+    .map((post) => {
+      const link = escapeXml(`${site}/blog/${post.slug}`);
+      const pub = iso(post.date);
+      return `
     <item>
       <title>${escapeXml(post.title)}</title>
-      <link>${escapeXml(`${siteUrl}/blog/${post.slug}`)}</link>
-      <guid>${escapeXml(`${siteUrl}/blog/${post.slug}`)}</guid>
-      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
+      <link>${link}</link>
+      <guid isPermaLink="true">${link}</guid>${
+        pub ? `\n      <pubDate>${new Date(pub).toUTCString()}</pubDate>` : ""
+      }
       <description>${escapeXml(post.description)}</description>
-    </item>`
-    )
+    </item>`;
+    })
     .join("");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Thanveer Ahammed N — Blog</title>
-    <link>${siteUrl}/blog</link>
+    <link>${escapeXml(`${site}/blog`)}</link>
+    <atom:link href="${escapeXml(`${site}/rss.xml`)}" rel="self" type="application/rss+xml" />
     <description>Notes on software engineering, system design, AI integration, and automation.</description>
     <language>en-us</language>
-    ${items}
+    <lastBuildDate>${now.toUTCString()}</lastBuildDate>${items}
   </channel>
-</rss>`;
+</rss>
+`;
 }
 
-/** XML sitemap. Ported from `app/sitemap.ts`. */
-export async function buildSitemapXml(): Promise<string> {
-  const [projects, posts] = await Promise.all([
-    Project.find().select("slug updatedAt").lean(),
-    Post.find().select("slug date updatedAt").lean(),
-  ]);
+type SitemapDoc = { slug: string; updatedAt?: unknown; date?: unknown };
 
-  const staticRoutes = ["", "/projects", "/blog", "/resume", "/uses", "/now", "/privacy"];
-  const iso = (d: unknown) => {
-    const t = new Date(d as string | number | Date);
-    return Number.isNaN(t.getTime()) ? undefined : t.toISOString();
-  };
+/** Pure XML sitemap renderer (no I/O). */
+export function renderSitemap(projects: SitemapDoc[], posts: SitemapDoc[], site = siteUrl): string {
   const latest = [...projects, ...posts]
     .map((d) => iso(d.updatedAt))
     .filter((d): d is string => !!d)
@@ -61,30 +68,41 @@ export async function buildSitemapXml(): Promise<string> {
     .pop();
 
   const urls: { url: string; lastmod?: string }[] = [
-    ...staticRoutes.map((r) => ({ url: `${siteUrl}${r}`, lastmod: latest })),
-    ...projects.map((p) => ({ url: `${siteUrl}/projects/${p.slug}`, lastmod: iso(p.updatedAt) })),
-    ...posts.map((p) => ({
-      url: `${siteUrl}/blog/${p.slug}`,
-      lastmod: iso(p.updatedAt) ?? iso(p.date),
-    })),
+    ...STATIC_ROUTES.map((r) => ({ url: `${site}${r}`, lastmod: latest })),
+    ...projects.map((p) => ({ url: `${site}/projects/${p.slug}`, lastmod: iso(p.updatedAt) })),
+    ...posts.map((p) => ({ url: `${site}/blog/${p.slug}`, lastmod: iso(p.updatedAt) ?? iso(p.date) })),
   ];
 
   const body = urls
     .map(
       ({ url, lastmod }) =>
-        `  <url>\n    <loc>${escapeXml(url)}</loc>${
-          lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ""
-        }\n  </url>`
+        `  <url>\n    <loc>${escapeXml(url)}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ""}\n  </url>`
     )
     .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${body}
-</urlset>`;
+</urlset>
+`;
 }
 
-/** robots.txt. Ported from `app/robots.ts`. */
+/** RSS 2.0 feed of blog posts, newest first. */
+export async function buildRssXml(): Promise<string> {
+  const posts = await Post.find().select("slug title description date").sort({ date: -1 }).lean();
+  return renderRss(posts);
+}
+
+/** XML sitemap of every public page. */
+export async function buildSitemapXml(): Promise<string> {
+  const [projects, posts] = await Promise.all([
+    Project.find().select("slug updatedAt").lean(),
+    Post.find().select("slug date updatedAt").lean(),
+  ]);
+  return renderSitemap(projects, posts);
+}
+
+/** robots.txt for the API host itself (the website ships its own static copy). */
 export function buildRobotsTxt(): string {
   return `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
 }

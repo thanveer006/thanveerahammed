@@ -21,7 +21,9 @@ export function Component() {
     return (
       <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-6 py-20 text-center">
         <Seo title="Project not found" path={`/projects/${slug}`} noIndex />
-        <p className="font-mono text-sm text-accent">{loading ? "Loading…" : "404"}</p>
+        <p className="font-mono text-sm text-accent" role="status">
+          {loading ? "Loading…" : "404"}
+        </p>
         {!loading && (
           <>
             <h1 className="mt-3 text-(length:--text-h3) font-semibold">Project not found.</h1>
