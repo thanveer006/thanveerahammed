@@ -103,7 +103,10 @@ function HorizontalTrack({ projects }: { projects: Project[] }) {
   const revealFocused = (e: React.FocusEvent<HTMLDivElement>) => {
     const section = sectionRef.current;
     const track = trackRef.current;
-    const item = (e.target as HTMLElement).closest<HTMLElement>("[data-track-item]");
+    const target = e.target as HTMLElement;
+    // Keyboard focus only: a mouse click also focuses the link and must not move the page.
+    if (!target.matches(":focus-visible")) return;
+    const item = target.closest<HTMLElement>("[data-track-item]");
     if (!section || !track || !item || distance === 0) return;
     // Both rects carry the same translateX, so their difference is the untransformed offset.
     const itemRect = item.getBoundingClientRect();

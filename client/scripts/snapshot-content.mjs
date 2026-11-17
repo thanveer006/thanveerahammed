@@ -48,6 +48,7 @@ async function main() {
     skills: { categories: [], highlightedIntegrations: [] },
   };
   let routes = [];
+  let fetched = false;
 
   try {
     const [projects, posts, experience, skills] = await Promise.all([
@@ -66,6 +67,7 @@ async function main() {
     const failed = settled.length - fullPosts.length;
 
     snapshot = { projects, posts, fullPosts, experience, skills };
+    fetched = true;
     routes = [
       ...projects.map((p) => `/projects/${p.slug}`),
       ...posts.map((p) => `/blog/${p.slug}`),
@@ -93,8 +95,15 @@ async function main() {
   );
   writeFileSync(join(outDir, "routes.json"), JSON.stringify(routes, null, 2) + "\n");
   mkdirSync(publicDir, { recursive: true });
-  writeSitemap(snapshot);
-  writeRss(snapshot);
+  // Only publish feeds built from real data: an unreachable API must not replace a
+  // good sitemap/feed with an empty one (or leave a stale empty file shadowing the
+  // dev proxy). Without a fetch the existing files are left untouched.
+  if (fetched) {
+    writeSitemap(snapshot);
+    writeRss(snapshot);
+  } else {
+    console.warn("snapshot: skipped sitemap.xml / rss.xml (no API data).");
+  }
 }
 
 const site = (process.env.PUBLIC_SITE_URL ?? "https://thanveerahammed.in").replace(/\/+$/, "");

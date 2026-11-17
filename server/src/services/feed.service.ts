@@ -30,13 +30,14 @@ export function renderRss(posts: FeedPost[], site = siteUrl, now = new Date()): 
   const items = posts
     .map((post) => {
       const link = escapeXml(`${site}/blog/${post.slug}`);
-      const pub = iso(post.date);
+      const pub = new Date(post.date);
+      const hasPub = !Number.isNaN(pub.getTime());
       return `
     <item>
       <title>${escapeXml(post.title)}</title>
       <link>${link}</link>
       <guid isPermaLink="true">${link}</guid>${
-        pub ? `\n      <pubDate>${new Date(pub).toUTCString()}</pubDate>` : ""
+        hasPub ? `\n      <pubDate>${pub.toUTCString()}</pubDate>` : ""
       }
       <description>${escapeXml(post.description)}</description>
     </item>`;

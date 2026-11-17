@@ -112,46 +112,49 @@ export function ProjectsExplorer() {
         {filtered.length} of {projects.length} projects
       </p>
 
-      {filtered.length === 0 ? (
-        <p className="rounded-3xl border border-dashed border-border px-6 py-20 text-center text-sm text-muted-foreground">
-          {emptyMessage}
-        </p>
-      ) : (
-        <ul id="project-results" className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {filtered.map((project) => (
-            <li key={project.slug}>
-              <SpotlightCard className="group h-full transition-colors hover:border-foreground/30">
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="flex h-full flex-col rounded-3xl p-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <div className="mb-7 flex items-start justify-between gap-3">
-                    <p className="font-mono text-xs tracking-[0.18em] text-accent uppercase">
-                      <span className="mr-2 opacity-60">
-                        {String(rank.get(project.slug) ?? 0).padStart(2, "0")}
-                      </span>
-                      {project.category}
-                    </p>
-                    <ArrowUpRight
-                      aria-hidden
-                      className="size-5 shrink-0 text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
-                    />
-                  </div>
-                  <h2 className="mb-3 text-2xl font-semibold tracking-tight text-balance">{project.name}</h2>
-                  <p className="mb-6 text-muted-foreground text-pretty">{project.oneLiner}</p>
-                  <div className="mt-auto flex flex-wrap gap-1.5">
-                    {project.tech.map((t) => (
-                      <Badge key={t} variant="secondary">
-                        {t}
-                      </Badge>
-                    ))}
-                  </div>
-                </Link>
-              </SpotlightCard>
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* Always mounted so the aria-controls references above never dangle. */}
+      <div id="project-results">
+        {filtered.length === 0 ? (
+          <p className="rounded-3xl border border-dashed border-border px-6 py-20 text-center text-sm text-muted-foreground">
+            {emptyMessage}
+          </p>
+        ) : (
+          <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {filtered.map((project) => (
+              <li key={project.slug}>
+                <SpotlightCard className="group h-full transition-colors hover:border-foreground/30">
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="flex h-full flex-col rounded-3xl p-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <div className="mb-7 flex items-start justify-between gap-3">
+                      <p className="font-mono text-xs tracking-[0.18em] text-accent uppercase">
+                        <span className="mr-2 opacity-60">
+                          {String(rank.get(project.slug) ?? 0).padStart(2, "0")}
+                        </span>
+                        {project.category}
+                      </p>
+                      <ArrowUpRight
+                        aria-hidden
+                        className="size-5 shrink-0 text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
+                      />
+                    </div>
+                    <h2 className="mb-3 text-2xl font-semibold tracking-tight text-balance">{project.name}</h2>
+                    <p className="mb-6 text-muted-foreground text-pretty">{project.oneLiner}</p>
+                    <div className="mt-auto flex flex-wrap gap-1.5">
+                      {project.tech.map((t) => (
+                        <Badge key={t} variant="secondary">
+                          {t}
+                        </Badge>
+                      ))}
+                    </div>
+                  </Link>
+                </SpotlightCard>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

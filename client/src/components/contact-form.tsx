@@ -126,7 +126,8 @@ export function ContactForm() {
     maxLength: MAX_LENGTH[field],
     value: fields[field],
     onChange: update(field),
-    disabled: pending,
+    // readOnly (not disabled) while sending: a disabled field drops keyboard focus.
+    readOnly: pending,
     "aria-invalid": fieldErrors[field] ? true : undefined,
     "aria-describedby": fieldErrors[field] ? `${field}-error` : undefined,
   });

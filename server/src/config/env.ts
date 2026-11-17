@@ -16,7 +16,7 @@ const schema = z.object({
   PORT: z.coerce.number().int().min(1).max(65535).default(4000),
   CLIENT_URL: z.string().default("http://localhost:5173"),
   PUBLIC_SITE_URL: z
-    .url()
+    .url({ protocol: /^https?$/, message: "PUBLIC_SITE_URL must be an http(s) URL" })
     .default("https://thanveerahammed.in")
     .transform((v) => v.replace(/\/+$/, "")),
   MONGODB_URI: z.string().min(1, "MONGODB_URI is required"),
